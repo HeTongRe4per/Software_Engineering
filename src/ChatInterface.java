@@ -1,69 +1,141 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import com.formdev.flatlaf.extras.*;
+/*
+ * Created by JFormDesigner on Wed Nov 29 20:58:19 CST 2023
+ */
 
-public class ChatInterface extends JFrame {
-    private JTextArea chatArea;
-    private JTextField inputField;
 
-    public ChatInterface() {
-        // 设置窗口标题
-        super("ChatGPT Interface");
 
-        // 设置布局为边界布局
-        setLayout(new BorderLayout());
+/**
+ * @author zhang
+ */
+public class ChatInterface  {
 
-        // 创建聊天区域
+    private void initComponents() {
+        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
+        ChatInterface = new JFrame();
+        mainMenuBar = new JMenuBar();
+        accountMenu = new JMenu();
+        login = new JMenuItem();
+        registered = new JMenuItem();
+        logout = new JMenuItem();
+        toolMenu = new JMenu();
+        setting = new JMenuItem();
+        helpMenu = new JMenu();
+        aboutItem = new JMenuItem();
+        snedPanel = new JPanel();
+        sendScrollPane = new JScrollPane();
+        sendPane = new JTextPane();
+        sendButton = new JButton();
+        chatScrollPane = new JScrollPane();
         chatArea = new JTextArea();
-        chatArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(chatArea);
-        add(scrollPane, BorderLayout.CENTER);
 
-        // 创建输入框和发送按钮
-        inputField = new JTextField();
-        JButton sendButton = new JButton("发送");
-        sendButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMessage();
+        //======== ChatInterface ========
+        {
+            ChatInterface.setTitle("Chat Interface");
+            ChatInterface.setForeground(Color.black);
+            ChatInterface.setIconImage(new ImageIcon(getClass().getResource("/resource/icon-chatgpt.png")).getImage());
+            var ChatInterfaceContentPane = ChatInterface.getContentPane();
+            ChatInterfaceContentPane.setLayout(new BorderLayout());
+
+            //======== mainMenuBar ========
+            {
+
+                //======== accountMenu ========
+                {
+                    accountMenu.setText("\u8d26\u53f7");
+
+                    //---- login ----
+                    login.setText("\u767b\u5f55");
+                    accountMenu.add(login);
+
+                    //---- registered ----
+                    registered.setText("\u6ce8\u518c");
+                    accountMenu.add(registered);
+                    accountMenu.addSeparator();
+
+                    //---- logout ----
+                    logout.setText("\u9000\u51fa\u767b\u5f55");
+                    accountMenu.add(logout);
+                }
+                mainMenuBar.add(accountMenu);
+
+                //======== toolMenu ========
+                {
+                    toolMenu.setText("\u5de5\u5177");
+
+                    //---- setting ----
+                    setting.setText("\u8bbe\u7f6e");
+                    toolMenu.add(setting);
+                }
+                mainMenuBar.add(toolMenu);
+
+                //======== helpMenu ========
+                {
+                    helpMenu.setText("\u5e2e\u52a9");
+
+                    //---- aboutItem ----
+                    aboutItem.setText("\u5173\u4e8e");
+                    helpMenu.add(aboutItem);
+                }
+                mainMenuBar.add(helpMenu);
             }
-        });
+            ChatInterface.setJMenuBar(mainMenuBar);
 
-        // 创建底部面板，并添加输入框和发送按钮
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BorderLayout());
-        bottomPanel.add(inputField, BorderLayout.CENTER);
-        bottomPanel.add(sendButton, BorderLayout.EAST);
+            //======== snedPanel ========
+            {
+                snedPanel.setLayout(new BoxLayout(snedPanel, BoxLayout.X_AXIS));
 
-        // 将底部面板添加到窗口底部
-        add(bottomPanel, BorderLayout.SOUTH);
+                //======== sendScrollPane ========
+                {
 
-        // 设置窗口大小和关闭操作
-        setSize(400, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // 将窗口居中显示
-    }
+                    //---- sendPane ----
+                    sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 12));
+                    sendScrollPane.setViewportView(sendPane);
+                }
+                snedPanel.add(sendScrollPane);
 
-    private void sendMessage() {
-        String userMessage = inputField.getText();
-        if (!userMessage.trim().isEmpty()) {
-            // 将用户输入的消息添加到聊天框
-            appendMessage("User: " + userMessage);
+                //---- sendButton ----
+                sendButton.setIcon(new ImageIcon(getClass().getResource("/resource/send.png")));
+                sendButton.setMaximumSize(new Dimension(30, 30));
+                sendButton.setMinimumSize(new Dimension(30, 30));
+                sendButton.setPreferredSize(new Dimension(30, 30));
+                snedPanel.add(sendButton);
+            }
+            ChatInterfaceContentPane.add(snedPanel, BorderLayout.SOUTH);
 
-            // TODO: 调用ChatGPT或其他聊天机器人的API，获取回复消息
+            //======== chatScrollPane ========
+            {
 
-            // 暂时使用简单的回复
-            String replyMessage = "这是ChatGPT的回复。";
-            appendMessage("ChatGPT: " + replyMessage);
-
-            // 清空输入框
-            inputField.setText("");
+                //---- chatArea ----
+                chatArea.setEditable(false);
+                chatArea.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
+                chatScrollPane.setViewportView(chatArea);
+            }
+            ChatInterfaceContentPane.add(chatScrollPane, BorderLayout.CENTER);
+            ChatInterface.setSize(725, 535);
+            ChatInterface.setLocationRelativeTo(null);
         }
+        // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
-    private void appendMessage(String message) {
-        chatArea.append(message + "\n");
-        chatArea.setCaretPosition(chatArea.getDocument().getLength()); // 滚动到最底部
-    }
+    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
+    private JFrame ChatInterface;
+    private JMenuBar mainMenuBar;
+    private JMenu accountMenu;
+    private JMenuItem login;
+    private JMenuItem registered;
+    private JMenuItem logout;
+    private JMenu toolMenu;
+    private JMenuItem setting;
+    private JMenu helpMenu;
+    private JMenuItem aboutItem;
+    private JPanel snedPanel;
+    private JScrollPane sendScrollPane;
+    private JTextPane sendPane;
+    private JButton sendButton;
+    private JScrollPane chatScrollPane;
+    private JTextArea chatArea;
+    // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
