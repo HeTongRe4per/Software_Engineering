@@ -7,6 +7,7 @@ public class main {
             @Override
             public void run() {
                 new ChatInterface().setVisible(true);
+                new PasswordWin().setVisible(true);
             }
         });
     }

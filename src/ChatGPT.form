@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ChatGPT">
+  <grid id="27dc6" binding="chatWin" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="27" y="37" width="611" height="480"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="dc1f2" binding="sendPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="48b23" class="javax.swing.JTextField" binding="sendField">
+            <constraints/>
+            <properties>
+              <enabled value="true"/>
+              <horizontalAlignment value="2"/>
+            </properties>
+            <clientProperties>
+              <caretWidth class="java.lang.Integer" value="500"/>
+            </clientProperties>
+          </component>
+          <component id="7c798" class="javax.swing.JButton" binding="sendButton">
+            <constraints/>
+            <properties>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <text value="发送"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="4978b">
+        <constraints border-constraint="East"/>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </scrollpane>
+      <component id="6207" class="javax.swing.JTextArea" binding="chatArea">
+        <constraints border-constraint="West"/>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
