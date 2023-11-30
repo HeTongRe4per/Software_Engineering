@@ -4,18 +4,18 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:59:p, par t {comp label2:::p::p, comp label3:::p::p}, space s:::p, par t {seq {comp remberPasswd:::p::p, space ::26:x, comp forgotPasswdButton:::p::p}, comp loginButton::l::180:x, comp passwordField1::l::180:x, comp accountField::l:::x}, space :p:87:p}, seq t {space ::148:x, par l {seq t {comp registerButton:::p::p, space :::p}, seq t {comp label1:::p::p, space :p:130:p}}}}"
-			"$verticalGroup": "par l {seq l {space :p:20:p, comp label1:::p::p, space :p:27:p, par b {comp label2::b:p::p, comp accountField::b:p:25:p}, space :p:28:p, par b {comp label3::b:p::p, comp passwordField1::b:p:25:p}, space s:::p, comp loginButton:::p:25:p, space s:::p, par b {comp forgotPasswdButton::b:p::p, comp remberPasswd::b:p::p}, space s:::p, comp registerButton:::p::p, space ::11:x}}"
+			"$horizontalGroup": "par l {seq l {space :p:59:p, par t {comp label2:::p::p, comp label3:::p::p}, space s:::p, par t {seq {comp remberPasswd:::p::p, space ::26:x, comp forgotPasswdButton:::p::p}, comp loginButton::l::180:x, comp passwordField1::l::180:x, comp accountField::l:::x}, space :p:87:p}, seq t {space ::277:x, par l {seq t {comp registerButton:::p::p, space :::p}, seq t {comp label1:::p::p, space :p:130:p}}}}"
+			"$verticalGroup": "par l {seq l {space :p:20:p, comp label1:::p::p, space :p:27:p, par b {comp label2::b:p::p, comp accountField::b:p:25:p}, space :p:28:p, par b {comp label3::b:p::p, comp passwordField1::b:p:25:p}, space s:::p, comp loginButton:::p:25:p, space s:::p, par b {comp forgotPasswdButton::b:p::p, comp remberPasswd::b:p::p}, space s:::p, comp registerButton:::p::p, space ::32:x}}"
 		} ) {
 			name: "this"
 			"resizable": false
 			"title": "登录"
-			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/resource/icon-chatgpt.png" )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
 			"$locationPolicy": 1
 			"$sizePolicy": 1
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/resource/ChatGPT_Logo_PNG.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/ChatGPT_Logo_PNG.png" )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label2"

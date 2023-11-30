@@ -83,11 +83,11 @@ public class loginWindows extends JFrame{
         //======== this ========
         setResizable(false);
         setTitle("\u767b\u5f55");
-        setIconImage(new ImageIcon(getClass().getResource("/resource/icon-chatgpt.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
         var contentPane = getContentPane();
 
         //---- label1 ----
-        label1.setIcon(new ImageIcon(getClass().getResource("/resource/ChatGPT_Logo_PNG.png")));
+        label1.setIcon(new ImageIcon(getClass().getResource("/ChatGPT_Logo_PNG.png")));
 
         //---- label2 ----
         label2.setText("\u7528\u6237\u540d\u6216\u90ae\u7bb1\uff1a");
@@ -154,7 +154,7 @@ public class loginWindows extends JFrame{
                         .addComponent(accountField, GroupLayout.Alignment.LEADING))
                     .addGap(87, 87, 87))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(148, Short.MAX_VALUE)
+                    .addContainerGap(277, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addComponent(registerButton)
@@ -184,7 +184,7 @@ public class loginWindows extends JFrame{
                         .addComponent(remberPasswd))
                     .addGap(18, 18, 18)
                     .addComponent(registerButton)
-                    .addContainerGap(11, Short.MAX_VALUE))
+                    .addContainerGap(32, Short.MAX_VALUE))
         );
         setSize(430, 325);
         setLocationRelativeTo(null);

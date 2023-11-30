@@ -29,7 +29,7 @@ public class accMgWindow extends JFrame {
         //======== this ========
         setTitle("\u8d26\u53f7\u7ba1\u7406");
         setResizable(false);
-        setIconImage(new ImageIcon(getClass().getResource("/resource/icon-chatgpt.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
         var contentPane = getContentPane();
 
         //---- label1 ----

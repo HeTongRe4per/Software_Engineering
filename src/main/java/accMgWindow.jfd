@@ -12,7 +12,7 @@ new FormModel {
 			"$locationPolicy": 1
 			"title": "账号管理"
 			"resizable": false
-			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/resource/icon-chatgpt.png" )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "用户名："

@@ -1,0 +1,105 @@
+JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq t {space :::p, par t {seq {space :0:201:x, comp button2:::p::p, space s:::p, comp button1:::p::p}, comp layeredPane1::l::333:x, comp layeredPane2::l::333:x}, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :p:17:p, comp layeredPane1:::p:114:p, space s:::p, comp layeredPane2:::p:76:p, space u:::p, par b {comp button1::b:p:25:p, comp button2::b:p:25:p}, space ::14:x}}"
+		} ) {
+			name: "settingWindow"
+			"title": "设置"
+			"$sizePolicy": 1
+			"$locationPolicy": 1
+			"resizable": false
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
+			add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
+				name: "layeredPane1"
+				"border": new javax.swing.border.TitledBorder( "ChatGPI API设置" )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label1"
+					"text": "接口URL："
+				}, new FormLayoutConstraints( null ) {
+					"x": 35
+					"y": 30
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label2"
+					"text": "API："
+				}, new FormLayoutConstraints( null ) {
+					"x": 60
+					"y": 75
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "textField2"
+				}, new FormLayoutConstraints( null ) {
+					"width": 190
+					"height": 25
+					"x": 110
+					"y": 25
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "textField1"
+				}, new FormLayoutConstraints( null ) {
+					"width": 190
+					"height": 25
+					"x": 110
+					"y": 70
+				} )
+			} )
+			add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
+				name: "layeredPane2"
+				"border": new javax.swing.border.TitledBorder( "Chat区设置" )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label3"
+					"text": "Chat框字体"
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 120, 375 )
+					"size": new java.awt.Dimension( 60, 27 )
+					"x": 15
+					"y": 35
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label4"
+					"text": "Chat框颜色"
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 120, 420 )
+					"size": new java.awt.Dimension( 60, 27 )
+					"x": 165
+					"y": 35
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "comboBox2"
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 195, 420 )
+					"size": new java.awt.Dimension( 80, 25 )
+					"x": 230
+					"y": 30
+					"height": 25
+					"width": 70
+				} )
+				add( new FormComponent( "javax.swing.JSpinner" ) {
+					name: "spinner1"
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 195, 375 )
+					"size": new java.awt.Dimension( 80, 25 )
+					"x": 80
+					"y": 30
+					"width": 70
+					"height": 25
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "确定"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "取消"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 355, 305 )
+		} )
+	}
+}
