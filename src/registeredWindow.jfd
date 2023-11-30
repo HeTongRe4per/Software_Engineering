@@ -1,0 +1,56 @@
+JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {par l {seq l {space :p:59:p, comp button1:::p:80:p, space :p:28:p, comp button2:::p:80:p}, seq l {space :p:37:p, par l {comp label4::t:p::p, par l:t {comp label2:::p:60:p, comp label1:::p:60:p}, comp label3::t:p:60:p}, space :::p, par l {comp textField2::l:p:169:p, comp textField3::l:p:169:p, comp textField1::l:p:169:p, comp passwordField1::l:p:169:p}}}, space ::38:x}}"
+			"$verticalGroup": "par l {seq l {space :p:34:p, par b {comp label1::b:p:22:p, comp textField1::b::26:x}, space :p:12:p, par b {comp label2::b:p:22:p, comp passwordField1::b::26:x}, space :p:12:p, par b {comp textField2::b:p:26:p, comp label3::b:p:22:p}, space s:::p, par b {comp textField3::b:p:26:p, comp label4::b:p:22:p}, space :p:28:p, par b {comp button2::b:p:30:p, comp button1::b:p:30:p}, space ::36:x}}"
+		} ) {
+			name: "registeredWindow"
+			"title": "注册账号"
+			"resizable": false
+			"$locationPolicy": 1
+			"$sizePolicy": 1
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "用户名："
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "邮箱："
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "密码："
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "确认密码："
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField1"
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "passwordField1"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField2"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField3"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "取消"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "注册"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 310, 305 )
+		} )
+	}
+}

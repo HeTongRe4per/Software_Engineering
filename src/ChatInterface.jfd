@@ -4,19 +4,20 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
-			name: "ChatInterface"
+			name: "this"
 			"title": "Chat Interface"
 			"$locationPolicy": 1
 			"$sizePolicy": 1
 			"foreground": sfield java.awt.Color black
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/resource/icon-chatgpt.png" )
+			"minimumSize": new java.awt.Dimension( 100, 50 )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) ) {
 				name: "snedPanel"
 				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 					name: "sendScrollPane"
 					add( new FormComponent( "javax.swing.JTextPane" ) {
 						name: "sendPane"
-						"font": new java.awt.Font( "黑体", 0, 12 )
+						"font": new java.awt.Font( "黑体", 0, 14 )
 					} )
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
@@ -45,12 +46,8 @@ new FormModel {
 					name: "accountMenu"
 					"text": "账号"
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "login"
-						"text": "登录"
-					} )
-					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "registered"
-						"text": "注册"
+						name: "accountMange"
+						"text": "账号管理"
 					} )
 					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
 						name: "separator1"
@@ -78,8 +75,8 @@ new FormModel {
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 160, 90 )
-			"size": new java.awt.Dimension( 725, 535 )
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 680, 450 )
 		} )
 	}
 }

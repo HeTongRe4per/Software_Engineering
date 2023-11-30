@@ -6,11 +6,9 @@ public class main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                //new ChatInterfaceOld().setVisible(true);
-                /*
-                new PasswordWinOld().setVisible(true);
-                new RegisterWin().setVisible(true);
-               */
+                new passwdUpdateWindow().setVisible(true);
+                new loginWindows().setVisible(true);
+                new ChatInterface().setVisible(true);
             }
         });
     }

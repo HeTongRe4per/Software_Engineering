@@ -52,7 +52,7 @@ public class ChatInterfaceOld extends JFrame {
             // 将用户输入的消息添加到聊天框
             appendMessage("User: " + userMessage);
 
-            // TODO: 调用ChatGPT或其他聊天机器人的API，获取回复消息
+            // 调用ChatGPT或其他聊天机器人的API，获取回复消息
 
             // 暂时使用简单的回复
             String replyMessage = "这是ChatGPT的回复。";
