@@ -20,7 +20,8 @@ public class loginWindows extends JFrame{
     }
 
     public void LoginWindowInit() {
-        // TODO 账号，密码框默认显示
+        // 账号，密码框默认显示
+        passwordField1.setEchoChar((char) 0);
         this.accountInit = "请输入用户名或邮箱";
         this.passwordInit = "请输入密码";
         accountField.setText(accountInit);
@@ -30,7 +31,7 @@ public class loginWindows extends JFrame{
     }
 
     private void accountFieldFocusGained() {
-        // TODO 账号输入框被聚焦
+        // 账号输入框被聚焦
         String temp = accountField.getText();
         if (temp.equals(accountInit)) {
             accountField.setText("");
@@ -39,7 +40,7 @@ public class loginWindows extends JFrame{
     }
 
     private void accountFieldFocusLost() {
-        // TODO 账号输入框失去聚焦
+        // 账号输入框失去聚焦
         String temp = accountField.getText();
         if (temp.equals("")) {
             accountField.setText(accountInit);
@@ -48,20 +49,22 @@ public class loginWindows extends JFrame{
     }
 
     private void passwordField1FocusGained() {
-        // TODO 密码框被聚焦
-        String temp = passwordField1.getText();
+        // 密码框被聚焦
+        String temp = String.valueOf(passwordField1.getPassword());
         if (temp.equals(passwordInit)) {
             passwordField1.setText("");
             passwordField1.setForeground(Color.BLACK);
+            passwordField1.setEchoChar('*');
         }
     }
 
     private void passwordField1FocusLost() {
-        // TODO 密码框失去聚焦
-        String temp = passwordField1.getText();
+        // 密码框失去聚焦
+        String temp = String.valueOf(passwordField1.getPassword());
         if (temp.equals("")) {
             passwordField1.setText(passwordInit);
             passwordField1.setForeground(Color.GRAY);
+            passwordField1.setEchoChar((char) 0);
         }
     }
 

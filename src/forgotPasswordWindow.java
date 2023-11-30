@@ -24,6 +24,8 @@ public class forgotPasswordWindow extends JFrame {
 
         //======== this ========
         setTitle("\u5fd8\u8bb0\u5bc6\u7801");
+        setIconImage(null);
+        setResizable(false);
         var contentPane = getContentPane();
 
         //---- label1 ----
@@ -55,7 +57,7 @@ public class forgotPasswordWindow extends JFrame {
                             .addGap(66, 66, 66))
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addComponent(button1)
-                            .addGap(39, 39, 39))))
+                            .addContainerGap())))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -68,12 +70,12 @@ public class forgotPasswordWindow extends JFrame {
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
                         .addComponent(label2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                     .addComponent(button1)
-                    .addGap(18, 18, 18))
+                    .addContainerGap())
         );
-        pack();
-        setLocationRelativeTo(getOwner());
+        setSize(320, 205);
+        setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 

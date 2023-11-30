@@ -46,14 +46,14 @@ new FormModel {
 					name: "accountMenu"
 					"text": "账号"
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "accountMange"
+						name: "accountMangeItem"
 						"text": "账号管理"
 					} )
 					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
 						name: "separator1"
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "logout"
+						name: "logoutItem"
 						"text": "退出登录"
 					} )
 				} )
@@ -61,7 +61,7 @@ new FormModel {
 					name: "toolMenu"
 					"text": "工具"
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "setting"
+						name: "settingItem"
 						"text": "设置"
 					} )
 				} )

@@ -4,12 +4,12 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq t {space ::238:x, comp button1:::p:60:p, space :::p}, seq l {space :p:34:p, par l {comp label1:::p:66:p, par l:l::p {comp label2::t:::x, comp label3::t:p::p}}, space :::p, par l {comp textField1::l:p:140:p, comp textField2::l:p:140:p, comp passwordField1:::p:140:p}, space ::58:x}}"
-			"$verticalGroup": "par l {seq l {space ::37:x, par b {comp label1::b:p:25:p, comp passwordField1::b:p:23:p}, space s:::p, par b {comp label2::b:p:25:p, comp textField1::b:p:23:p}, space s:::p, par b {comp label3::b:p:25:p, comp textField2::b:p:23:p}, space s:::p, comp button1:::p:23:p, space :::p}}"
+			"$horizontalGroup": "par l {seq {space ::50:x, par l {seq t {comp label1:::p:66:p, space :p:10:p, comp passwordField1:::p:140:p, space :p:42:p}, seq t {comp button1:::p::p, space :p:16:p}}}}"
+			"$verticalGroup": "par l {seq l {space ::33:x, par b {comp label1::b:p:25:p, comp passwordField1::b:p:23:p}, space :p:30:p, comp button1:::p:23:p, space :p:18:p}}"
 		} ) {
 			name: "this"
 			"title": "修改密码"
-			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/resource/icon-chatgpt.png" )
+			"iconImage": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"$locationPolicy": 1
 			"$sizePolicy": 1
 			"resizable": false
@@ -20,27 +20,13 @@ new FormModel {
 				name: "label1"
 				"text": "原密码："
 			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label2"
-				"text": "新密码："
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label3"
-				"text": "确认新密码："
-			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField1"
-			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField2"
-			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button1"
-				"text": "确认"
+				"text": "下一步"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 310, 230 )
+			"size": new java.awt.Dimension( 310, 160 )
 		} )
 	}
 }

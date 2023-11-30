@@ -19,10 +19,10 @@ public class ChatInterface extends JFrame  {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         mainMenuBar = new JMenuBar();
         accountMenu = new JMenu();
-        accountMange = new JMenuItem();
-        logout = new JMenuItem();
+        accountMangeItem = new JMenuItem();
+        logoutItem = new JMenuItem();
         toolMenu = new JMenu();
-        setting = new JMenuItem();
+        settingItem = new JMenuItem();
         helpMenu = new JMenu();
         aboutItem = new JMenuItem();
         snedPanel = new JPanel();
@@ -47,14 +47,14 @@ public class ChatInterface extends JFrame  {
             {
                 accountMenu.setText("\u8d26\u53f7");
 
-                //---- accountMange ----
-                accountMange.setText("\u8d26\u53f7\u7ba1\u7406");
-                accountMenu.add(accountMange);
+                //---- accountMangeItem ----
+                accountMangeItem.setText("\u8d26\u53f7\u7ba1\u7406");
+                accountMenu.add(accountMangeItem);
                 accountMenu.addSeparator();
 
-                //---- logout ----
-                logout.setText("\u9000\u51fa\u767b\u5f55");
-                accountMenu.add(logout);
+                //---- logoutItem ----
+                logoutItem.setText("\u9000\u51fa\u767b\u5f55");
+                accountMenu.add(logoutItem);
             }
             mainMenuBar.add(accountMenu);
 
@@ -62,9 +62,9 @@ public class ChatInterface extends JFrame  {
             {
                 toolMenu.setText("\u5de5\u5177");
 
-                //---- setting ----
-                setting.setText("\u8bbe\u7f6e");
-                toolMenu.add(setting);
+                //---- settingItem ----
+                settingItem.setText("\u8bbe\u7f6e");
+                toolMenu.add(settingItem);
             }
             mainMenuBar.add(toolMenu);
 
@@ -119,10 +119,10 @@ public class ChatInterface extends JFrame  {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JMenuBar mainMenuBar;
     private JMenu accountMenu;
-    private JMenuItem accountMange;
-    private JMenuItem logout;
+    private JMenuItem accountMangeItem;
+    private JMenuItem logoutItem;
     private JMenu toolMenu;
-    private JMenuItem setting;
+    private JMenuItem settingItem;
     private JMenu helpMenu;
     private JMenuItem aboutItem;
     private JPanel snedPanel;

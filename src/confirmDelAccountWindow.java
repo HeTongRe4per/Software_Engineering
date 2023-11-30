@@ -20,11 +20,12 @@ public class confirmDelAccountWindow extends JDialog {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
         label2 = new JLabel();
-        button1 = new JButton();
-        button2 = new JButton();
+        confirmDelButton = new JButton();
+        cancelDelButton = new JButton();
 
         //======== this ========
         setTitle("\u786e\u8ba4\u5220\u9664");
+        setResizable(false);
         var contentPane = getContentPane();
 
         //---- label1 ----
@@ -33,55 +34,55 @@ public class confirmDelAccountWindow extends JDialog {
         //---- label2 ----
         label2.setText("\u4f60\u7684\u8d26\u6237\u5c06\u4f1a\u6c38\u4e45\u5931\u53bb\uff01\uff08\u771f\u7684\u5f88\u4e45\uff01\uff09");
 
-        //---- button1 ----
-        button1.setText("\u6211\u518d\u60f3\u60f3");
-        button1.setSelected(true);
+        //---- confirmDelButton ----
+        confirmDelButton.setText("\u6211\u518d\u60f3\u60f3");
+        confirmDelButton.setSelected(true);
 
-        //---- button2 ----
-        button2.setText("\u786e\u8ba4\u5220\u9664");
+        //---- cancelDelButton ----
+        cancelDelButton.setText("\u786e\u8ba4\u5220\u9664");
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(57, 57, 57)
-                            .addComponent(button2)
-                            .addGap(28, 28, 28)
-                            .addComponent(button1))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(51, 51, 51)
-                            .addComponent(label2)))
+                    .addGap(51, 51, 51)
+                    .addComponent(label2)
                     .addContainerGap(41, Short.MAX_VALUE))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addGap(0, 94, Short.MAX_VALUE)
-                    .addComponent(label1, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-                    .addGap(88, 88, 88))
+                    .addGap(0, 66, Short.MAX_VALUE)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addComponent(label1)
+                            .addGap(97, 97, 97))
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addComponent(confirmDelButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(cancelDelButton)
+                            .addGap(62, 62, 62))))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(40, 40, 40)
+                    .addGap(38, 38, 38)
                     .addComponent(label1)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(label2)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                    .addGap(37, 37, 37)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(button2)
-                        .addComponent(button1))
-                    .addGap(30, 30, 30))
+                        .addComponent(confirmDelButton)
+                        .addComponent(cancelDelButton))
+                    .addContainerGap(25, Short.MAX_VALUE))
         );
-        pack();
-        setLocationRelativeTo(getOwner());
+        setSize(310, 190);
+        setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JLabel label1;
     private JLabel label2;
-    private JButton button1;
-    private JButton button2;
+    private JButton confirmDelButton;
+    private JButton cancelDelButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

@@ -22,8 +22,8 @@ public class settingWindow {
         label4 = new JLabel();
         textField2 = new JTextField();
         textField1 = new JTextField();
-        comboBox1 = new JComboBox();
         comboBox2 = new JComboBox();
+        spinner1 = new JSpinner();
 
         //======== settingWindow ========
         {
@@ -49,47 +49,43 @@ public class settingWindow {
             settingWindowContentPaneLayout.setHorizontalGroup(
                 settingWindowContentPaneLayout.createParallelGroup()
                     .addGroup(settingWindowContentPaneLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(settingWindowContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addGroup(settingWindowContentPaneLayout.createSequentialGroup()
-                                .addComponent(label1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
-                            .addGroup(settingWindowContentPaneLayout.createSequentialGroup()
-                                .addGroup(settingWindowContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(label4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(label2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(settingWindowContentPaneLayout.createParallelGroup()
-                                    .addComponent(textField1, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(settingWindowContentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(comboBox2, GroupLayout.Alignment.LEADING)
-                                        .addComponent(comboBox1, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(44, Short.MAX_VALUE))
+                        .addContainerGap(38, Short.MAX_VALUE)
+                        .addGroup(settingWindowContentPaneLayout.createParallelGroup()
+                            .addGroup(GroupLayout.Alignment.TRAILING, settingWindowContentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addComponent(label4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label2, GroupLayout.Alignment.TRAILING))
+                            .addComponent(label1, GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(settingWindowContentPaneLayout.createParallelGroup()
+                            .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textField1, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spinner1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
+                        .addGap(46, 46, 46))
             );
             settingWindowContentPaneLayout.setVerticalGroup(
                 settingWindowContentPaneLayout.createParallelGroup()
                     .addGroup(settingWindowContentPaneLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(settingWindowContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label1))
                         .addGap(18, 18, 18)
                         .addGroup(settingWindowContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label2))
                         .addGap(18, 18, 18)
                         .addGroup(settingWindowContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label3, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboBox1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(spinner1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(settingWindowContentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                             .addComponent(label4, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboBox2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(51, Short.MAX_VALUE))
+                        .addContainerGap(90, Short.MAX_VALUE))
             );
-            settingWindow.setSize(355, 280);
+            settingWindow.setSize(355, 315);
             settingWindow.setLocationRelativeTo(null);
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
@@ -103,7 +99,7 @@ public class settingWindow {
     private JLabel label4;
     private JTextField textField2;
     private JTextField textField1;
-    private JComboBox comboBox1;
     private JComboBox comboBox2;
+    private JSpinner spinner1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
