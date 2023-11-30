@@ -1,0 +1,82 @@
+JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"title": "Chat Interface"
+			"$locationPolicy": 1
+			"$sizePolicy": 1
+			"foreground": sfield java.awt.Color black
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/resource/icon-chatgpt.png" )
+			"minimumSize": new java.awt.Dimension( 100, 50 )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) ) {
+				name: "snedPanel"
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "sendScrollPane"
+					add( new FormComponent( "javax.swing.JTextPane" ) {
+						name: "sendPane"
+						"font": new java.awt.Font( "黑体", 0, 14 )
+					} )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "sendButton"
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/resource/send.png" )
+					"maximumSize": new java.awt.Dimension( 30, 30 )
+					"minimumSize": new java.awt.Dimension( 30, 30 )
+					"preferredSize": new java.awt.Dimension( 30, 30 )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "South"
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "chatScrollPane"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "chatArea"
+					"editable": false
+					"font": new java.awt.Font( "黑体", 0, 14 )
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "mainMenuBar"
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "accountMenu"
+					"text": "账号"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "accountMange"
+						"text": "账号管理"
+					} )
+					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
+						name: "separator1"
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "logout"
+						"text": "退出登录"
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "toolMenu"
+					"text": "工具"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "setting"
+						"text": "设置"
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "helpMenu"
+					"text": "帮助"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "aboutItem"
+						"text": "关于"
+					} )
+				} )
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 680, 450 )
+		} )
+	}
+}
