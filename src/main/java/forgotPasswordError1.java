@@ -30,7 +30,7 @@ public class forgotPasswordError1 extends JDialog {
             var dialog1ContentPane = dialog1.getContentPane();
 
             //---- label3 ----
-            label3.setText("\u7528\u6237\u540d\u6216\u5bc6\u7801\u9519\u8bef");
+            label3.setText("\u7528\u6237\u540d\u6216\u90ae\u7bb1\u9519\u8bef");
 
             //---- label4 ----
             label4.setText("\u8bf7\u68c0\u67e5\u662f\u5426\u8f93\u5165\u6709\u8bef");
@@ -43,7 +43,7 @@ public class forgotPasswordError1 extends JDialog {
             dialog1ContentPaneLayout.setHorizontalGroup(
                 dialog1ContentPaneLayout.createParallelGroup()
                     .addGroup(GroupLayout.Alignment.TRAILING, dialog1ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(160, Short.MAX_VALUE)
+                        .addContainerGap(156, Short.MAX_VALUE)
                         .addComponent(button2, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(dialog1ContentPaneLayout.createSequentialGroup()
@@ -56,7 +56,7 @@ public class forgotPasswordError1 extends JDialog {
             dialog1ContentPaneLayout.setVerticalGroup(
                 dialog1ContentPaneLayout.createParallelGroup()
                     .addGroup(dialog1ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(39, Short.MAX_VALUE)
+                        .addContainerGap(35, Short.MAX_VALUE)
                         .addComponent(label3)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label4)

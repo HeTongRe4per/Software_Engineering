@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:59:p, par t {comp label2:::p::p, comp label3:::p::p}, space s:::p, par t {seq {comp remberPasswd:::p::p, space ::16:x, comp forgotPasswdButton:::p::p}, comp loginButton::l::175:x, comp passwordField1::l::175:x, comp accountField::l:::x}, space :p:87:p}, seq t {space ::274:x, par l {seq t {comp registerButton:::p::p, space :::p}, seq t {comp label1:::p::p, space :p:130:p}}}}"
-			"$verticalGroup": "par l {seq l {space :p:20:p, comp label1:::p::p, space :p:27:p, par b {comp label2::b:p::p, comp accountField::b:p:25:p}, space :p:28:p, par b {comp label3::b:p::p, comp passwordField1::b:p:25:p}, space s:::p, comp loginButton:::p:25:p, space s:::p, par b {comp forgotPasswdButton::b:p::p, comp remberPasswd::b:p::p}, space s:::p, comp registerButton:::p::p, space ::14:x}}"
+			"$horizontalGroup": "par l {seq l {space :p:59:p, par t {comp label2:::p::p, comp label3:::p::p}, space s:::p, par t {seq {comp remberPasswd:::p::p, space ::26:x, comp forgotPasswdButton:::p::p}, comp loginButton::l::180:x, comp passwordField1::l::180:x, comp accountField::l:::x}, space :p:87:p}, seq t {space ::148:x, par l {seq t {comp registerButton:::p::p, space :::p}, seq t {comp label1:::p::p, space :p:130:p}}}}"
+			"$verticalGroup": "par l {seq l {space :p:20:p, comp label1:::p::p, space :p:27:p, par b {comp label2::b:p::p, comp accountField::b:p:25:p}, space :p:28:p, par b {comp label3::b:p::p, comp passwordField1::b:p:25:p}, space s:::p, comp loginButton:::p:25:p, space s:::p, par b {comp forgotPasswdButton::b:p::p, comp remberPasswd::b:p::p}, space s:::p, comp registerButton:::p::p, space ::11:x}}"
 		} ) {
 			name: "this"
 			"resizable": false
@@ -34,11 +34,13 @@ new FormModel {
 				name: "loginButton"
 				"text": "登录"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loginButtonLinster", false ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "loginButtonFocusLost", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "registerButton"
 				"text": "没有账号？点我注册"
 				"borderPainted": false
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "registerButtonlinsten", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
 				name: "remberPasswd"
@@ -48,6 +50,7 @@ new FormModel {
 				name: "forgotPasswdButton"
 				"text": "忘记密码"
 				"borderPainted": false
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "forgotPasswdButtonLinsten", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JPasswordField" ) {
 				name: "passwordField1"
@@ -61,4 +64,3 @@ new FormModel {
 		} )
 	}
 }
-

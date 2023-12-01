@@ -15,6 +15,18 @@ public class passwdUpdateWindow2 extends JFrame {
         initComponents();
     }
 
+    private void buttonSureListen() {
+        String newpassword,surpassword;
+        newpassword=new String(passwordField1.getPassword());
+        surpassword=new String(passwordField2.getPassword());
+        if(newpassword.equals(surpassword)){
+            // TODO 插入密码信息
+
+        }else {
+            JOptionPane.showMessageDialog(null, "密码不一致！", "错误", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -36,6 +48,7 @@ public class passwdUpdateWindow2 extends JFrame {
 
         //---- button1 ----
         button1.setText("\u786e\u8ba4");
+        button1.addActionListener(e -> buttonSureListen());
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);

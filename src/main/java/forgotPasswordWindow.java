@@ -14,6 +14,26 @@ public class forgotPasswordWindow extends JFrame {
         initComponents();
     }
 
+    private void buttonNextLinsten() {
+        // TODO add your code here
+        if(forpassverinfor()){
+            new passwdUpdateWindow2().setVisible(true);
+        }else {
+            // TODO 错误窗口
+            //new forgotPasswordError1().setVisible(true);
+        }
+
+    }
+
+    private boolean forpassverinfor(){
+        boolean flag=false;
+        String username,email;
+        username=label1.getText();
+        email=label2.getText();
+        // TODO 连接数据库验证信息
+        return flag;
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -36,6 +56,7 @@ public class forgotPasswordWindow extends JFrame {
 
         //---- button1 ----
         button1.setText("\u4e0b\u4e00\u6b65");
+        button1.addActionListener(e -> buttonNextLinsten());
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);

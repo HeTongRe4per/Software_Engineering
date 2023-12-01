@@ -70,10 +70,26 @@ public class loginWindows extends JFrame{
 
     private void loginButtonLinster() {
         // TODO  登录按钮监听（邮箱，用户名密码验证）
-        if(verifyinfor()) {
+        if(logverifyinfor()) {
             new ChatInterface().setVisible(true);
-        }else loginButton.setText("账号或密码错误，请重试");
-        // TODO 焦点回退按钮显示登陆
+        }else {
+            loginButton.setText("账号或密码错误，请重试");
+        }
+    }
+
+    private void loginButtonFocusLost() {
+        // 登录按钮失去焦点
+        loginButton.setText("登录");
+    }
+
+    private void registerButtonlinsten() {
+        // TODO 注册按钮监听(打开注册界面)
+        new registeredWindow();
+    }
+
+    private void forgotPasswdButtonLinsten() {
+        // TODO
+        new forgotPasswordWindow().setVisible(true);
     }
 
 
@@ -119,10 +135,17 @@ public class loginWindows extends JFrame{
         //---- loginButton ----
         loginButton.setText("\u767b\u5f55");
         loginButton.addActionListener(e -> loginButtonLinster());
+        loginButton.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                loginButtonFocusLost();
+            }
+        });
 
         //---- registerButton ----
         registerButton.setText("\u6ca1\u6709\u8d26\u53f7\uff1f\u70b9\u6211\u6ce8\u518c");
         registerButton.setBorderPainted(false);
+        registerButton.addActionListener(e -> registerButtonlinsten());
 
         //---- remberPasswd ----
         remberPasswd.setText("\u8bb0\u4f4f\u5bc6\u7801");
@@ -130,6 +153,7 @@ public class loginWindows extends JFrame{
         //---- forgotPasswdButton ----
         forgotPasswdButton.setText("\u5fd8\u8bb0\u5bc6\u7801");
         forgotPasswdButton.setBorderPainted(false);
+        forgotPasswdButton.addActionListener(e -> forgotPasswdButtonLinsten());
 
         //---- passwordField1 ----
         passwordField1.setEchoChar('*');
@@ -157,14 +181,14 @@ public class loginWindows extends JFrame{
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addComponent(remberPasswd)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                             .addComponent(forgotPasswdButton))
-                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                         .addComponent(accountField, GroupLayout.Alignment.LEADING))
                     .addGap(87, 87, 87))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(274, Short.MAX_VALUE)
+                    .addContainerGap(148, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addComponent(registerButton)
@@ -194,7 +218,7 @@ public class loginWindows extends JFrame{
                         .addComponent(remberPasswd))
                     .addGap(18, 18, 18)
                     .addComponent(registerButton)
-                    .addContainerGap(14, Short.MAX_VALUE))
+                    .addContainerGap(11, Short.MAX_VALUE))
         );
         setSize(430, 325);
         setLocationRelativeTo(null);
@@ -212,12 +236,13 @@ public class loginWindows extends JFrame{
     private JButton forgotPasswdButton;
     private JPasswordField passwordField1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-    private boolean verifyinfor(){
+    private boolean logverifyinfor(){
         //数据库验证
         boolean flag = false;
         String  usename_mail,password;
         usename_mail=accountField.getText();
         password=passwordField1.getText();
+        // TODO 连接数据库验证信息
         //查询数据库返回flag
         return flag;
     }
