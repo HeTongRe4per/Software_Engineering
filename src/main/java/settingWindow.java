@@ -48,9 +48,9 @@ public class settingWindow {
                 label1.setBounds(new Rectangle(new Point(35, 30), label1.getPreferredSize()));
 
                 //---- label2 ----
-                label2.setText("API\uff1a");
+                label2.setText("API Key\uff1a");
                 layeredPane1.add(label2, JLayeredPane.DEFAULT_LAYER);
-                label2.setBounds(new Rectangle(new Point(60, 75), label2.getPreferredSize()));
+                label2.setBounds(35, 75, 55, label2.getPreferredSize().height);
                 layeredPane1.add(textField2, JLayeredPane.DEFAULT_LAYER);
                 textField2.setBounds(110, 25, 190, 25);
                 layeredPane1.add(textField1, JLayeredPane.DEFAULT_LAYER);

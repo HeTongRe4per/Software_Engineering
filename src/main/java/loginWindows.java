@@ -68,6 +68,11 @@ public class loginWindows extends JFrame{
         }
     }
 
+    private void loginButtonListner() {
+        // TODO add your code here
+        new ChatInterface().setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -109,6 +114,7 @@ public class loginWindows extends JFrame{
 
         //---- loginButton ----
         loginButton.setText("\u767b\u5f55");
+        loginButton.addActionListener(e -> loginButtonListner());
 
         //---- registerButton ----
         registerButton.setText("\u6ca1\u6709\u8d26\u53f7\uff1f\u70b9\u6211\u6ce8\u518c");
@@ -154,7 +160,7 @@ public class loginWindows extends JFrame{
                         .addComponent(accountField, GroupLayout.Alignment.LEADING))
                     .addGap(87, 87, 87))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(277, Short.MAX_VALUE)
+                    .addContainerGap(148, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addComponent(registerButton)
@@ -184,7 +190,7 @@ public class loginWindows extends JFrame{
                         .addComponent(remberPasswd))
                     .addGap(18, 18, 18)
                     .addComponent(registerButton)
-                    .addContainerGap(32, Short.MAX_VALUE))
+                    .addContainerGap(11, Short.MAX_VALUE))
         );
         setSize(430, 325);
         setLocationRelativeTo(null);

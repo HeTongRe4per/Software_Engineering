@@ -25,10 +25,11 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label2"
-					"text": "API："
+					"text": "API Key："
 				}, new FormLayoutConstraints( null ) {
-					"x": 60
+					"x": 35
 					"y": 75
+					"width": 55
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField2"
