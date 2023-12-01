@@ -1,4 +1,3 @@
-import java.awt.*;
 import javax.swing.*;
 /*
  * Created by JFormDesigner on Wed Nov 29 23:01:29 CST 2023
@@ -32,7 +31,7 @@ public class registeredWindow {
         {
             registeredWindow.setTitle("\u6ce8\u518c\u8d26\u53f7");
             registeredWindow.setResizable(false);
-            registeredWindow.setIconImage(new ImageIcon(getClass().getResource("/resource/icon-chatgpt.png")).getImage());
+            registeredWindow.setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
             var registeredWindowContentPane = registeredWindow.getContentPane();
 
             //---- button1 ----

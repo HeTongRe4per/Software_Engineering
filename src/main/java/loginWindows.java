@@ -42,7 +42,7 @@ public class loginWindows extends JFrame{
     private void accountFieldFocusLost() {
         // 账号输入框失去聚焦
         String temp = accountField.getText();
-        if (temp.equals("")) {
+        if (temp.isEmpty()) {
             accountField.setText(accountInit);
             accountField.setForeground(Color.GRAY);
         }
@@ -61,12 +61,21 @@ public class loginWindows extends JFrame{
     private void passwordField1FocusLost() {
         // 密码框失去聚焦
         String temp = String.valueOf(passwordField1.getPassword());
-        if (temp.equals("")) {
+        if (temp.isEmpty()) {
             passwordField1.setText(passwordInit);
             passwordField1.setForeground(Color.GRAY);
             passwordField1.setEchoChar((char) 0);
         }
     }
+
+    private void loginButtonLinster() {
+        // TODO  登录按钮监听（邮箱，用户名密码验证）
+        if(verifyinfor()) {
+            new ChatInterface().setVisible(true);
+        }else loginButton.setText("账号或密码错误，请重试");
+        // TODO 焦点回退按钮显示登陆
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -83,11 +92,11 @@ public class loginWindows extends JFrame{
         //======== this ========
         setResizable(false);
         setTitle("\u767b\u5f55");
-        setIconImage(new ImageIcon(getClass().getResource("/resource/icon-chatgpt.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
         var contentPane = getContentPane();
 
         //---- label1 ----
-        label1.setIcon(new ImageIcon(getClass().getResource("/resource/ChatGPT_Logo_PNG.png")));
+        label1.setIcon(new ImageIcon(getClass().getResource("/ChatGPT_Logo_PNG.png")));
 
         //---- label2 ----
         label2.setText("\u7528\u6237\u540d\u6216\u90ae\u7bb1\uff1a");
@@ -109,6 +118,7 @@ public class loginWindows extends JFrame{
 
         //---- loginButton ----
         loginButton.setText("\u767b\u5f55");
+        loginButton.addActionListener(e -> loginButtonLinster());
 
         //---- registerButton ----
         registerButton.setText("\u6ca1\u6709\u8d26\u53f7\uff1f\u70b9\u6211\u6ce8\u518c");
@@ -147,14 +157,14 @@ public class loginWindows extends JFrame{
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addComponent(remberPasswd)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                             .addComponent(forgotPasswdButton))
-                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                         .addComponent(accountField, GroupLayout.Alignment.LEADING))
                     .addGap(87, 87, 87))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(148, Short.MAX_VALUE)
+                    .addContainerGap(274, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addComponent(registerButton)
@@ -184,7 +194,7 @@ public class loginWindows extends JFrame{
                         .addComponent(remberPasswd))
                     .addGap(18, 18, 18)
                     .addComponent(registerButton)
-                    .addContainerGap(11, Short.MAX_VALUE))
+                    .addContainerGap(14, Short.MAX_VALUE))
         );
         setSize(430, 325);
         setLocationRelativeTo(null);
@@ -202,7 +212,15 @@ public class loginWindows extends JFrame{
     private JButton forgotPasswdButton;
     private JPasswordField passwordField1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-
+    private boolean verifyinfor(){
+        //数据库验证
+        boolean flag = false;
+        String  usename_mail,password;
+        usename_mail=accountField.getText();
+        password=passwordField1.getText();
+        //查询数据库返回flag
+        return flag;
+    }
     // 自定义变量
     private String accountInit;
     private String passwordInit;

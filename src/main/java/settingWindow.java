@@ -29,7 +29,7 @@ public class settingWindow {
         {
             settingWindow.setTitle("\u8bbe\u7f6e");
             settingWindow.setResizable(false);
-            settingWindow.setIconImage(new ImageIcon(getClass().getResource("/resource/icon-chatgpt.png")).getImage());
+            settingWindow.setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
             var settingWindowContentPane = settingWindow.getContentPane();
 
             //---- label1 ----

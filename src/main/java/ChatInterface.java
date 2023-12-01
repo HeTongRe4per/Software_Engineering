@@ -35,7 +35,7 @@ public class ChatInterface extends JFrame  {
         //======== this ========
         setTitle("Chat Interface");
         setForeground(Color.black);
-        setIconImage(new ImageIcon(getClass().getResource("/resource/icon-chatgpt.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
         setMinimumSize(new Dimension(100, 50));
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -94,7 +94,7 @@ public class ChatInterface extends JFrame  {
             snedPanel.add(sendScrollPane);
 
             //---- sendButton ----
-            sendButton.setIcon(new ImageIcon(getClass().getResource("/resource/send.png")));
+            sendButton.setIcon(new ImageIcon(getClass().getResource("/send.png")));
             sendButton.setMaximumSize(new Dimension(30, 30));
             sendButton.setMinimumSize(new Dimension(30, 30));
             sendButton.setPreferredSize(new Dimension(30, 30));
