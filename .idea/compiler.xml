@@ -9,8 +9,5 @@
         <module name="Software_Engineering" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Software_Engineering" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
