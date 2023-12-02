@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
@@ -69,30 +70,35 @@ public class loginWindows extends JFrame{
     }
 
     private void loginButtonLinster() {
-        // TODO  登录按钮监听（邮箱，用户名密码验证）
+        //
         if(logverifyinfor()) {
             new ChatInterface().setVisible(true);
         }else {
-            loginButton.setText("账号或密码错误，请重试");
+            JOptionPane.showMessageDialog(null, "账号或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void loginButtonFocusLost() {
-        // 登录按钮失去焦点
-        loginButton.setText("登录");
-    }
 
     private void registerButtonlinsten() {
-        // TODO 注册按钮监听(打开注册界面)
+        //
         new registeredWindow().setVisible(true);
     }
 
     private void forgotPasswdButtonLinsten() {
-        // TODO
+        //
         new forgotPasswordWindow().setVisible(true);
     }
 
-
+    private boolean logverifyinfor(){
+        //数据库验证
+        boolean flag = false;
+        String  usename_mail,password;
+        usename_mail=accountField.getText();
+        password= new String(passwordField1.getPassword());
+        // TODO 连接数据库验证信息
+        //查询数据库返回flag
+        return flag;
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -135,12 +141,7 @@ public class loginWindows extends JFrame{
         //---- loginButton ----
         loginButton.setText("\u767b\u5f55");
         loginButton.addActionListener(e -> loginButtonLinster());
-        loginButton.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                loginButtonFocusLost();
-            }
-        });
+
 
         //---- registerButton ----
         registerButton.setText("\u6ca1\u6709\u8d26\u53f7\uff1f\u70b9\u6211\u6ce8\u518c");
@@ -236,16 +237,7 @@ public class loginWindows extends JFrame{
     private JButton forgotPasswdButton;
     private JPasswordField passwordField1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-    private boolean logverifyinfor(){
-        //数据库验证
-        boolean flag = false;
-        String  usename_mail,password;
-        usename_mail=accountField.getText();
-        password=passwordField1.getText();
-        // TODO 连接数据库验证信息
-        //查询数据库返回flag
-        return flag;
-    }
+
     // 自定义变量
     private String accountInit;
     private String passwordInit;

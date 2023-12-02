@@ -13,14 +13,39 @@ public class registeredWindow extends JFrame {
         initComponents();
     }
 
+    private void button2registerLinsten() {
+        if(regisverifyinfor()){
+            // TODO 信息输入数据库
+
+        }
+    }
+
+    private boolean regisverifyinfor(){
+        String username,email,password,surpassword;
+        boolean flag=false;
+        username=textField1.getText();
+        email=textField2.getText();
+        password=new String(passwordField1.getPassword());
+        surpassword=new String(passwordField2.getPassword());
+        while (true){
+            // TODO 用户名是否重复、邮箱检验？
+
+            if(!password.equals(surpassword)){
+                JOptionPane.showMessageDialog(null, "密码不一致！", "错误", JOptionPane.ERROR_MESSAGE);
+                break;
+            }
+            flag=true;
+        }
+        return flag;
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
-        button1 = new JButton();
         button2 = new JButton();
         textField1 = new JTextField();
         textField2 = new JTextField();
         passwordField1 = new JPasswordField();
-        textField3 = new JPasswordField();
+        passwordField2 = new JPasswordField();
         label1 = new JLabel();
         label2 = new JLabel();
         label3 = new JLabel();
@@ -32,17 +57,15 @@ public class registeredWindow extends JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
         var contentPane = getContentPane();
 
-        //---- button1 ----
-        button1.setText("\u53d6\u6d88");
-
         //---- button2 ----
         button2.setText("\u6ce8\u518c");
+        button2.addActionListener(e -> button2registerLinsten());
 
         //---- passwordField1 ----
         passwordField1.setEchoChar('*');
 
-        //---- textField3 ----
-        textField3.setEchoChar('*');
+        //---- passwordField2 ----
+        passwordField2.setEchoChar('*');
 
         //---- label1 ----
         label1.setText("\u7528\u6237\u540d\uff1a");
@@ -61,13 +84,8 @@ public class registeredWindow extends JFrame {
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(36, Short.MAX_VALUE)
+                    .addContainerGap(34, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addComponent(button1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(button2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                            .addGap(58, 58, 58))
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addGroup(contentPaneLayout.createParallelGroup()
                                 .addComponent(label1, GroupLayout.Alignment.TRAILING)
@@ -79,8 +97,11 @@ public class registeredWindow extends JFrame {
                                 .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(textField1, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
-                            .addGap(38, 38, 38))))
+                                .addComponent(passwordField2, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
+                            .addGap(38, 38, 38))
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addComponent(button2, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                            .addGap(104, 104, 104))))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -99,13 +120,11 @@ public class registeredWindow extends JFrame {
                         .addComponent(label3))
                     .addGap(18, 18, 18)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordField2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(label4))
                     .addGap(18, 18, 18)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(button1, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button2, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-                    .addGap(29, 29, 29))
+                    .addComponent(button2, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
         );
         setSize(310, 285);
         setLocationRelativeTo(null);
@@ -113,12 +132,11 @@ public class registeredWindow extends JFrame {
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
-    private JButton button1;
     private JButton button2;
     private JTextField textField1;
     private JTextField textField2;
     private JPasswordField passwordField1;
-    private JPasswordField textField3;
+    private JPasswordField passwordField2;
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
