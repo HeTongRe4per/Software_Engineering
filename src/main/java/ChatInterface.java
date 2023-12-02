@@ -19,9 +19,9 @@ public class ChatInterface extends JFrame  {
     private void sendMessage() {
         // TODO Send消息方法
         String userMessage = sendPane.getText();
-        if (!userMessage.trim().isEmpty()) {
+        /*if (!userMessage.trim().isEmpty()) {
 
-        }
+        }*/
     }
 
     private void sendPanelPaneKeyTyped() {
