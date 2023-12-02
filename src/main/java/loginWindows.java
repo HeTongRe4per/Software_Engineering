@@ -84,7 +84,7 @@ public class loginWindows extends JFrame{
 
     private void registerButtonlinsten() {
         // TODO 注册按钮监听(打开注册界面)
-        new registeredWindow();
+        new registeredWindow().setVisible(true);
     }
 
     private void forgotPasswdButtonLinsten() {
