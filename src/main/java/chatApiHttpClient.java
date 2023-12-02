@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 
 public class chatApiHttpClient {
 
-    private  String message = "你好";
+    private  String message = "测试";
     private String Url = "https://api.chatanywhere.com.cn";
     private String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
 
@@ -32,7 +32,7 @@ public class chatApiHttpClient {
 
             // 设置请求体
             String jsonPayload = "{\"model\": \"gpt-3.5-turbo\",\"messages\": [{\"role\": \"user\", \"content\": \"" + message + "\"}]}";
-            StringEntity entity = new StringEntity(jsonPayload, "UTF-8");
+            StringEntity entity = new StringEntity(jsonPayload);
             httpPost.setEntity(entity);
 
             // 发送请求并获取响应
