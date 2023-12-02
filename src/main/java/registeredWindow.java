@@ -16,7 +16,7 @@ public class registeredWindow extends JFrame {
     private void button2registerLinsten() {
         if(regisverifyinfor()){
             // TODO 信息输入数据库
-            //注释。
+            //注释。。
         }
     }
 
