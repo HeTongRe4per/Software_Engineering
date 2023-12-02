@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.9" encoding: "UTF-8"
+JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.6" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -10,11 +10,12 @@ new FormModel {
 			"$sizePolicy": 1
 			"foreground": sfield java.awt.Color black
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
-			"minimumSize": new java.awt.Dimension( 100, 50 )
+			"minimumSize": new java.awt.Dimension( 200, 300 )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) ) {
 				name: "snedPanel"
 				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 					name: "sendScrollPane"
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyTyped", "sendPanelPaneKeyTyped", false ) )
 					add( new FormComponent( "javax.swing.JTextPane" ) {
 						name: "sendPane"
 						"font": new java.awt.Font( "黑体", 0, 14 )

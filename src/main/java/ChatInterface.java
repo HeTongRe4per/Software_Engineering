@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 /*
  * Created by JFormDesigner on Wed Nov 29 20:58:19 CST 2023
@@ -13,6 +14,18 @@ public class ChatInterface extends JFrame  {
 
     public ChatInterface() {
         initComponents();
+    }
+
+    private void sendMessage() {
+        // TODO Send消息方法
+        String userMessage = sendPane.getText();
+        if (!userMessage.trim().isEmpty()) {
+
+        }
+    }
+
+    private void sendPanelPaneKeyTyped() {
+        // TODO Send区域快捷键监听
     }
 
     private void initComponents() {
@@ -36,7 +49,7 @@ public class ChatInterface extends JFrame  {
         setTitle("Chat Interface");
         setForeground(Color.black);
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
-        setMinimumSize(new Dimension(100, 50));
+        setMinimumSize(new Dimension(200, 300));
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -86,6 +99,12 @@ public class ChatInterface extends JFrame  {
 
             //======== sendScrollPane ========
             {
+                sendScrollPane.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        sendPanelPaneKeyTyped();
+                    }
+                });
 
                 //---- sendPane ----
                 sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
@@ -133,4 +152,7 @@ public class ChatInterface extends JFrame  {
     private JTextArea chatArea;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
+    // 自定义变量
+
+    // 自定义方法
 }

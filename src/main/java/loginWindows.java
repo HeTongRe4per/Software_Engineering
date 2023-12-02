@@ -91,7 +91,7 @@ public class loginWindows extends JFrame{
 
     private boolean logverifyinfor(){
         //数据库验证
-        boolean flag = false;
+        boolean flag = true;
         String  usename_mail,password;
         usename_mail=accountField.getText();
         password= new String(passwordField1.getPassword());
