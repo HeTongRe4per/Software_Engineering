@@ -1,0 +1,32 @@
+JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space ::50:x, par l {seq t {comp label1:::p:66:p, space :p:10:p, comp passwordField1:::p:140:p, space :p:42:p}, seq t {comp button1:::p::p, space :p:16:p}}}}"
+			"$verticalGroup": "par l {seq l {space ::33:x, par b {comp label1::b:p:25:p, comp passwordField1::b:p:23:p}, space :p:30:p, comp button1:::p:23:p, space :p:18:p}}"
+		} ) {
+			name: "this"
+			"title": "修改密码"
+			"iconImage": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			"$locationPolicy": 1
+			"$sizePolicy": 1
+			"resizable": false
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "passwordField1"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "原密码："
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "下一步"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 310, 160 )
+		} )
+	}
+}

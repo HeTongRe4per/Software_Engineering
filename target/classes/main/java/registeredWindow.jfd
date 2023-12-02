@@ -1,0 +1,56 @@
+JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.9" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space ::34:x, par l {seq t {par l {comp label1::t:p::p, comp label4::t:p::p, comp label3::t:p::p, comp label2::t:p::p}, space :::p, par l {comp passwordField1:::p:170:p, comp textField1:::p:170:p, comp textField2::l:p:170:p, comp passwordField2::l:p:170:p}, space :p:38:p}, seq t {comp button2:::p:80:p, space :p:104:p}}}}"
+			"$verticalGroup": "par l {seq l {space :p:23:p, par b {comp textField1::b:p:25:p, comp label1::b:p::p}, space s:::p, par b {comp textField2::b:p:25:p, comp label2::b:p::p}, space s:::p, par b {comp passwordField1::b:p:25:p, comp label3::b:p::p}, space s:::p, par b {comp passwordField2::b:p:25:p, comp label4::b:p::p}, space s:::p, comp button2:::p:30:p, space :::p}}"
+		} ) {
+			name: "this"
+			"title": "注册账号"
+			"resizable": false
+			"$locationPolicy": 1
+			"$sizePolicy": 1
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "注册"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button2registerLinsten", false ) )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField1"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "textField2"
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "passwordField1"
+				"echoChar": '*'
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "passwordField2"
+				"echoChar": '*'
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "用户名："
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "邮箱："
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "密码："
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "确认密码："
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 310, 285 )
+		} )
+	}
+}
