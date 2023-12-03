@@ -33,7 +33,7 @@ public class accMgWindow extends JFrame {
 
     private void resetPasswdListen() {
         //
-        new passwdUpdateWindow2();
+        new passwdUpdateWindow2().setVisible(true);
     }
 
     private void initComponents() {

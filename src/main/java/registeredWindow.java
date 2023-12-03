@@ -17,6 +17,10 @@ public class registeredWindow extends JFrame {
         if(regisverifyinfor()){
             // TODO 信息输入数据库
             //注释。。。
+            this.setVisible(false);
+            this.dispose();
+        }else {
+            this.repaint();
         }
     }
 
@@ -35,6 +39,7 @@ public class registeredWindow extends JFrame {
                 break;
             }
             flag=true;
+            break;
         }
         return flag;
     }

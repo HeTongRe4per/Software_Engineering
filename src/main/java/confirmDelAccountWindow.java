@@ -21,6 +21,12 @@ public class confirmDelAccountWindow extends JDialog {
 
     }
 
+    private void confirmDelListen() {
+        // TODO add your code here
+        this.setVisible(false);
+        this.dispose();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -42,6 +48,7 @@ public class confirmDelAccountWindow extends JDialog {
         //---- confirmDelButton ----
         confirmDelButton.setText("\u6211\u518d\u60f3\u60f3");
         confirmDelButton.setSelected(true);
+        confirmDelButton.addActionListener(e -> confirmDelListen());
 
         //---- cancelDelButton ----
         cancelDelButton.setText("\u786e\u8ba4\u5220\u9664");

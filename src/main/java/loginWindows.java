@@ -72,6 +72,8 @@ public class loginWindows extends JFrame{
     private void loginButtonLinster() {
         //
         if(logverifyinfor()) {
+            this.setVisible(false);
+            this.dispose();
             new ChatInterface().setVisible(true);
         }else {
             JOptionPane.showMessageDialog(null, "账号或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);

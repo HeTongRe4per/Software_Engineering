@@ -21,7 +21,8 @@ public class passwdUpdateWindow2 extends JFrame {
         surpassword=new String(passwordField2.getPassword());
         if(newpassword.equals(surpassword)){
             // TODO 插入密码信息
-
+            this.setVisible(false);
+            this.dispose();
         }else {
             JOptionPane.showMessageDialog(null, "密码不一致！", "错误", JOptionPane.ERROR_MESSAGE);
         }

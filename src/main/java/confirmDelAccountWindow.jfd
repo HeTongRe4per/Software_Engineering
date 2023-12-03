@@ -24,6 +24,7 @@ new FormModel {
 				name: "confirmDelButton"
 				"text": "我再想想"
 				"selected": true
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "confirmDelListen", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "cancelDelButton"

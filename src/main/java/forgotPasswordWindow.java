@@ -18,6 +18,8 @@ public class forgotPasswordWindow extends JFrame {
         //
         if(forpassverinfor()){
             new passwdUpdateWindow2().setVisible(true);
+            this.setVisible(false);
+            this.dispose();
         }else {
             //
             JOptionPane.showMessageDialog(null, "用户名或邮箱错误！", "错误", JOptionPane.ERROR_MESSAGE);

@@ -26,6 +26,8 @@ public class ChatInterface extends JFrame  {
 
     private void logoutItemListen() {
         //
+        this.setVisible(false);
+        this.dispose();
         new loginWindows().setVisible(true);
     }
 
