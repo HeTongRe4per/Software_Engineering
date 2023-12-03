@@ -26,11 +26,12 @@ public class forgotPasswordWindow extends JFrame {
     }
 
     private boolean forpassverinfor(){
-        boolean flag=false;
+        boolean flag=true;
         String username,email;
         username=textField1.getText();
         email=textField2.getText();
         // TODO 连接数据库验证信息
+
         return flag;
     }
 

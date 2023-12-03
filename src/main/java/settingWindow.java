@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * @author zhang
  */
-public class settingWindow {
+public class settingWindow extends JFrame{
     public settingWindow() {
         initComponents();
     }

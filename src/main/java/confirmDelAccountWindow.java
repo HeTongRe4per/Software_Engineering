@@ -16,6 +16,11 @@ public class confirmDelAccountWindow extends JDialog {
         initComponents();
     }
 
+    private void cancelDelListen() {
+        // TODO 获取信息、删除数据库
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -40,6 +45,7 @@ public class confirmDelAccountWindow extends JDialog {
 
         //---- cancelDelButton ----
         cancelDelButton.setText("\u786e\u8ba4\u5220\u9664");
+        cancelDelButton.addActionListener(e -> cancelDelListen());
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
@@ -72,7 +78,7 @@ public class confirmDelAccountWindow extends JDialog {
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(confirmDelButton)
                         .addComponent(cancelDelButton))
-                    .addContainerGap(25, Short.MAX_VALUE))
+                    .addContainerGap(27, Short.MAX_VALUE))
         );
         setSize(310, 190);
         setLocationRelativeTo(null);

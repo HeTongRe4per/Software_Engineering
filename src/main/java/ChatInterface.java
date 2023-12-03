@@ -16,17 +16,40 @@ public class ChatInterface extends JFrame  {
         initComponents();
     }
 
-    private void sendMessage() {
-        // TODO Send消息方法
-        String userMessage = sendPane.getText();
-        /*if (!userMessage.trim().isEmpty()) {
 
-        }*/
+
+
+    private void accountMangeItemListen() {
+        //
+        new  accMgWindow().setVisible(true);
     }
 
-    private void sendPanelPaneKeyTyped() {
-        // TODO Send区域快捷键监听
+    private void logoutItemListen() {
+        //
+        new loginWindows().setVisible(true);
     }
+
+    private void settingItemListen() {
+        //
+        new settingWindow().setVisible(true);
+    }
+
+    private void sendButtonListen() {
+        //
+        String input = sendPane.getText();
+        chatArea.append("\n用户：\n"+input);
+    }
+
+    private void sendPaneKeyPressedListen(KeyEvent e) {
+        // TODO add your code here
+        int keyCode = e.getKeyCode();
+        // 处理特定的按键
+        if (keyCode == KeyEvent.VK_ENTER && e.isShiftDown()) {
+            sendButtonListen();
+        }
+    }
+
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -62,11 +85,13 @@ public class ChatInterface extends JFrame  {
 
                 //---- accountMangeItem ----
                 accountMangeItem.setText("\u8d26\u53f7\u7ba1\u7406");
+                accountMangeItem.addActionListener(e -> accountMangeItemListen());
                 accountMenu.add(accountMangeItem);
                 accountMenu.addSeparator();
 
                 //---- logoutItem ----
                 logoutItem.setText("\u9000\u51fa\u767b\u5f55");
+                logoutItem.addActionListener(e -> logoutItemListen());
                 accountMenu.add(logoutItem);
             }
             mainMenuBar.add(accountMenu);
@@ -77,6 +102,7 @@ public class ChatInterface extends JFrame  {
 
                 //---- settingItem ----
                 settingItem.setText("\u8bbe\u7f6e");
+                settingItem.addActionListener(e -> settingItemListen());
                 toolMenu.add(settingItem);
             }
             mainMenuBar.add(toolMenu);
@@ -99,15 +125,15 @@ public class ChatInterface extends JFrame  {
 
             //======== sendScrollPane ========
             {
-                sendScrollPane.addKeyListener(new KeyAdapter() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        sendPanelPaneKeyTyped();
-                    }
-                });
 
                 //---- sendPane ----
                 sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
+                sendPane.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        sendPaneKeyPressedListen(e);
+                    }
+                });
                 sendScrollPane.setViewportView(sendPane);
             }
             snedPanel.add(sendScrollPane);
@@ -117,6 +143,7 @@ public class ChatInterface extends JFrame  {
             sendButton.setMaximumSize(new Dimension(30, 30));
             sendButton.setMinimumSize(new Dimension(30, 30));
             sendButton.setPreferredSize(new Dimension(30, 30));
+            sendButton.addActionListener(e -> sendButtonListen());
             snedPanel.add(sendButton);
         }
         contentPane.add(snedPanel, BorderLayout.SOUTH);
@@ -130,7 +157,7 @@ public class ChatInterface extends JFrame  {
             chatScrollPane.setViewportView(chatArea);
         }
         contentPane.add(chatScrollPane, BorderLayout.CENTER);
-        setSize(680, 450);
+        setSize(835, 450);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }

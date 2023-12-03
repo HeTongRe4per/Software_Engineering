@@ -28,6 +28,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "delAccountButton"
 				"text": "删除账户"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "delAccountListen", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "accountTextField"
@@ -38,14 +39,17 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "resetUserNameButton"
 				"text": "修改用户名"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "resetUserNameListen", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "resetEmailButton"
 				"text": "修改邮箱"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "resetEmailListen", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "resetPasswdButton"
 				"text": "修改密码"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "resetPasswdListen", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JPasswordField" ) {
 				name: "passwordField1"

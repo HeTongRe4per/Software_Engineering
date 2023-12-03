@@ -34,7 +34,6 @@ new FormModel {
 				name: "loginButton"
 				"text": "登录"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loginButtonLinster", false ) )
-				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "loginButtonFocusLost", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "registerButton"

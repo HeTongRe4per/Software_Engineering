@@ -1,11 +1,11 @@
-JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.5" encoding: "UTF-8"
+JFDML JFormDesigner: "8.2.0.0.331" Java: "17.0.9" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq {space :p:51:p, comp label2:::p::p, space ::41:x}, seq t {space :0:66:x, par l {seq t {comp label1:::p::p, space :p:97:p}, seq t {comp confirmDelButton:::p::p, space s:::p, comp cancelDelButton:::p::p, space :p:62:p}}}}"
-			"$verticalGroup": "par l {seq l {space :p:38:p, comp label1:::p::p, space u:::p, comp label2:::p::p, space :p:37:p, par b {comp confirmDelButton::b:p::p, comp cancelDelButton::b:p::p}, space ::25:x}}"
+			"$verticalGroup": "par l {seq l {space :p:38:p, comp label1:::p::p, space u:::p, comp label2:::p::p, space :p:37:p, par b {comp confirmDelButton::b:p::p, comp cancelDelButton::b:p::p}, space ::27:x}}"
 		} ) {
 			name: "this"
 			"title": "确认删除"
@@ -28,6 +28,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "cancelDelButton"
 				"text": "确认删除"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cancelDelListen", false ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

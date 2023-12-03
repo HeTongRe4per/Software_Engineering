@@ -6,8 +6,9 @@ public class main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                //ows().setVisible(true);
                 new loginWindows().setVisible(true);
-                new chatApiHttpClient();
+                //new chatApiHttpClient();
             }
         });
     }

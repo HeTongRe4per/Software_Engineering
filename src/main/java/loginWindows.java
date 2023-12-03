@@ -99,6 +99,7 @@ public class loginWindows extends JFrame{
         //查询数据库返回flag
         return flag;
     }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -141,7 +142,6 @@ public class loginWindows extends JFrame{
         //---- loginButton ----
         loginButton.setText("\u767b\u5f55");
         loginButton.addActionListener(e -> loginButtonLinster());
-
 
         //---- registerButton ----
         registerButton.setText("\u6ca1\u6709\u8d26\u53f7\uff1f\u70b9\u6211\u6ce8\u518c");

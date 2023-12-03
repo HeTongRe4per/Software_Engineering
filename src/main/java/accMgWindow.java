@@ -13,6 +13,29 @@ public class accMgWindow extends JFrame {
         initComponents();
     }
 
+    private void delAccountListen() {
+        //
+        new confirmDelAccountWindow(this).setVisible(true);
+    }
+
+    private void resetUserNameListen() {
+        //
+        String username=accountTextField.getText();
+        // TODO 更新数据库
+
+    }
+
+    private void resetEmailListen() {
+        String email=emailTextField.getText();
+        // TODO 更新数据库
+
+    }
+
+    private void resetPasswdListen() {
+        //
+        new passwdUpdateWindow2();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -43,15 +66,19 @@ public class accMgWindow extends JFrame {
 
         //---- delAccountButton ----
         delAccountButton.setText("\u5220\u9664\u8d26\u6237");
+        delAccountButton.addActionListener(e -> delAccountListen());
 
         //---- resetUserNameButton ----
         resetUserNameButton.setText("\u4fee\u6539\u7528\u6237\u540d");
+        resetUserNameButton.addActionListener(e -> resetUserNameListen());
 
         //---- resetEmailButton ----
         resetEmailButton.setText("\u4fee\u6539\u90ae\u7bb1");
+        resetEmailButton.addActionListener(e -> resetEmailListen());
 
         //---- resetPasswdButton ----
         resetPasswdButton.setText("\u4fee\u6539\u5bc6\u7801");
+        resetPasswdButton.addActionListener(e -> resetPasswdListen());
 
         //---- passwordField1 ----
         passwordField1.setText("******");
