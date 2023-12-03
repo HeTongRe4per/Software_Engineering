@@ -8,7 +8,7 @@ public class main {
             public void run() {
                 //ows().setVisible(true);
                 new loginWindows().setVisible(true);
-                //new chatApiHttpClient();////
+                //new chatApiHttpClient();/////
             }
         });
     }
