@@ -51,6 +51,15 @@ public class ChatInterface extends JFrame  {
         }
     }
 
+    private void sendPaneKeyPressed(KeyEvent e) {
+        // TODO add your code here
+        int keyCode = e.getKeyCode();
+        // 处理特定的按键
+        if (keyCode == KeyEvent.VK_ENTER && e.isControlDown()) {
+            sendButtonListen();
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         mainMenuBar = new JMenuBar();
@@ -130,8 +139,8 @@ public class ChatInterface extends JFrame  {
                 sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
                 sendPane.addKeyListener(new KeyAdapter() {
                     @Override
-                    public void keyTyped(KeyEvent e) {
-                        sendPaneKeyTyped(e);
+                    public void keyPressed(KeyEvent e) {
+                        sendPaneKeyPressed(e);
                     }
                 });
                 sendScrollPane.setViewportView(sendPane);
