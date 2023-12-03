@@ -4,46 +4,95 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space ::38:x, par l {par l:t::p {comp label4:::::x, comp label3::l:::x, comp label2::t:p::p}, comp label1::t:p::p}, space s:::p, par l {comp textField2:::p:190:p, comp textField1::l:p:191:p, comp comboBox2::l:p:80:p, comp spinner1:::p:80:p}, space :p:46:p}}"
-			"$verticalGroup": "par l {seq l {space :p:36:p, par b {comp textField2::b:p:25:p, comp label1::b:p::p}, space s:::p, par b {comp textField1::b:p:25:p, comp label2::b:p::p}, space s:::p, par b {comp label3::b:p:27:p, comp spinner1::b:p:25:p}, space s:::p, par b {comp label4::b:p:27:p, comp comboBox2::b:p:25:p}, space ::90:x}}"
+			"$horizontalGroup": "par l {seq t {par t {seq {space ::193:x, comp button3:::p:60:p, space s:::p, comp button2:::p:60:p}, seq {space ::10:x, par l {comp layeredPane2:::::x, seq {comp layeredPane1:::p:321:p, space :0:0:x}}}}, space :p:22:p}}"
+			"$verticalGroup": "par l {seq l {space :p:28:p, comp layeredPane1:::p:106:p, space u:::p, comp layeredPane2:::p:70:p, space u:::p, par b {comp button2::b:p:25:p, comp button3::b:p:25:p}, space ::15:x}}"
 		} ) {
-			name: "settingWindow"
+			name: "this"
 			"title": "设置"
 			"$sizePolicy": 1
 			"$locationPolicy": 1
 			"resizable": false
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label1"
-				"text": "接口URL："
+			add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
+				name: "layeredPane1"
+				"border": new javax.swing.border.TitledBorder( "API设置" )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label1"
+					"text": "接口URL："
+				}, new FormLayoutConstraints( null ) {
+					"x": 35
+					"y": 25
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label2"
+					"text": "API："
+				}, new FormLayoutConstraints( null ) {
+					"x": 35
+					"y": 70
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "textField2"
+				}, new FormLayoutConstraints( null ) {
+					"width": 190
+					"height": 25
+					"x": 100
+					"y": 20
+				} )
+				add( new FormComponent( "javax.swing.JTextField" ) {
+					name: "textField1"
+				}, new FormLayoutConstraints( null ) {
+					"width": 191
+					"height": 25
+					"x": 100
+					"y": 65
+				} )
 			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label2"
-				"text": "API："
+			add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
+				name: "layeredPane2"
+				"border": new javax.swing.border.TitledBorder( "Chat框设置" )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label3"
+					"text": "Chat框字体"
+				}, new FormLayoutConstraints( null ) {
+					"x": 15
+					"y": 30
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label4"
+					"text": "Chat框颜色"
+				}, new FormLayoutConstraints( null ) {
+					"x": 155
+					"y": 30
+				} )
+				add( new FormComponent( "javax.swing.JSpinner" ) {
+					name: "spinner1"
+				}, new FormLayoutConstraints( null ) {
+					"width": 55
+					"height": 25
+					"x": 85
+					"y": 25
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "button1"
+					"text": "1"
+				}, new FormLayoutConstraints( null ) {
+					"x": 230
+					"y": 25
+					"width": 55
+					"height": 25
+				} )
 			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label3"
-				"text": "Chat框字体"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "确认"
 			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label4"
-				"text": "Chat框颜色"
-			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField2"
-			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField1"
-			} )
-			add( new FormComponent( "javax.swing.JComboBox" ) {
-				name: "comboBox2"
-			} )
-			add( new FormComponent( "javax.swing.JSpinner" ) {
-				name: "spinner1"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button3"
+				"text": "取消"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 355, 315 )
+			"size": new java.awt.Dimension( 345, 295 )
 		} )
 	}
 }

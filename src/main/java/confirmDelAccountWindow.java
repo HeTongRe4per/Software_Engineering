@@ -22,7 +22,7 @@ public class confirmDelAccountWindow extends JDialog {
     }
 
     private void confirmDelListen() {
-        // TODO add your code here
+        // 取消删除
         this.setVisible(false);
         this.dispose();
     }

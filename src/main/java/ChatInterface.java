@@ -51,6 +51,10 @@ public class ChatInterface extends JFrame  {
         }
     }
 
+    private void sendPaneKeyPressedListen() {
+        // TODO add your code here
+    }
+
 
 
     private void initComponents() {
@@ -133,7 +137,7 @@ public class ChatInterface extends JFrame  {
                 sendPane.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        sendPaneKeyPressedListen(e);
+                        sendPaneKeyPressedListen();
                     }
                 });
                 sendScrollPane.setViewportView(sendPane);
@@ -159,7 +163,7 @@ public class ChatInterface extends JFrame  {
             chatScrollPane.setViewportView(chatArea);
         }
         contentPane.add(chatScrollPane, BorderLayout.CENTER);
-        setSize(835, 450);
+        setSize(745, 480);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }

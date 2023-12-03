@@ -6,9 +6,15 @@ public class main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                //ows().setVisible(true);
+                try {
+                    // 设置本机系统外观
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 new loginWindows().setVisible(true);
-                //new chatApiHttpClient();/////
+                //new chatApiHttpClient();
+                //new ChatInterfaceOld().setVisible(true);
             }
         });
     }
