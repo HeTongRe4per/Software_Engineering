@@ -135,4 +135,10 @@ public class settingWindow extends JFrame{
     private JButton button2;
     private JButton button3;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
+    // 自定义变量
+    public static String Url = "https://api.chatanywhere.com.cn";
+    public static String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
+
+
 }

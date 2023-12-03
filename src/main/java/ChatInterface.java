@@ -16,9 +16,6 @@ public class ChatInterface extends JFrame  {
         initComponents();
     }
 
-
-
-
     private void accountMangeItemListen() {
         //
         new  accMgWindow().setVisible(true);
@@ -38,8 +35,11 @@ public class ChatInterface extends JFrame  {
 
     private void sendButtonListen() {
         //
-        String input = sendPane.getText();
-        chatArea.append("\n用户：\n"+input);
+        input = sendPane.getText();
+        chatArea.append("用户：\n" + input + "\n");
+        sendPane.setText("");
+        new chatApiHttpClient();
+        chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n");
     }
 
     private void sendPaneKeyPressedListen(KeyEvent e) {
@@ -186,6 +186,6 @@ public class ChatInterface extends JFrame  {
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 自定义变量
-
+    static String input = "";
     // 自定义方法
 }

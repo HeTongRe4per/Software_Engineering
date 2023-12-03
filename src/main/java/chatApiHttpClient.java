@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -17,11 +19,15 @@ import java.io.InputStreamReader;
 
 public class chatApiHttpClient {
 
-    private  String message = "你好";
-    private String Url = "https://api.chatanywhere.com.cn";
-    private String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
+    private  String message;
+    static String outputMessage = "";
+    private String Url;
+    private String ApiKey;
 
     public chatApiHttpClient() {
+        message = ChatInterface.input;
+        Url = settingWindow.Url;
+        ApiKey = settingWindow.ApiKey;
         try {
             HttpClient httpClient = HttpClients.createDefault();
             HttpPost httpPost = new HttpPost(Url + "/v1/chat/completions");
@@ -46,8 +52,25 @@ public class chatApiHttpClient {
                 output.append(line).append("\n");
             }
 
-            // 打印响应内容
-            System.out.println("Response:\n" + output.toString());
+            // 处理传出Json
+            String json = String.valueOf(output);
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(json);
+
+                // 获取"content"字段的内容
+                String content = jsonNode
+                        .path("choices")
+                        .path(0)
+                        .path("message")
+                        .path("content")
+                        .asText();
+                // 传出响应内容
+                outputMessage = content;
+                System.out.println("Content: " + content);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
