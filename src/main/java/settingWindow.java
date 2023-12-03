@@ -13,6 +13,17 @@ import javax.swing.border.*;
 public class settingWindow extends JFrame{
     public settingWindow() {
         initComponents();
+        initWindow();
+    }
+
+    private void initWindow() {
+        textField2.setText(Url);
+        textField1.setText(ApiKey);
+    }
+    private void button2Linter() {
+        // TODO 确认按钮监听
+        Url = textField2.getText();
+        ApiKey = textField1.getText();
     }
 
     private void initComponents() {
@@ -79,6 +90,7 @@ public class settingWindow extends JFrame{
 
         //---- button2 ----
         button2.setText("\u786e\u8ba4");
+        button2.addActionListener(e -> button2Linter());
 
         //---- button3 ----
         button3.setText("\u53d6\u6d88");
@@ -87,36 +99,32 @@ public class settingWindow extends JFrame{
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addContainerGap(193, Short.MAX_VALUE)
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addGap(0, 203, Short.MAX_VALUE)
                             .addComponent(button3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(button2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addContainerGap(10, Short.MAX_VALUE)
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addComponent(layeredPane2)
-                                .addGroup(contentPaneLayout.createSequentialGroup()
-                                    .addComponent(layeredPane1, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, Short.MAX_VALUE)))))
-                    .addGap(22, 22, 22))
+                        .addComponent(layeredPane2)
+                        .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
+                    .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(28, 28, 28)
+                    .addGap(17, 17, 17)
                     .addComponent(layeredPane1, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(layeredPane2, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(button2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(button3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(11, Short.MAX_VALUE))
+                    .addContainerGap(15, Short.MAX_VALUE))
         );
-        setSize(355, 295);
+        setSize(355, 280);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -135,4 +143,8 @@ public class settingWindow extends JFrame{
     private JButton button2;
     private JButton button3;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
+    // 自定义变量
+    public static String Url = "https://api.chatanywhere.com.cn";
+    public static String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
 }

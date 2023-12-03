@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.security.PublicKey;
 
 public class main {
 
@@ -12,6 +13,7 @@ public class main {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 new loginWindows().setVisible(true);
                 //new chatApiHttpClient();
                 //new ChatInterfaceOld().setVisible(true);

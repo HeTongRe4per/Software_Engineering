@@ -16,9 +16,6 @@ public class ChatInterface extends JFrame  {
         initComponents();
     }
 
-
-
-
     private void accountMangeItemListen() {
         //
         new  accMgWindow().setVisible(true);
@@ -38,24 +35,21 @@ public class ChatInterface extends JFrame  {
 
     private void sendButtonListen() {
         //
-        String input = sendPane.getText();
-        chatArea.append("\n用户：\n"+input);
+        input = sendPane.getText();
+        new chatApiHttpClient();
+        chatArea.append("\n用户：\n" + input + "\n");
+        sendPane.setText("");
+        chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage);
     }
 
-    private void sendPaneKeyPressedListen(KeyEvent e) {
+    private void sendPaneKeyTyped(KeyEvent e) {
         // TODO add your code here
         int keyCode = e.getKeyCode();
         // 处理特定的按键
-        if (keyCode == KeyEvent.VK_ENTER && e.isShiftDown()) {
+        if (e.isControlDown() && keyCode == KeyEvent.VK_ENTER) {
             sendButtonListen();
         }
     }
-
-    private void sendPaneKeyPressedListen() {
-        // TODO add your code here
-    }
-
-
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -136,8 +130,8 @@ public class ChatInterface extends JFrame  {
                 sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
                 sendPane.addKeyListener(new KeyAdapter() {
                     @Override
-                    public void keyPressed(KeyEvent e) {
-                        sendPaneKeyPressedListen();
+                    public void keyTyped(KeyEvent e) {
+                        sendPaneKeyTyped(e);
                     }
                 });
                 sendScrollPane.setViewportView(sendPane);
@@ -186,6 +180,6 @@ public class ChatInterface extends JFrame  {
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 自定义变量
-
+    static String input = "";
     // 自定义方法
 }
