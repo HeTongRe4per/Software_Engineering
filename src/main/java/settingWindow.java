@@ -114,9 +114,9 @@ public class settingWindow extends JFrame{
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(button2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(button3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(15, Short.MAX_VALUE))
+                    .addContainerGap(11, Short.MAX_VALUE))
         );
-        setSize(345, 295);
+        setSize(355, 295);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }

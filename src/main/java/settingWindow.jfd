@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq t {par t {seq {space ::193:x, comp button3:::p:60:p, space s:::p, comp button2:::p:60:p}, seq {space ::10:x, par l {comp layeredPane2:::::x, seq {comp layeredPane1:::p:321:p, space :0:0:x}}}}, space :p:22:p}}"
-			"$verticalGroup": "par l {seq l {space :p:28:p, comp layeredPane1:::p:106:p, space u:::p, comp layeredPane2:::p:70:p, space u:::p, par b {comp button2::b:p:25:p, comp button3::b:p:25:p}, space ::15:x}}"
+			"$verticalGroup": "par l {seq l {space :p:28:p, comp layeredPane1:::p:106:p, space u:::p, comp layeredPane2:::p:70:p, space u:::p, par b {comp button2::b:p:25:p, comp button3::b:p:25:p}, space ::11:x}}"
 		} ) {
 			name: "this"
 			"title": "设置"
@@ -92,7 +92,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 345, 295 )
+			"size": new java.awt.Dimension( 355, 295 )
 		} )
 	}
 }
