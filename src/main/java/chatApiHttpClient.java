@@ -8,7 +8,6 @@ import org.apache.http.impl.client.HttpClients;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 public class chatApiHttpClient {
 
