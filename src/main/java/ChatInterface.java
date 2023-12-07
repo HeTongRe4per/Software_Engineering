@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import javax.swing.*;
 /*
  * Created by JFormDesigner on Wed Nov 29 20:58:19 CST 2023
@@ -8,17 +10,18 @@ import javax.swing.*;
 
 
 /**
- * @author zhang
+ * @author zhang xp
  */
 public class ChatInterface extends JFrame  {
 
     public ChatInterface() {
         initComponents();
+        sendPaneEmpty();
     }
 
     private void accountMangeItemListen() {
         //
-        new  accMgWindow().setVisible(true);
+        new accMgWindow().setVisible(true);
     }
 
     private void logoutItemListen() {
@@ -34,29 +37,48 @@ public class ChatInterface extends JFrame  {
     }
 
     private void sendButtonListen() {
-        //
-        input = sendPane.getText();
-        new chatApiHttpClient();
-        chatArea.append("\n用户：\n" + input + "\n");
-        sendPane.setText("");
-        chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage);
-    }
+        if (sendButtonFlag) {
+            input = sendPane.getText();
+            chatArea.append("\n用户：\n" + input + "\n");
+            sendPane.setText("");
+            sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
+            sendButtonFlag =false;  // 锁定按钮监听
 
-    private void sendPaneKeyTyped(KeyEvent e) {
-        // TODO add your code here
-        int keyCode = e.getKeyCode();
-        // 处理特定的按键
-        if (e.isControlDown() && keyCode == KeyEvent.VK_ENTER) {
-            sendButtonListen();
+            // 异步执行 chatApiHttpClient
+            CompletableFuture.supplyAsync(chatApiHttpClient::new)
+                    .thenAcceptAsync(chatApiHttpClient -> {
+                        chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n");
+                        sendButton.setEnabled(true);    // 解除发送按钮锁定
+                        sendButtonFlag = true;  // 解除按钮监听锁定
+                    });
         }
     }
 
+    private void sendPaneEmpty() {
+        sendPane.setText(initSendText);
+        sendPane.setForeground(Color.GRAY);
+    }
+
     private void sendPaneKeyPressed(KeyEvent e) {
-        // TODO add your code here
         int keyCode = e.getKeyCode();
         // 处理特定的按键
         if (keyCode == KeyEvent.VK_ENTER && e.isControlDown()) {
             sendButtonListen();
+        }
+    }
+
+    private void sendPaneFocusGained() {
+        String temp = sendPane.getText();
+        if (temp.equals(initSendText)) {
+            sendPane.setForeground(Color.BLACK);
+            sendPane.setText("");
+        }
+    }
+
+    private void sendPaneFocusLost() {
+        String temp = sendPane.getText();
+        if (temp.isEmpty()) {
+            sendPaneEmpty();
         }
     }
 
@@ -83,7 +105,6 @@ public class ChatInterface extends JFrame  {
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
         setMinimumSize(new Dimension(200, 300));
         var contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout());
 
         //======== mainMenuBar ========
         {
@@ -130,7 +151,6 @@ public class ChatInterface extends JFrame  {
 
         //======== snedPanel ========
         {
-            snedPanel.setLayout(new BoxLayout(snedPanel, BoxLayout.X_AXIS));
 
             //======== sendScrollPane ========
             {
@@ -143,9 +163,18 @@ public class ChatInterface extends JFrame  {
                         sendPaneKeyPressed(e);
                     }
                 });
+                sendPane.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        sendPaneFocusGained();
+                    }
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        sendPaneFocusLost();
+                    }
+                });
                 sendScrollPane.setViewportView(sendPane);
             }
-            snedPanel.add(sendScrollPane);
 
             //---- sendButton ----
             sendButton.setIcon(new ImageIcon(getClass().getResource("/send.png")));
@@ -153,9 +182,29 @@ public class ChatInterface extends JFrame  {
             sendButton.setMinimumSize(new Dimension(30, 30));
             sendButton.setPreferredSize(new Dimension(30, 30));
             sendButton.addActionListener(e -> sendButtonListen());
-            snedPanel.add(sendButton);
+
+            GroupLayout snedPanelLayout = new GroupLayout(snedPanel);
+            snedPanel.setLayout(snedPanelLayout);
+            snedPanelLayout.setHorizontalGroup(
+                snedPanelLayout.createParallelGroup()
+                    .addGroup(snedPanelLayout.createSequentialGroup()
+                        .addComponent(sendScrollPane, GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2))
+            );
+            snedPanelLayout.setVerticalGroup(
+                snedPanelLayout.createParallelGroup()
+                    .addGroup(snedPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(snedPanelLayout.createParallelGroup()
+                            .addComponent(sendScrollPane)
+                            .addGroup(snedPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+            );
         }
-        contentPane.add(snedPanel, BorderLayout.SOUTH);
 
         //======== chatScrollPane ========
         {
@@ -165,8 +214,28 @@ public class ChatInterface extends JFrame  {
             chatArea.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
             chatScrollPane.setViewportView(chatArea);
         }
-        contentPane.add(chatScrollPane, BorderLayout.CENTER);
-        setSize(745, 480);
+
+        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
+        contentPane.setLayout(contentPaneLayout);
+        contentPaneLayout.setHorizontalGroup(
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addComponent(chatScrollPane, GroupLayout.DEFAULT_SIZE, 831, Short.MAX_VALUE)
+                        .addComponent(snedPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap())
+        );
+        contentPaneLayout.setVerticalGroup(
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(8, 8, 8)
+                    .addComponent(chatScrollPane, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(snedPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+        );
+        setSize(845, 555);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -189,6 +258,8 @@ public class ChatInterface extends JFrame  {
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 自定义变量
+    final String initSendText = "Message ChatGPT...";
     static String input = "";
+    boolean sendButtonFlag = true;
     // 自定义方法
 }

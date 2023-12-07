@@ -8,36 +8,37 @@ import org.apache.http.impl.client.HttpClients;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
-/**
-  ChatGPIAPI调用
-**/
-
-/**
- * @auhtor zhang
-**/
+import java.util.Objects;
 
 public class chatApiHttpClient {
 
-    private  String message;
-    static String outputMessage = "";
+    public static String outputMessage = "";
+    private String message = ChatInterface.input;
     private String Url;
     private String ApiKey;
 
     public chatApiHttpClient() {
-        message = ChatInterface.input;
+        callChatApi();
+    }
+
+    public void callChatApi() {
         Url = settingWindow.Url;
         ApiKey = settingWindow.ApiKey;
+
         try {
             HttpClient httpClient = HttpClients.createDefault();
             HttpPost httpPost = new HttpPost(Url + "/v1/chat/completions");
 
             // 设置请求头
-            httpPost.setHeader("Authorization", "Bearer " + ApiKey );
+            httpPost.setHeader("Authorization", "Bearer " + ApiKey);
             httpPost.setHeader("Content-Type", "application/json");
 
+            StringBuilder payload = new StringBuilder("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
+
+            // 添加用户输入
+            payload.append("{\"role\": \"user\", \"content\":\"").append(message).append("\"},");
             // 设置请求体
-            String jsonPayload = "{\"model\": \"gpt-3.5-turbo\",\"messages\": [{\"role\": \"user\", \"content\": \"" + message + "\"}]}";
+            String jsonPayload = payload.deleteCharAt(payload.length() - 1).toString() + "]}";
             StringEntity entity = new StringEntity(jsonPayload, "UTF-8");
             httpPost.setEntity(entity);
 
@@ -45,32 +46,32 @@ public class chatApiHttpClient {
             HttpResponse response = httpClient.execute(httpPost);
 
             // 读取响应内容
-            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuilder output = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
-            }
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()))) {
+                StringBuilder output = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
 
-            // 处理传出Json
-            String json = String.valueOf(output);
-            try {
+                // 处理传出Json
                 ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode jsonNode = objectMapper.readTree(json);
+                JsonNode jsonNode = objectMapper.readTree(output.toString());
 
-                // 获取"content"字段的内容
-                String content = jsonNode
+                // 获取"content"字段的内容并传出响应内容
+                outputMessage = jsonNode
                         .path("choices")
                         .path(0)
                         .path("message")
                         .path("content")
                         .asText();
-                // 传出响应内容
-                outputMessage = content;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
+                // 添加助手输出
+                payload.append("{\"role\": \"assistant\", \"content\":\"").append(outputMessage).append("\"},");
+                // 删除尾随逗号并重载 JSON
+                payload.deleteCharAt(payload.length() - 1);
+                payload.append("]}");
+                System.out.println(payload.toString());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

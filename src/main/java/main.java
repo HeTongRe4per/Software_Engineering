@@ -15,8 +15,6 @@ public class main {
                 }
 
                 new loginWindows().setVisible(true);
-                //new chatApiHttpClient();
-                //new ChatInterfaceOld().setVisible(true);
             }
         });
     }

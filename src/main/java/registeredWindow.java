@@ -33,7 +33,6 @@ public class registeredWindow extends JFrame {
         surpassword=new String(passwordField2.getPassword());
         while (true){
             // TODO 用户名是否重复、邮箱检验？
-
             if(!password.equals(surpassword)){
                 JOptionPane.showMessageDialog(null, "密码不一致！", "错误", JOptionPane.ERROR_MESSAGE);
                 break;

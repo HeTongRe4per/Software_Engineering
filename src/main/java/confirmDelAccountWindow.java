@@ -18,7 +18,7 @@ public class confirmDelAccountWindow extends JDialog {
 
     private void cancelDelListen() {
         // TODO 获取信息、删除数据库
-
+        
     }
 
     private void confirmDelListen() {

@@ -23,8 +23,6 @@ public class loginWindows extends JFrame{
     public void LoginWindowInit() {
         // 账号，密码框默认显示
         passwordField1.setEchoChar((char) 0);
-        this.accountInit = "请输入用户名或邮箱";
-        this.passwordInit = "请输入密码";
         accountField.setText(accountInit);
         passwordField1.setText(passwordInit);
         accountField.setForeground(Color.GRAY);
@@ -241,6 +239,6 @@ public class loginWindows extends JFrame{
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 自定义变量
-    private String accountInit;
-    private String passwordInit;
+    private final String accountInit = "请输入用户名或邮箱";
+    private final String passwordInit = "请输入密码";
 }
