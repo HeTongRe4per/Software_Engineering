@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 
 
 /**
- * @author zhang
+ * @author zhang xp
  */
 public class ChatInterface extends JFrame  {
 
