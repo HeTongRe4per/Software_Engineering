@@ -122,9 +122,6 @@ public class loginWindows extends JFrame{
         password= new String(passwordField1.getPassword());
         // TODO 连接数据库验证信息
         // 连接数据库验证信息
-        //Connection connection = (Connection) new createMySQLConnection();
-        // 替换原来的数据库连接获取方式
-
         Connection connection = null;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
