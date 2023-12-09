@@ -33,7 +33,7 @@ public class main {
         });
     }
 
-    private static Connection createMySQLConnection() throws SQLException {
+    public static Connection createMySQLConnection() throws SQLException {
         String url = "jdbc:mysql://database.hetong-re4per.icu/chatgpt_account";
         String username = "chatgpt";
         String password = "zl221021@Chatgpt";
