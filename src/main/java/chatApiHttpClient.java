@@ -8,20 +8,19 @@ import org.apache.http.impl.client.HttpClients;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 public class chatApiHttpClient {
 
     public static String outputMessage = "";
-    private String message = ChatInterface.input;
     private String Url;
     private String ApiKey;
+    //private StringBuilder payload = new StringBuilder("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
 
     public chatApiHttpClient() {
         callChatApi();
     }
 
-    public void callChatApi() {
+    private void callChatApi() {
         Url = settingWindow.Url;
         ApiKey = settingWindow.ApiKey;
 
@@ -33,12 +32,12 @@ public class chatApiHttpClient {
             httpPost.setHeader("Authorization", "Bearer " + ApiKey);
             httpPost.setHeader("Content-Type", "application/json");
 
-            StringBuilder payload = new StringBuilder("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
-
             // 添加用户输入
-            payload.append("{\"role\": \"user\", \"content\":\"").append(message).append("\"},");
+            buildJsonPayload.refreshInputMessage();
+            buildJsonPayload.payload.append(buildJsonPayload.historyMessage);
+
             // 设置请求体
-            String jsonPayload = payload.deleteCharAt(payload.length() - 1).toString() + "]}";
+            String jsonPayload = buildJsonPayload.payload.deleteCharAt( buildJsonPayload.payload.length() - 1).toString() + "]}";
             StringEntity entity = new StringEntity(jsonPayload, "UTF-8");
             httpPost.setEntity(entity);
 
@@ -64,13 +63,13 @@ public class chatApiHttpClient {
                         .path("message")
                         .path("content")
                         .asText();
-
+                buildJsonPayload.payload.append(",");
+                buildJsonPayload.getOutputMessage();
                 // 添加助手输出
-                payload.append("{\"role\": \"assistant\", \"content\":\"").append(outputMessage).append("\"},");
+                buildJsonPayload.payload.append(buildJsonPayload.historyReply);
                 // 删除尾随逗号并重载 JSON
-                payload.deleteCharAt(payload.length() - 1);
-                payload.append("]}");
-                System.out.println(payload.toString());
+                buildJsonPayload.payload.deleteCharAt(  buildJsonPayload.payload.length() - 1);
+                buildJsonPayload.payload.append(",");
             }
         } catch (Exception e) {
             e.printStackTrace();

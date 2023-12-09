@@ -1,10 +1,12 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.concurrent.CompletableFuture;
 /*
- * Created by JFormDesigner on Wed Nov 29 20:58:19 CST 2023
+ * Created by JFormDesigner on Thu Dec 07 23:57:49 CST 2023
  */
 
 
@@ -14,73 +16,73 @@ import javax.swing.*;
  */
 public class ChatInterface extends JFrame  {
 
-    public ChatInterface() {
-        initComponents();
-        sendPaneEmpty();
-    }
+	public ChatInterface() {
+		initComponents();
+		sendPaneEmpty();
+	}
 
-    private void accountMangeItemListen() {
-        //
-        new accMgWindow().setVisible(true);
-    }
+	private void accountMangeItemListen() {
+		//
+		new accMgWindow().setVisible(true);
+	}
 
-    private void logoutItemListen() {
-        //
-        this.setVisible(false);
-        this.dispose();
-        new loginWindows().setVisible(true);
-    }
+	private void logoutItemListen() {
+		//
+		this.setVisible(false);
+		this.dispose();
+		new loginWindows().setVisible(true);
+	}
 
-    private void settingItemListen() {
-        //
-        new settingWindow().setVisible(true);
-    }
+	private void settingItemListen() {
+		//
+		new settingWindow().setVisible(true);
+	}
 
-    private void sendButtonListen() {
-        if (sendButtonFlag) {
-            input = sendPane.getText();
-            chatArea.append("\n用户：\n" + input + "\n");
-            sendPane.setText("");
-            sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
-            sendButtonFlag =false;  // 锁定按钮监听
+	private void sendButtonListen() {
+		if (sendButtonFlag) {
+			inputMessage = sendPane.getText();
+			chatArea.append("\n用户：\n" + inputMessage + "\n");
+			sendPane.setText("");
+			sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
+			sendButtonFlag =false;  // 锁定按钮监听
 
-            // 异步执行 chatApiHttpClient
-            CompletableFuture.supplyAsync(chatApiHttpClient::new)
-                    .thenAcceptAsync(chatApiHttpClient -> {
-                        chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n");
-                        sendButton.setEnabled(true);    // 解除发送按钮锁定
-                        sendButtonFlag = true;  // 解除按钮监听锁定
-                    });
-        }
-    }
+			// 异步执行 chatApiHttpClient
+			CompletableFuture.supplyAsync(chatApiHttpClient::new)
+					.thenAcceptAsync(chatApiHttpClient -> {
+						chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n");
+						sendButton.setEnabled(true);    // 解除发送按钮锁定
+						sendButtonFlag = true;  // 解除按钮监听锁定
+					});
+		}
+	}
 
-    private void sendPaneEmpty() {
-        sendPane.setText(initSendText);
-        sendPane.setForeground(Color.GRAY);
-    }
+	private void sendPaneEmpty() {
+		sendPane.setText(initSendText);
+		sendPane.setForeground(Color.GRAY);
+	}
 
-    private void sendPaneKeyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        // 处理特定的按键
-        if (keyCode == KeyEvent.VK_ENTER && e.isControlDown()) {
-            sendButtonListen();
-        }
-    }
+	private void sendPaneKeyPressed(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		// 处理特定的按键
+		if (keyCode == KeyEvent.VK_ENTER && e.isControlDown()) {
+			sendButtonListen();
+		}
+	}
 
-    private void sendPaneFocusGained() {
-        String temp = sendPane.getText();
-        if (temp.equals(initSendText)) {
-            sendPane.setForeground(Color.BLACK);
-            sendPane.setText("");
-        }
-    }
+	private void sendPaneFocusGained() {
+		String temp = sendPane.getText();
+		if (temp.equals(initSendText)) {
+			sendPane.setForeground(Color.BLACK);
+			sendPane.setText("");
+		}
+	}
 
-    private void sendPaneFocusLost() {
-        String temp = sendPane.getText();
-        if (temp.isEmpty()) {
-            sendPaneEmpty();
-        }
-    }
+	private void sendPaneFocusLost() {
+		String temp = sendPane.getText();
+		if (temp.isEmpty()) {
+			sendPaneEmpty();
+		}
+	}
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -257,9 +259,9 @@ public class ChatInterface extends JFrame  {
     private JTextArea chatArea;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
-    // 自定义变量
-    final String initSendText = "Message ChatGPT...";
-    static String input = "";
-    boolean sendButtonFlag = true;
-    // 自定义方法
+	// 自定义变量
+	final String initSendText = "Message ChatGPT...";
+	static String inputMessage = "";
+	boolean sendButtonFlag = true;
+	// 自定义方法
 }
