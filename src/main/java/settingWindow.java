@@ -58,16 +58,16 @@ public class settingWindow extends JFrame{
             //---- label1 ----
             label1.setText("\u63a5\u53e3URL\uff1a");
             layeredPane1.add(label1, JLayeredPane.DEFAULT_LAYER);
-            label1.setBounds(new Rectangle(new Point(35, 25), label1.getPreferredSize()));
+            label1.setBounds(new Rectangle(new Point(20, 25), label1.getPreferredSize()));
 
             //---- label2 ----
             label2.setText("API\uff1a");
             layeredPane1.add(label2, JLayeredPane.DEFAULT_LAYER);
-            label2.setBounds(new Rectangle(new Point(35, 70), label2.getPreferredSize()));
+            label2.setBounds(new Rectangle(new Point(40, 65), label2.getPreferredSize()));
             layeredPane1.add(textField2, JLayeredPane.DEFAULT_LAYER);
-            textField2.setBounds(110, 20, 200, 25);
+            textField2.setBounds(85, 20, 200, 25);
             layeredPane1.add(textField1, JLayeredPane.DEFAULT_LAYER);
-            textField1.setBounds(110, 60, 200, 25);
+            textField1.setBounds(85, 60, 200, 25);
         }
 
         //======== layeredPane2 ========
@@ -82,14 +82,14 @@ public class settingWindow extends JFrame{
             //---- label4 ----
             label4.setText("\u5b57\u4f53\u989c\u8272");
             layeredPane2.add(label4, JLayeredPane.DEFAULT_LAYER);
-            label4.setBounds(190, 70, 50, label4.getPreferredSize().height);
+            label4.setBounds(175, 70, 50, label4.getPreferredSize().height);
             layeredPane2.add(spinner1, JLayeredPane.DEFAULT_LAYER);
-            spinner1.setBounds(245, 25, 70, 25);
+            spinner1.setBounds(230, 25, 70, 25);
 
             //---- button1 ----
             button1.setText("\u4fee\u6539");
             layeredPane2.add(button1, JLayeredPane.DEFAULT_LAYER);
-            button1.setBounds(245, 65, 70, 25);
+            button1.setBounds(230, 65, 70, 25);
 
             //---- label5 ----
             label5.setText("\u80cc\u666f\u989c\u8272");
@@ -106,7 +106,7 @@ public class settingWindow extends JFrame{
             //---- label6 ----
             label6.setText("\u5b57\u53f7");
             layeredPane2.add(label6, JLayeredPane.DEFAULT_LAYER);
-            label6.setBounds(new Rectangle(new Point(210, 30), label6.getPreferredSize()));
+            label6.setBounds(new Rectangle(new Point(195, 30), label6.getPreferredSize()));
         }
 
         //---- button2 ----
@@ -123,13 +123,13 @@ public class settingWindow extends JFrame{
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                        .addComponent(layeredPane2, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                        .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addGap(0, 223, Short.MAX_VALUE)
+                            .addGap(0, 198, Short.MAX_VALUE)
                             .addComponent(button3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(button2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-                        .addComponent(layeredPane2))
+                            .addComponent(button2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
@@ -145,7 +145,7 @@ public class settingWindow extends JFrame{
                         .addComponent(button3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
-        setSize(375, 325);
+        setSize(350, 325);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
