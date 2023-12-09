@@ -1,5 +1,12 @@
 import javax.swing.*;
 import javax.swing.GroupLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /*
  * Created by JFormDesigner on Thu Nov 30 10:22:31 CST 2023
  */
@@ -20,21 +27,93 @@ public class forgotPasswordWindow extends JFrame {
             new passwdUpdateWindow2().setVisible(true);
             this.setVisible(false);
             this.dispose();
-        }else {
-            //
-            JOptionPane.showMessageDialog(null, "用户名或邮箱错误！", "错误", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     private boolean forpassverinfor(){
-        boolean flag=true;
-        String username,email;
-        username=textField1.getText();
+        boolean flag=false;
+        String username_mail,email;
+        username_mail=textField1.getText();
         email=textField2.getText();
-        // TODO 连接数据库验证信息
+        // 连接数据库验证信息
+        Connection connection;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            String query = "SELECT * FROM user WHERE username_mail = ? AND email = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username_mail);
+                preparedStatement.setString(2, email);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    // 如果结果集不为空，意味着用户名和邮箱是有效的
+                    flag = resultSet.next();
+                }
+                if (!flag)
+                {
+                    // 用户名或邮箱不匹配，弹出提示
+                    String errorMessage = "用户名或邮箱";
+                    if (!isUsernameExists(username_mail) && !isEmailExists(email)) {
+                        errorMessage = "用户名和邮箱";
+                    } else if (!isUsernameExists(username_mail)) {
+                        errorMessage = "用户名";
+                    } else if (!isEmailExists(email)) {
+                        errorMessage = "邮箱";
+                    }
+                    JOptionPane.showMessageDialog(null, errorMessage + "不匹配！", "错误", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // 处理数据库连接异常
+        }finally {
+            try {
+                // 关闭数据库连接
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
         return flag;
+    }
+
+    // 检查用户名是否已存在
+    private boolean isUsernameExists(String username) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt")) {
+            String query = "SELECT * FROM user WHERE username_mail = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    return resultSet.next(); // 如果存在记录，则用户名已存在
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // 检查邮箱是否已存在
+    private boolean isEmailExists(String email) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt")) {
+            String query = "SELECT * FROM user WHERE email = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, email);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    return resultSet.next(); // 如果存在记录，则邮箱已存在
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private void initComponents() {
