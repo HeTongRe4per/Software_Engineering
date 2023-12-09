@@ -1,6 +1,10 @@
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 /*
  * Created by JFormDesigner on Thu Nov 30 16:08:18 CST 2023
  */
@@ -11,20 +15,57 @@ import javax.swing.LayoutStyle;
  * @author zhang
  */
 public class passwdUpdateWindow2 extends JFrame {
-    public passwdUpdateWindow2() {
+    private String username_mail;
+    public passwdUpdateWindow2(String username_mail) {
+        this.username_mail = username_mail;
         initComponents();
     }
 
-    private void buttonSureListen() {
+    private boolean buttonSureListen() {
+        boolean flag=true;
         String newpassword,surpassword;
         newpassword=new String(passwordField1.getPassword());
         surpassword=new String(passwordField2.getPassword());
+
+        // 检查密码是否匹配复杂性要求
+        if (!isPasswordValid(newpassword)) {
+            JOptionPane.showMessageDialog(null, "密码不符合复杂性要求！", "错误", JOptionPane.ERROR_MESSAGE);
+        }
+
         if(newpassword.equals(surpassword)){
             // TODO 插入密码信息
-            this.setVisible(false);
-            this.dispose();
+            if (updatePasswordInDatabase(newpassword)) {
+                JOptionPane.showMessageDialog(null, "密码修改成功！", "成功", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "密码修改失败！", "错误", JOptionPane.ERROR_MESSAGE);
+            }
         }else {
             JOptionPane.showMessageDialog(null, "密码不一致！", "错误", JOptionPane.ERROR_MESSAGE);
+        }
+        return flag;
+    }
+
+    // 检查密码是否符合复杂性要求的方法
+    private boolean isPasswordValid(String password) {
+        // 密码至少包含一个数字、一个小写字母、一个大写字母，总长度至少为6
+        String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$";
+        return password.matches(passwordRegex);
+    }
+
+    private boolean updatePasswordInDatabase(String newpassword) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt")) {
+            String updateQuery = "UPDATE user SET password = ? WHERE username_mail = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, PasswordHasher.hashPasswordSHA256(newpassword));
+                preparedStatement.setString(2, username_mail);
+                int rowsAffected = preparedStatement.executeUpdate();
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

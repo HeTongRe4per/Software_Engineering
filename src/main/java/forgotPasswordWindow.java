@@ -24,7 +24,8 @@ public class forgotPasswordWindow extends JFrame {
     private void buttonNextLinsten() {
         //
         if(forpassverinfor()){
-            new passwdUpdateWindow2().setVisible(true);
+            String username_mail = textField1.getText();
+            new passwdUpdateWindow2(username_mail).setVisible(true);
             this.setVisible(false);
             this.dispose();
         }
