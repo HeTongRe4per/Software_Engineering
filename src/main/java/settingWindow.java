@@ -21,9 +21,17 @@ public class settingWindow extends JFrame{
         textField1.setText(ApiKey);
     }
     private void button2Linter() {
-        // TODO 确认按钮监听
+        //TODO ?
         Url = textField2.getText();
         ApiKey = textField1.getText();
+        this.setVisible(false);
+        this.dispose();
+    }
+
+    private void button3Listen() {
+        //
+        this.setVisible(false);
+        this.dispose();
     }
 
     private void initComponents() {
@@ -33,15 +41,6 @@ public class settingWindow extends JFrame{
         label2 = new JLabel();
         textField2 = new JTextField();
         textField1 = new JTextField();
-        layeredPane2 = new JLayeredPane();
-        label3 = new JLabel();
-        label4 = new JLabel();
-        spinner1 = new JSpinner();
-        button1 = new JButton();
-        label5 = new JLabel();
-        comboBox1 = new JComboBox();
-        button4 = new JButton();
-        label6 = new JLabel();
         button2 = new JButton();
         button3 = new JButton();
 
@@ -70,51 +69,13 @@ public class settingWindow extends JFrame{
             textField1.setBounds(85, 60, 200, 25);
         }
 
-        //======== layeredPane2 ========
-        {
-            layeredPane2.setBorder(new TitledBorder("Chat\u6846\u8bbe\u7f6e"));
-
-            //---- label3 ----
-            label3.setText("\u5b57\u4f53");
-            layeredPane2.add(label3, JLayeredPane.DEFAULT_LAYER);
-            label3.setBounds(50, 30, 25, label3.getPreferredSize().height);
-
-            //---- label4 ----
-            label4.setText("\u5b57\u4f53\u989c\u8272");
-            layeredPane2.add(label4, JLayeredPane.DEFAULT_LAYER);
-            label4.setBounds(160, 70, 50, label4.getPreferredSize().height);
-            layeredPane2.add(spinner1, JLayeredPane.DEFAULT_LAYER);
-            spinner1.setBounds(215, 25, 70, 25);
-
-            //---- button1 ----
-            button1.setText("\u4fee\u6539");
-            layeredPane2.add(button1, JLayeredPane.DEFAULT_LAYER);
-            button1.setBounds(215, 65, 70, 25);
-
-            //---- label5 ----
-            label5.setText("\u80cc\u666f\u989c\u8272");
-            layeredPane2.add(label5, JLayeredPane.DEFAULT_LAYER);
-            label5.setBounds(new Rectangle(new Point(25, 70), label5.getPreferredSize()));
-            layeredPane2.add(comboBox1, JLayeredPane.DEFAULT_LAYER);
-            comboBox1.setBounds(80, 25, 70, 25);
-
-            //---- button4 ----
-            button4.setText("\u4fee\u6539");
-            layeredPane2.add(button4, JLayeredPane.DEFAULT_LAYER);
-            button4.setBounds(80, 65, 70, 25);
-
-            //---- label6 ----
-            label6.setText("\u5b57\u53f7");
-            layeredPane2.add(label6, JLayeredPane.DEFAULT_LAYER);
-            label6.setBounds(new Rectangle(new Point(180, 30), label6.getPreferredSize()));
-        }
-
         //---- button2 ----
         button2.setText("\u786e\u8ba4");
         button2.addActionListener(e -> button2Linter());
 
         //---- button3 ----
         button3.setText("\u53d6\u6d88");
+        button3.addActionListener(e -> button3Listen());
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
@@ -123,7 +84,6 @@ public class settingWindow extends JFrame{
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(layeredPane2, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                         .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addGap(0, 198, Short.MAX_VALUE)
@@ -137,15 +97,13 @@ public class settingWindow extends JFrame{
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addGap(17, 17, 17)
                     .addComponent(layeredPane1, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(layeredPane2, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(button2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(button3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
-        setSize(350, 325);
+        setSize(350, 205);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -156,15 +114,6 @@ public class settingWindow extends JFrame{
     private JLabel label2;
     private JTextField textField2;
     private JTextField textField1;
-    private JLayeredPane layeredPane2;
-    private JLabel label3;
-    private JLabel label4;
-    private JSpinner spinner1;
-    private JButton button1;
-    private JLabel label5;
-    private JComboBox comboBox1;
-    private JButton button4;
-    private JLabel label6;
     private JButton button2;
     private JButton button3;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on

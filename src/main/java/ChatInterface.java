@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class ChatInterface extends JFrame  {
 
-	public ChatInterface() {
+    public ChatInterface() {
 		initComponents();
 		sendPaneEmpty();
 	}
@@ -72,7 +72,7 @@ public class ChatInterface extends JFrame  {
 	private void sendPaneFocusGained() {
 		String temp = sendPane.getText();
 		if (temp.equals(initSendText)) {
-			sendPane.setForeground(Color.BLACK);
+			//sendPane.setForeground(Color.BLACK);
 			sendPane.setText("");
 		}
 	}
@@ -84,6 +84,22 @@ public class ChatInterface extends JFrame  {
 		}
 	}
 
+    private void changemodelListen() {
+        // TODO add your code here
+        if (!isdark) {
+            chatArea.setBackground(new Color(48, 48, 48, 255)); // Set background color to gray with alpha channel
+            chatArea.setForeground(Color.white);
+            sendPane.setBackground(new Color(48, 48, 48, 255)); // Set background color to gray with alpha channel
+            sendPane.setForeground(Color.white);
+        } else {
+            chatArea.setBackground(Color.white);
+            chatArea.setForeground(new Color(48, 48, 48, 255));
+            sendPane.setBackground(Color.white);
+            sendPane.setForeground(new Color(48, 48, 48, 255));
+        }
+        isdark = !isdark;
+    }
+    private boolean isdark=false;
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         mainMenuBar = new JMenuBar();
@@ -92,6 +108,7 @@ public class ChatInterface extends JFrame  {
         logoutItem = new JMenuItem();
         toolMenu = new JMenu();
         settingItem = new JMenuItem();
+        changemodel = new JMenuItem();
         helpMenu = new JMenu();
         aboutItem = new JMenuItem();
         snedPanel = new JPanel();
@@ -136,6 +153,12 @@ public class ChatInterface extends JFrame  {
                 settingItem.setText("\u8bbe\u7f6e");
                 settingItem.addActionListener(e -> settingItemListen());
                 toolMenu.add(settingItem);
+                toolMenu.addSeparator();
+
+                //---- changemodel ----
+                changemodel.setText("\u5207\u6362\u6a21\u5f0f");
+                changemodel.addActionListener(e -> changemodelListen());
+                toolMenu.add(changemodel);
             }
             mainMenuBar.add(toolMenu);
 
@@ -224,7 +247,7 @@ public class ChatInterface extends JFrame  {
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(chatScrollPane, GroupLayout.DEFAULT_SIZE, 831, Short.MAX_VALUE)
+                        .addComponent(chatScrollPane, GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
                         .addComponent(snedPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap())
         );
@@ -232,7 +255,7 @@ public class ChatInterface extends JFrame  {
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addGap(8, 8, 8)
-                    .addComponent(chatScrollPane, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                    .addComponent(chatScrollPane, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(snedPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
@@ -249,6 +272,7 @@ public class ChatInterface extends JFrame  {
     private JMenuItem logoutItem;
     private JMenu toolMenu;
     private JMenuItem settingItem;
+    private JMenuItem changemodel;
     private JMenu helpMenu;
     private JMenuItem aboutItem;
     private JPanel snedPanel;
