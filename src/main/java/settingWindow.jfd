@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :::p, par l {comp layeredPane2::::328:x, comp layeredPane1::l::328:x, seq t {space :0:198:x, comp button3:::p:60:p, space u:::p, comp button2:::p:60:p}}, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :p:17:p, comp layeredPane1:::p:106:p, space u:::p, comp layeredPane2::::120:x, space :::p, par l {comp button2:::p:25:p, comp button3::l:p:25:p}, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :::p, par l {comp layeredPane1::l::328:x, seq t {space :0:198:x, comp button3:::p:60:p, space u:::p, comp button2:::p:60:p}}, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :p:17:p, comp layeredPane1:::p:106:p, space ::16:x, par l {comp button2:::p:25:p, comp button3::l:p:25:p}, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "设置"
@@ -47,74 +47,6 @@ new FormModel {
 					"y": 60
 				} )
 			} )
-			add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
-				name: "layeredPane2"
-				"border": new javax.swing.border.TitledBorder( "Chat框设置" )
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label3"
-					"text": "字体"
-				}, new FormLayoutConstraints( null ) {
-					"x": 50
-					"y": 30
-					"width": 25
-				} )
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label4"
-					"text": "字体颜色"
-				}, new FormLayoutConstraints( null ) {
-					"x": 160
-					"y": 70
-					"width": 50
-				} )
-				add( new FormComponent( "javax.swing.JSpinner" ) {
-					name: "spinner1"
-				}, new FormLayoutConstraints( null ) {
-					"width": 70
-					"height": 25
-					"x": 215
-					"y": 25
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "button1"
-					"text": "修改"
-				}, new FormLayoutConstraints( null ) {
-					"x": 215
-					"y": 65
-					"width": 70
-					"height": 25
-				} )
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label5"
-					"text": "背景颜色"
-				}, new FormLayoutConstraints( null ) {
-					"x": 25
-					"y": 70
-				} )
-				add( new FormComponent( "javax.swing.JComboBox" ) {
-					name: "comboBox1"
-				}, new FormLayoutConstraints( null ) {
-					"x": 80
-					"y": 25
-					"height": 25
-					"width": 70
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "button4"
-					"text": "修改"
-				}, new FormLayoutConstraints( null ) {
-					"x": 80
-					"y": 65
-					"width": 70
-					"height": 25
-				} )
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label6"
-					"text": "字号"
-				}, new FormLayoutConstraints( null ) {
-					"x": 180
-					"y": 30
-				} )
-			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button2"
 				"text": "确认"
@@ -123,10 +55,11 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button3"
 				"text": "取消"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button3Listen", false ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 350, 325 )
+			"size": new java.awt.Dimension( 350, 205 )
 		} )
 	}
 }

@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :::p, par l {comp chatScrollPane::::831:x, comp snedPanel:::::x}, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :p:8:p, comp chatScrollPane::::410:x, space u:::p, comp snedPanel:::p::p, space :::p}}"
+			"$horizontalGroup": "par l {seq {space :::p, par l {comp chatScrollPane::::823:x, comp snedPanel:::::x}, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :p:8:p, comp chatScrollPane::::408:x, space u:::p, comp snedPanel:::p::p, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "Chat Interface"
@@ -73,6 +73,14 @@ new FormModel {
 						"text": "设置"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "settingItemListen", false ) )
 					} )
+					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
+						name: "separator2"
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "changemodel"
+						"text": "切换模式"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "changemodelListen", false ) )
+					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "helpMenu"
@@ -89,4 +97,3 @@ new FormModel {
 		} )
 	}
 }
-
