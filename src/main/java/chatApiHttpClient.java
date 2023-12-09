@@ -14,7 +14,6 @@ public class chatApiHttpClient {
     public static String outputMessage = "";
     private String Url;
     private String ApiKey;
-    //private StringBuilder payload = new StringBuilder("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
 
     public chatApiHttpClient() {
         callChatApi();
