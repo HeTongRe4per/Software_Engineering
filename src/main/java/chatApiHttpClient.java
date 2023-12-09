@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 public class chatApiHttpClient {
 
     public static String outputMessage = "";
-    private String message = ChatInterface.input;
     private String Url;
     private String ApiKey;
     //private StringBuilder payload = new StringBuilder("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
@@ -21,7 +20,7 @@ public class chatApiHttpClient {
         callChatApi();
     }
 
-    public void callChatApi() {
+    private void callChatApi() {
         Url = settingWindow.Url;
         ApiKey = settingWindow.ApiKey;
 
@@ -33,10 +32,10 @@ public class chatApiHttpClient {
             httpPost.setHeader("Authorization", "Bearer " + ApiKey);
             httpPost.setHeader("Content-Type", "application/json");
 
-
-
             // 添加用户输入
+            buildJsonPayload.refreshInputMessage();
             buildJsonPayload.payload.append(buildJsonPayload.historyMessage);
+
             // 设置请求体
             String jsonPayload = buildJsonPayload.payload.deleteCharAt( buildJsonPayload.payload.length() - 1).toString() + "]}";
             StringEntity entity = new StringEntity(jsonPayload, "UTF-8");
@@ -64,14 +63,13 @@ public class chatApiHttpClient {
                         .path("message")
                         .path("content")
                         .asText();
-
+                buildJsonPayload.payload.append(",");
+                buildJsonPayload.getOutputMessage();
                 // 添加助手输出
                 buildJsonPayload.payload.append(buildJsonPayload.historyReply);
                 // 删除尾随逗号并重载 JSON
                 buildJsonPayload.payload.deleteCharAt(  buildJsonPayload.payload.length() - 1);
-                buildJsonPayload.payload.append("]}");
-                System.out.println(buildJsonPayload.payload.toString());
-                //new  buildJsonPayload();
+                buildJsonPayload.payload.append(",");
             }
         } catch (Exception e) {
             e.printStackTrace();

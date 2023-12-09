@@ -40,8 +40,8 @@ public class ChatInterface extends JFrame  {
 
 	private void sendButtonListen() {
 		if (sendButtonFlag) {
-			input = sendPane.getText();
-			chatArea.append("\n用户：\n" + input + "\n");
+			inputMessage = sendPane.getText();
+			chatArea.append("\n用户：\n" + inputMessage + "\n");
 			sendPane.setText("");
 			sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
 			sendButtonFlag =false;  // 锁定按钮监听
@@ -261,7 +261,7 @@ public class ChatInterface extends JFrame  {
 
 	// 自定义变量
 	final String initSendText = "Message ChatGPT...";
-	static String input = "";
+	static String inputMessage = "";
 	boolean sendButtonFlag = true;
 	// 自定义方法
 }
