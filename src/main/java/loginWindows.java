@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
@@ -104,9 +106,6 @@ public class loginWindows extends JFrame{
         password= new String(passwordField1.getPassword());
         // TODO 连接数据库验证信息
         // 连接数据库验证信息
-        //Connection connection = (Connection) new createMySQLConnection();
-        // 替换原来的数据库连接获取方式
-
         Connection connection = null;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
@@ -115,10 +114,12 @@ public class loginWindows extends JFrame{
         }
 
         try {
+            // 对密码进行 SHA-256 哈希
+            String hashedPassword = hashPasswordSHA256(password);
             String query = "SELECT * FROM user WHERE username_mail = ? AND password = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, username_mail);
-                preparedStatement.setString(2, password);
+                preparedStatement.setString(2, hashedPassword);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     // 如果结果集不为空，则验证成功
@@ -141,6 +142,23 @@ public class loginWindows extends JFrame{
 
         // 查询数据库返回flag
         return flag;
+    }
+
+    // 使用 SHA-256 对密码进行哈希
+    private String hashPasswordSHA256(String password) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = messageDigest.digest(password.getBytes());
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (byte hashedByte : hashedBytes) {
+                stringBuilder.append(Integer.toString((hashedByte & 0xff) + 0x100, 16).substring(1));
+            }
+
+            return stringBuilder.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void initComponents() {
