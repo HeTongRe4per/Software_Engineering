@@ -44,6 +44,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
 				name: "remberPasswd"
 				"text": "记住密码"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "remberPasswdListen", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "forgotPasswdButton"

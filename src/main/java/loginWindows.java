@@ -11,7 +11,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
 
 /*
  * Created by JFormDesigner on Thu Nov 30 13:18:45 CST 2023
@@ -163,6 +166,22 @@ public class loginWindows extends JFrame{
             throw new RuntimeException(e);
         }
     }
+    private String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
+    private void remberPasswdListen() throws IOException {
+        // TODO add your code here
+        File file = new File(FILE_PATH);
+        file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
+        file.createNewFile(); // 创建文件（如果不存在）
+        String  username_mail,hashpassword;
+        username_mail=accountField.getText();
+        hashpassword= new String(hashPasswordSHA256(new String(passwordField1.getPassword())));
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            writer.write(username_mail + "," + hashpassword);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -214,6 +233,15 @@ public class loginWindows extends JFrame{
 
         //---- remberPasswd ----
         remberPasswd.setText("\u8bb0\u4f4f\u5bc6\u7801");
+        remberPasswd.addActionListener(e -> {
+            try {
+                remberPasswdListen();
+            }
+            catch (IOException ex) {
+                    throw new RuntimeException(ex);
+            }
+            }
+        );
 
         //---- forgotPasswdButton ----
         forgotPasswdButton.setText("\u5fd8\u8bb0\u5bc6\u7801");
