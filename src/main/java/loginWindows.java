@@ -4,6 +4,13 @@ import java.util.Arrays;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
 /*
  * Created by JFormDesigner on Thu Nov 30 13:18:45 CST 2023
  */
@@ -91,12 +98,48 @@ public class loginWindows extends JFrame{
 
     private boolean logverifyinfor(){
         //数据库验证
-        boolean flag = true;
-        String  usename_mail,password;
-        usename_mail=accountField.getText();
+        boolean flag = false;
+        String  username_mail,password;
+        username_mail=accountField.getText();
         password= new String(passwordField1.getPassword());
         // TODO 连接数据库验证信息
-        //查询数据库返回flag
+        // 连接数据库验证信息
+        //Connection connection = (Connection) new createMySQLConnection();
+        // 替换原来的数据库连接获取方式
+
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            String query = "SELECT * FROM user WHERE username_mail = ? AND password = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username_mail);
+                preparedStatement.setString(2, password);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    // 如果结果集不为空，则验证成功
+                    flag = resultSet.next();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // 处理数据库连接异常
+        } finally {
+            try {
+                // 关闭数据库连接
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // 查询数据库返回flag
         return flag;
     }
 
