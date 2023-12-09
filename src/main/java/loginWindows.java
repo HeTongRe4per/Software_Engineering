@@ -44,7 +44,7 @@ public class loginWindows extends JFrame{
             }
         }
     }
-
+    //。。
     public void LoginWindowInit() {
         // 账号，密码框默认显示
         passwordField1.setEchoChar((char) 0);
