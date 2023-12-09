@@ -54,15 +54,15 @@ new FormModel {
 					name: "label3"
 					"text": "字体"
 				}, new FormLayoutConstraints( null ) {
-					"x": 45
+					"x": 50
 					"y": 30
-					"width": 30
+					"width": 25
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label4"
 					"text": "字体颜色"
 				}, new FormLayoutConstraints( null ) {
-					"x": 175
+					"x": 160
 					"y": 70
 					"width": 50
 				} )
@@ -71,14 +71,14 @@ new FormModel {
 				}, new FormLayoutConstraints( null ) {
 					"width": 70
 					"height": 25
-					"x": 230
+					"x": 215
 					"y": 25
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "button1"
 					"text": "修改"
 				}, new FormLayoutConstraints( null ) {
-					"x": 230
+					"x": 215
 					"y": 65
 					"width": 70
 					"height": 25
@@ -87,13 +87,13 @@ new FormModel {
 					name: "label5"
 					"text": "背景颜色"
 				}, new FormLayoutConstraints( null ) {
-					"x": 30
+					"x": 25
 					"y": 70
 				} )
 				add( new FormComponent( "javax.swing.JComboBox" ) {
 					name: "comboBox1"
 				}, new FormLayoutConstraints( null ) {
-					"x": 90
+					"x": 80
 					"y": 25
 					"height": 25
 					"width": 70
@@ -102,7 +102,7 @@ new FormModel {
 					name: "button4"
 					"text": "修改"
 				}, new FormLayoutConstraints( null ) {
-					"x": 90
+					"x": 80
 					"y": 65
 					"width": 70
 					"height": 25
@@ -111,7 +111,7 @@ new FormModel {
 					name: "label6"
 					"text": "字号"
 				}, new FormLayoutConstraints( null ) {
-					"x": 195
+					"x": 180
 					"y": 30
 				} )
 			} )

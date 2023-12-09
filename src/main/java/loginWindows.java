@@ -11,8 +11,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 /*
  * Created by JFormDesigner on Thu Nov 30 13:18:45 CST 2023
  */
@@ -27,6 +35,14 @@ public class loginWindows extends JFrame{
     public loginWindows() {
         initComponents();
         LoginWindowInit();
+        if(checkFileExistence(FILE_PATH)){
+            remberPasswd.setSelected(true);
+            try {
+                default_input();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void LoginWindowInit() {
@@ -160,6 +176,121 @@ public class loginWindows extends JFrame{
             throw new RuntimeException(e);
         }
     }
+    private String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
+    private final int numOfEncAndDec = 0x99; // 加密解密秘钥
+    private int dataOfFile = 0; // 文件字节内容
+    private void remberPasswdListen() throws IOException {
+        // 记住密码，加密保存账号和密码到文件
+        File F_file = new File(FILE_PATH+"-F");
+        F_file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
+        F_file.createNewFile(); // 创建文件（如果不存在）
+        File file = new File(FILE_PATH);
+        file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
+        file.createNewFile(); // 创建文件（如果不存在）
+        String  username_mail,password;
+        username_mail=accountField.getText();
+        password= new String(passwordField1.getPassword());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(F_file))) {
+            writer.write(username_mail + "," + password);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            EncFile(F_file,file); // 加密操作
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        F_file.delete();
+    }
+
+    private void EncFile(File srcFile, File encFile) throws Exception {
+        if (!srcFile.exists()) {
+            System.out.println("source file not exist");
+            return;
+        }
+
+        if (!encFile.exists()) {
+            System.out.println("encrypt file created");
+            encFile.createNewFile();
+        }
+        InputStream fis = new FileInputStream(srcFile);
+        OutputStream fos = new FileOutputStream(encFile);
+
+        while ((dataOfFile = fis.read()) > -1) {
+            fos.write(dataOfFile ^ numOfEncAndDec);
+        }
+
+        fis.close();
+        fos.flush();
+        fos.close();
+    }
+
+    private void DecFile(File encFile, File decFile) throws Exception {
+        if (!encFile.exists()) {
+            System.out.println("加密文件不存在");
+            return;
+        }
+
+        if (!decFile.exists()) {
+            System.out.println("解密文件已创建");
+            decFile.createNewFile();
+        }
+
+        InputStream fis = new FileInputStream(encFile);
+        OutputStream fos = new FileOutputStream(decFile);
+
+        while ((dataOfFile = fis.read()) > -1) {
+            fos.write(dataOfFile ^ numOfEncAndDec);
+        }
+
+        fis.close();
+        fos.flush();
+        fos.close();
+    }
+
+    private void default_input() throws IOException {
+        File file = new File(FILE_PATH);
+        File L_file = new File(FILE_PATH+"-L");
+        L_file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
+        L_file.createNewFile(); // 创建文件（如果不存在）
+        try {
+            DecFile(file,L_file);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        readfile(L_file);
+        L_file.delete();
+    }
+
+    private void readfile(File file){
+        try {
+            // 创建Scanner对象读取文件
+            Scanner scanner = new Scanner(file);
+            // 使用StringBuilder拼接读取到的数据
+            StringBuilder stringBuilder = new StringBuilder();
+            // 读取文件内容
+            while (scanner.hasNext()) {
+                String data = scanner.next();
+                // 将字段添加到StringBuilder中
+                stringBuilder.append(data);
+            }
+            // 将StringBuilder的内容赋值给文本框
+            String Text = stringBuilder.toString();
+            String[] parts = Text.split(",");
+            accountField.setText(parts[0]);
+            passwordField1.setText(parts[1]);
+            passwordField1.setEchoChar('*');
+            // 关闭Scanner
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    private boolean checkFileExistence(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
+    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -211,6 +342,15 @@ public class loginWindows extends JFrame{
 
         //---- remberPasswd ----
         remberPasswd.setText("\u8bb0\u4f4f\u5bc6\u7801");
+        remberPasswd.addActionListener(e -> {
+            try {
+                remberPasswdListen();
+            }
+            catch (IOException ex) {
+                    throw new RuntimeException(ex);
+            }
+            }
+        );
 
         //---- forgotPasswdButton ----
         forgotPasswdButton.setText("\u5fd8\u8bb0\u5bc6\u7801");
