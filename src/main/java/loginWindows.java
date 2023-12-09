@@ -116,6 +116,7 @@ public class loginWindows extends JFrame{
         try {
             // 对密码进行 SHA-256 哈希
             String hashedPassword = hashPasswordSHA256(password);
+            /*
             String query = "SELECT * FROM user WHERE username_mail = ? AND password = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, username_mail);
@@ -124,6 +125,21 @@ public class loginWindows extends JFrame{
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     // 如果结果集不为空，则验证成功
                     flag = resultSet.next();
+                }
+            }
+            */
+            // 修改查询条件，检查用户名或邮箱是否匹配
+            String query = "SELECT * FROM user WHERE username_mail = ? OR email = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username_mail);
+                preparedStatement.setString(2, username_mail);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    // 如果结果集不为空，则验证密码
+                    if (resultSet.next()) {
+                        String storedPassword = resultSet.getString("password");
+                        flag = hashedPassword.equals(storedPassword);
+                    }
                 }
             }
         } catch (SQLException e) {
