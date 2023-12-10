@@ -30,10 +30,10 @@ public class passwdUpdateWindow2 extends JFrame {
         // 检查密码是否匹配复杂性要求
         if (!isPasswordValid(newpassword)) {
             JOptionPane.showMessageDialog(null, "密码不符合复杂性要求！", "错误", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
 
         if(newpassword.equals(surpassword)){
-            // TODO 插入密码信息
             if (updatePasswordInDatabase(newpassword)) {
                 JOptionPane.showMessageDialog(null, "密码修改成功！", "成功", JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
