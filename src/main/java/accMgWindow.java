@@ -32,8 +32,8 @@ public class accMgWindow extends JFrame {
     }
 
     private void resetPasswdListen() {
-        //
-        new passwdUpdateWindow2().setVisible(true);
+        //todo 账号邮箱
+        new passwdUpdateWindow2("123").setVisible(true);
     }
 
     private void initComponents() {

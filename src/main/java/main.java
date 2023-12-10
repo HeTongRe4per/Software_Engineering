@@ -20,7 +20,6 @@ public class main {
                     e.printStackTrace();
                     // 处理数据库连接异常
                 }
-
                 try {
                     // 设置本机系统外观
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
