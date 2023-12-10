@@ -35,12 +35,14 @@ public class loginWindows extends JFrame{
     public loginWindows() {
         initComponents();
         LoginWindowInit();
-        if(checkFileExistence(FILE_PATH)){
-            remberPasswd.setSelected(true);
-            try {
-                default_input();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        if(checkFileExistence(FILE_PATH)&&checkFileExistence(FILE_PATH+"boolean")){
+            if(readbool()){
+                remberPasswd.setSelected(true);
+                try {
+                    default_input();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -95,6 +97,8 @@ public class loginWindows extends JFrame{
     private void loginButtonLinster() {
         //
         if(logverifyinfor()) {
+            isselect=remberPasswd.isSelected();
+            boolisselect();
             this.setVisible(false);
             this.dispose();
             new ChatInterface().setVisible(true);
@@ -196,6 +200,42 @@ public class loginWindows extends JFrame{
     private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
     private final int numOfEncAndDec = 0x99; // 加密解密秘钥
     private int dataOfFile = 0; // 文件字节内容
+    private boolean isselect = false;
+    private void boolisselect(){
+        File file=new File(FILE_PATH+"boolean");
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(String.valueOf(isselect));
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private boolean readbool(){
+        boolean value=false;
+        File file=new File(FILE_PATH+"boolean");
+        try {
+            // 创建Scanner对象读取文件
+            Scanner scanner = new Scanner(file);
+            // 使用StringBuilder拼接读取到的数据
+            StringBuilder stringBuilder = new StringBuilder();
+            // 读取文件内容
+            while (scanner.hasNext()) {
+                String data = scanner.next();
+                // 将字段添加到StringBuilder中
+                stringBuilder.append(data);
+            }
+            // 将StringBuilder的内容赋值给文本框
+            String Text = stringBuilder.toString();
+            value = Boolean.parseBoolean(Text);
+            // 关闭Scanner
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return value;
+    }
     private void remberPasswdListen() throws IOException {
         // 记住密码，加密保存账号和密码到文件
         File F_file = new File(FILE_PATH+"-F");

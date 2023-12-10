@@ -4,6 +4,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.*;
+import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 /*
  * Created by JFormDesigner on Thu Dec 07 23:57:49 CST 2023
@@ -19,6 +21,20 @@ public class ChatInterface extends JFrame  {
     public ChatInterface() {
 		initComponents();
 		sendPaneEmpty();
+        if(checkFileExistence(FILE_PATH)){
+            if(readbool()){
+                chatArea.setBackground(new Color(48, 48, 48, 255)); // Set background color to gray with alpha channel
+                chatArea.setForeground(Color.white);
+                sendPane.setBackground(new Color(48, 48, 48, 255)); // Set background color to gray with alpha channel
+                sendPane.setForeground(Color.white);
+            }else {
+                chatArea.setBackground(Color.white);
+                chatArea.setForeground(new Color(48, 48, 48, 255));
+                sendPane.setBackground(Color.white);
+                sendPane.setForeground(new Color(48, 48, 48, 255));
+            }
+            isdark=readbool();
+        }
 	}
 
 	private void accountMangeItemListen() {
@@ -98,8 +114,50 @@ public class ChatInterface extends JFrame  {
             sendPane.setForeground(new Color(48, 48, 48, 255));
         }
         isdark = !isdark;
+        boolisdark();
     }
     private boolean isdark=false;
+    private String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
+    private void boolisdark(){
+        File file=new File(FILE_PATH);
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(String.valueOf(isdark));
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private boolean readbool(){
+        boolean value=false;
+        File file=new File(FILE_PATH);
+        try {
+            // 创建Scanner对象读取文件
+            Scanner scanner = new Scanner(file);
+            // 使用StringBuilder拼接读取到的数据
+            StringBuilder stringBuilder = new StringBuilder();
+            // 读取文件内容
+            while (scanner.hasNext()) {
+                String data = scanner.next();
+                // 将字段添加到StringBuilder中
+                stringBuilder.append(data);
+            }
+            // 将StringBuilder的内容赋值给文本框
+            String Text = stringBuilder.toString();
+            value = Boolean.parseBoolean(Text);
+            // 关闭Scanner
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return value;
+    }
+    private boolean checkFileExistence(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         mainMenuBar = new JMenuBar();
