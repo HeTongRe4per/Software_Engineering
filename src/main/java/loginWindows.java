@@ -99,6 +99,11 @@ public class loginWindows extends JFrame{
         if(logverifyinfor()) {
             isselect=remberPasswd.isSelected();
             boolisselect();
+            try {
+                remberPasswdListen();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             this.setVisible(false);
             this.dispose();
             new ChatInterface().setVisible(true);
