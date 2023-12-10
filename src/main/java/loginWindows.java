@@ -100,7 +100,7 @@ public class loginWindows extends JFrame{
             isselect=remberPasswd.isSelected();
             boolisselect();
             try {
-                remberPasswdListen();
+                remberPasswdListen();//。
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -111,7 +111,6 @@ public class loginWindows extends JFrame{
             JOptionPane.showMessageDialog(null, "账号或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     private void registerButtonlinsten() {
         //
