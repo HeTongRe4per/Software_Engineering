@@ -1,6 +1,6 @@
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 /*
  * Created by JFormDesigner on Thu Nov 30 08:55:23 CST 2023
  */
@@ -16,12 +16,14 @@ public class settingWindow extends JFrame{
         initWindow();
     }
 
+
     private void initWindow() {
         textField2.setText(Url);
         textField1.setText(ApiKey);
+
     }
     private void button2Linter() {
-        //TODO ?
+        // TODO 判定输入链接格式和APIKEY格式
         Url = textField2.getText();
         ApiKey = textField1.getText();
         this.setVisible(false);

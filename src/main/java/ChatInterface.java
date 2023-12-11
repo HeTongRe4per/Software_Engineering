@@ -34,6 +34,7 @@ public class ChatInterface extends JFrame  {
                 sendPane.setForeground(new Color(48, 48, 48, 255));
             }
             isdark=readbool();
+`
         }
 	}
 
