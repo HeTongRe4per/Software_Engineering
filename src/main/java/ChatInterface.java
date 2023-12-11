@@ -35,6 +35,7 @@ public class ChatInterface extends JFrame  {
             }
             isdark=readbool();
         }
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void accountMangeItemListen() {

@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.io.*;
+import java.util.Scanner;
 /*
  * Created by JFormDesigner on Thu Nov 30 09:10:35 CST 2023
  */
@@ -11,8 +13,80 @@ import javax.swing.*;
 public class accMgWindow extends JFrame {
     public accMgWindow() {
         initComponents();
+        if(loginWindows.checkFileExistence(FILE_PATH)){
+            try {
+                default_input();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+    private final String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
+    private int dataOfFile = 0; // 文件字节内容
+    private void DecFile(File encFile, File decFile) throws Exception {
+        if (!encFile.exists()) {
+            System.out.println("加密文件不存在");
+            return;
+        }
+
+        if (!decFile.exists()) {
+            System.out.println("解密文件已创建");
+            decFile.createNewFile();
+        }
+
+        InputStream fis = new FileInputStream(encFile);
+        OutputStream fos = new FileOutputStream(decFile);
+
+        while ((dataOfFile = fis.read()) > -1) {
+            // 加密解密秘钥
+            int numOfEncAndDec = 0x99;
+            fos.write(dataOfFile ^ numOfEncAndDec);
+        }
+
+        fis.close();
+        fos.flush();
+        fos.close();
     }
 
+    private void default_input() throws IOException {
+        File file = new File(FILE_PATH);
+        File L_file = new File(FILE_PATH+"-L");
+        L_file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
+        L_file.createNewFile(); // 创建文件（如果不存在）
+        try {
+            DecFile(file,L_file);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        readfile(L_file);
+        L_file.delete();
+    }
+    private void readfile(File file){
+        try {
+            // 创建Scanner对象读取文件
+            Scanner scanner = new Scanner(file);
+            // 使用StringBuilder拼接读取到的数据
+            StringBuilder stringBuilder = new StringBuilder();
+            // 读取文件内容
+            while (scanner.hasNext()) {
+                String data = scanner.next();
+                // 将字段添加到StringBuilder中
+                stringBuilder.append(data);
+            }
+            // 将StringBuilder的内容赋值给文本框
+            String Text = stringBuilder.toString();
+            String[] parts = Text.split(",");
+            accountTextField.setText(parts[0]);
+            passwordField1.setText(parts[1]);
+            passwordField1.setEchoChar('*');
+            // 关闭Scanner
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     private void delAccountListen() {
         //
         new confirmDelAccountWindow(this).setVisible(true);

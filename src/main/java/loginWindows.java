@@ -45,6 +45,7 @@ public class loginWindows extends JFrame{
                 }
             }
         }
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     //。。
     public void LoginWindowInit() {
@@ -347,9 +348,14 @@ public class loginWindows extends JFrame{
             e.printStackTrace();
         }
     }
-    private boolean checkFileExistence(String filePath) {
+    public static boolean checkFileExistence(String filePath) {
         File file = new File(filePath);
         return file.exists();
+    }
+
+    private void accountFieldListen() {
+        //
+        passwordField1.requestFocusInWindow();
     }
 
     private void initComponents() {
@@ -390,6 +396,7 @@ public class loginWindows extends JFrame{
                 accountFieldFocusLost();
             }
         });
+        accountField.addActionListener(e -> accountFieldListen());
 
         //---- loginButton ----
         loginButton.setText("\u767b\u5f55");
@@ -402,15 +409,10 @@ public class loginWindows extends JFrame{
 
         //---- remberPasswd ----
         remberPasswd.setText("\u8bb0\u4f4f\u5bc6\u7801");
-        remberPasswd.addActionListener(e -> {
-            try {
-                remberPasswdListen();
-            }
-            catch (IOException ex) {
-                    throw new RuntimeException(ex);
-            }
-            }
-        );
+        remberPasswd.addActionListener(e -> {try {
+            remberPasswdListen();} catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }});
 
         //---- forgotPasswdButton ----
         forgotPasswdButton.setText("\u5fd8\u8bb0\u5bc6\u7801");
