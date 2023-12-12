@@ -78,7 +78,7 @@ new FormModel {
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "changemodel"
-						"text": "切换模式"
+						"text": "切换背景色"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "changemodelListen", false ) )
 					} )
 				} )
@@ -97,4 +97,3 @@ new FormModel {
 		} )
 	}
 }
-

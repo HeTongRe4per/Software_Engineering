@@ -38,9 +38,10 @@ public class ChatInterface extends JFrame  {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	private void accountMangeItemListen() {
+	public void accountMangeItemListen() {
 		//
-		new accMgWindow().setVisible(true);
+        accMgWindow ac =new accMgWindow(ChatInterface.this);
+		ac.setVisible(true);
 	}
 
 	private void logoutItemListen() {
@@ -215,7 +216,7 @@ public class ChatInterface extends JFrame  {
                 toolMenu.addSeparator();
 
                 //---- changemodel ----
-                changemodel.setText("\u5207\u6362\u6a21\u5f0f");
+                changemodel.setText("\u5207\u6362\u80cc\u666f\u8272");
                 changemodel.addActionListener(e -> changemodelListen());
                 toolMenu.add(changemodel);
             }

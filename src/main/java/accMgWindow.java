@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
+import java.io.File;
 /*
  * Created by JFormDesigner on Thu Nov 30 09:10:35 CST 2023
  */
@@ -11,8 +12,10 @@ import java.util.Scanner;
  * @author zhang
  */
 public class accMgWindow extends JFrame {
-    public accMgWindow() {
+    private ChatInterface parent;
+    public accMgWindow(ChatInterface parent) {
         initComponents();
+        this.parent=parent;
         if(loginWindows.checkFileExistence(FILE_PATH)){
             try {
                 default_input();
@@ -90,6 +93,11 @@ public class accMgWindow extends JFrame {
     private void delAccountListen() {
         //
         new confirmDelAccountWindow(this).setVisible(true);
+
+        delefile();
+        parent.dispose();
+        dispose();
+        new loginWindows().setVisible(true);
     }
 
     private void resetUserNameListen() {
@@ -97,19 +105,44 @@ public class accMgWindow extends JFrame {
         String username=accountTextField.getText();
         // TODO 更新数据库
 
+        delefile();
+        parent.dispose();
+        dispose();
+        new loginWindows().setVisible(true);
     }
 
     private void resetEmailListen() {
         String email=emailTextField.getText();
         // TODO 更新数据库
 
+        delefile();
+        parent.dispose();
+        dispose();
+        new loginWindows().setVisible(true);
     }
 
     private void resetPasswdListen() {
         //todo 账号邮箱
         new passwdUpdateWindow2("123").setVisible(true);
+
+        delefile();
+        parent.dispose();
+        dispose();
+        new loginWindows().setVisible(true);
     }
 
+    private void delefile(){
+        String fp=localAppDATA+"\\CIF";
+        File directory = new File(fp);
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            for (File file : files) {
+                if (file.isFile()) {
+                    file.delete();
+                }
+            }
+        }
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
