@@ -2,6 +2,13 @@ import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
 /*
  * Created by JFormDesigner on Thu Nov 30 09:10:35 CST 2023
  */
@@ -12,6 +19,8 @@ import java.io.File;
  * @author zhang
  */
 public class accMgWindow extends JFrame {
+    private String oldUsernameOrEmail;
+
     private ChatInterface parent;
     public accMgWindow(ChatInterface parent) {
         initComponents();
@@ -66,30 +75,91 @@ public class accMgWindow extends JFrame {
         readfile(L_file);
         L_file.delete();
     }
-    private void readfile(File file){
+    private void readfile(File file) {
         try {
-            // 创建Scanner对象读取文件
             Scanner scanner = new Scanner(file);
-            // 使用StringBuilder拼接读取到的数据
             StringBuilder stringBuilder = new StringBuilder();
-            // 读取文件内容
+
             while (scanner.hasNext()) {
                 String data = scanner.next();
-                // 将字段添加到StringBuilder中
                 stringBuilder.append(data);
             }
-            // 将StringBuilder的内容赋值给文本框
-            String Text = stringBuilder.toString();
-            String[] parts = Text.split(",");
-            accountTextField.setText(parts[0]);
-            passwordField1.setText(parts[1]);
-            passwordField1.setEchoChar('*');
-            // 关闭Scanner
+            //原用户名 or 邮箱
+            oldUsernameOrEmail = stringBuilder.toString();
+
+            String usernameOrEmail = stringBuilder.toString();
+            String[] parts = usernameOrEmail.split(",");
+
+            String query;
+            String columnToUpdate;
+            String otherColumn;
+
+            // 判断是根据 username_mail 还是 email 查询
+            if (isUsernameMail(parts[0])) {
+                query = "SELECT * FROM user WHERE username_mail = ?";
+                columnToUpdate = "username_mail";
+                otherColumn = "email";
+            } else {
+                query = "SELECT * FROM user WHERE email = ?";
+                columnToUpdate = "email";
+                otherColumn = "username_mail";
+            }
+
+            // 使用数据库连接函数创建连接
+            Connection connection = createMySQLConnection();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, parts[0]);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        // 从结果集中获取其他列的值
+                        String otherColumnValue = resultSet.getString(otherColumn);
+
+                        // 更新 UI
+                        if (columnToUpdate.equals("username_mail")) {
+                            accountTextField.setText(parts[0]);
+                            emailTextField.setText(otherColumnValue);
+                        } else {
+                            accountTextField.setText(otherColumnValue);
+                            emailTextField.setText(parts[0]);
+                        }
+                        passwordField1.setEchoChar('*');
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+    private boolean isUsernameMail(String input) {
+        // 根据需要实现判断是 username_mail 还是 email 的逻辑
+        // 这里简单地通过包含 "@" 符号来判断是否是 email
+        return input.contains("@");
+    }
+
+    private Connection createMySQLConnection() {
+        Connection connection = null;
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
     private void delAccountListen() {
         //
         new confirmDelAccountWindow(this).setVisible(true);
@@ -103,17 +173,21 @@ public class accMgWindow extends JFrame {
     private void resetUserNameListen() {
         //
         String username=accountTextField.getText();
-        // TODO 更新数据库
-
+        //连接数据库并执行更新操作
+        updateUsernameInDatabase(username, oldUsernameOrEmail);
+        // 删除文件
         delefile();
+        // 关闭当前窗口和父窗口
         parent.dispose();
         dispose();
+        // 打开新的登录窗口
         new loginWindows().setVisible(true);
     }
 
     private void resetEmailListen() {
         String email=emailTextField.getText();
-        // TODO 更新数据库
+        // 连接数据库并执行更新操作
+        updateEmailInDatabase(email, oldUsernameOrEmail);
 
         delefile();
         parent.dispose();
@@ -129,6 +203,70 @@ public class accMgWindow extends JFrame {
         parent.dispose();
         dispose();
         new loginWindows().setVisible(true);
+    }
+
+    // 更新数据库中的username_mail属性值
+    private void updateUsernameInDatabase(String newUsername, String oldUsernameOrEmail) {
+        Connection connection = null;
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
+
+            // 准备更新语句
+            String updateQuery = "UPDATE user SET username_mail = ? WHERE username_mail = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                // 设置更新参数
+                preparedStatement.setString(1, newUsername);
+                preparedStatement.setString(2, oldUsernameOrEmail);
+
+                // 执行更新
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // 处理数据库连接异常
+        } finally {
+            try {
+                // 关闭数据库连接
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // 更新数据库中的email属性值
+    private void updateEmailInDatabase(String newEmail, String oldUsernameOrEmail) {
+        Connection connection = null;
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
+
+            // 准备更新语句
+            String updateQuery = "UPDATE user SET email = ? WHERE email = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                // 设置更新参数
+                preparedStatement.setString(1, newEmail);
+                preparedStatement.setString(2, oldUsernameOrEmail);
+
+                // 执行更新
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // 处理数据库连接异常
+        } finally {
+            try {
+                // 关闭数据库连接
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void delefile(){
