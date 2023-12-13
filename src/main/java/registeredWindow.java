@@ -20,9 +20,6 @@ public class registeredWindow extends JFrame {
 
     private void button2registerLinsten() {
         if(regisverifyinfor()){
-            // TODO 信息输入数据库
-
-            //注释。。。
             this.setVisible(false);
             this.dispose();
         }else {
@@ -41,6 +38,12 @@ public class registeredWindow extends JFrame {
         // 检查用户名是否已存在
         if (isUsernameExists(username)) {
             JOptionPane.showMessageDialog(null, "已存在该用户名！", "错误", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // 检查账号名是否匹配复杂性要求
+        if (!isUsernameValid(username)) {
+            JOptionPane.showMessageDialog(null, "用户名至少包含数字、（大、小）英文字母，长度为6~12！", "错误", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -64,7 +67,7 @@ public class registeredWindow extends JFrame {
 
         // 检查密码是否匹配复杂性要求
         if (!isPasswordValid(password)) {
-            JOptionPane.showMessageDialog(null, "密码不符合复杂性要求！", "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "密码至少包含数字、（大、小）英文字母，长度为6~12！", "错误", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -74,7 +77,7 @@ public class registeredWindow extends JFrame {
         insertUserIntoDatabase(username, email, hashedPassword);
 
         while (true){
-            // TODO 用户名是否重复、邮箱检验？
+            //用户名是否重复、邮箱检验
             if(!password.equals(surpassword)){
                 JOptionPane.showMessageDialog(null, "密码不一致！", "错误", JOptionPane.ERROR_MESSAGE);
                 break;
@@ -85,10 +88,17 @@ public class registeredWindow extends JFrame {
         return flag;
     }
 
+    // 检查用户名是否符合复杂性要求的方法
+    private boolean isUsernameValid(String username) {
+        // 用户名至少包含一个数字、一个小写字母、一个大写字母，总长度至少为6
+        String usernameRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$";
+        return username.matches(usernameRegex);
+    }
+
     // 检查密码是否符合复杂性要求的方法
     private boolean isPasswordValid(String password) {
         // 密码至少包含一个数字、一个小写字母、一个大写字母，总长度至少为6
-        String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$";
+        String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$";
         return password.matches(passwordRegex);
     }
 

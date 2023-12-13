@@ -31,6 +31,7 @@ import java.util.Scanner;
  * @author zhang
  */
 public class loginWindows extends JFrame{
+    private String username; // 添加用户名成员变量
 
     public loginWindows() {
         initComponents();
@@ -98,6 +99,9 @@ public class loginWindows extends JFrame{
     private void loginButtonLinster() {
         //
         if(logverifyinfor()) {
+            // 在验证成功的情况下，将username_mail的值赋给username
+            username = accountField.getText();
+
             isselect=remberPasswd.isSelected();
             boolisselect();
             try {
@@ -129,7 +133,6 @@ public class loginWindows extends JFrame{
         String  username_mail,password;
         username_mail=accountField.getText();
         password= new String(passwordField1.getPassword());
-        // TODO 连接数据库验证信息
         // 连接数据库验证信息
         Connection connection = null;
         try {
@@ -141,18 +144,6 @@ public class loginWindows extends JFrame{
         try {
             // 对密码进行 SHA-256 哈希
             String hashedPassword = hashPasswordSHA256(password);
-            /*
-            String query = "SELECT * FROM user WHERE username_mail = ? AND password = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, username_mail);
-                preparedStatement.setString(2, hashedPassword);
-
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    // 如果结果集不为空，则验证成功
-                    flag = resultSet.next();
-                }
-            }
-            */
             // 修改查询条件，检查用户名或邮箱是否匹配
             String query = "SELECT * FROM user WHERE username_mail = ? OR email = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -504,4 +495,8 @@ public class loginWindows extends JFrame{
     // 自定义变量
     private final String accountInit = "请输入用户名或邮箱";
     private final String passwordInit = "请输入密码";
+
+    public String getUsername() {
+        return username;
+    }
 }
