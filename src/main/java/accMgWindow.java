@@ -19,7 +19,6 @@ import java.sql.ResultSet;
  * @author zhang
  */
 public class accMgWindow extends JFrame {
-    private String oldUsernameOrEmail;
 
     private ChatInterface parent;
     public accMgWindow(ChatInterface parent) {
@@ -84,8 +83,6 @@ public class accMgWindow extends JFrame {
                 String data = scanner.next();
                 stringBuilder.append(data);
             }
-            //原用户名 or 邮箱
-            oldUsernameOrEmail = stringBuilder.toString();
 
             String usernameOrEmail = stringBuilder.toString();
             String[] parts = usernameOrEmail.split(",");
@@ -95,7 +92,7 @@ public class accMgWindow extends JFrame {
             String otherColumn;
 
             // 判断是根据 username_mail 还是 email 查询
-            if (isUsernameMail(parts[0])) {
+            if (!isUsernameMail(parts[0])) {
                 query = "SELECT * FROM user WHERE username_mail = ?";
                 columnToUpdate = "username_mail";
                 otherColumn = "email";
@@ -171,10 +168,10 @@ public class accMgWindow extends JFrame {
     }
 
     private void resetUserNameListen() {
-        //
         String username=accountTextField.getText();
+        String email=emailTextField.getText();
         //连接数据库并执行更新操作
-        updateUsernameInDatabase(username, oldUsernameOrEmail);
+        updateUsernameInDatabase(email, username);
         // 删除文件
         delefile();
         // 关闭当前窗口和父窗口
@@ -185,9 +182,10 @@ public class accMgWindow extends JFrame {
     }
 
     private void resetEmailListen() {
+        String username=accountTextField.getText();
         String email=emailTextField.getText();
         // 连接数据库并执行更新操作
-        updateEmailInDatabase(email, oldUsernameOrEmail);
+        updateEmailInDatabase(username, email);
 
         delefile();
         parent.dispose();
@@ -206,18 +204,18 @@ public class accMgWindow extends JFrame {
     }
 
     // 更新数据库中的username_mail属性值
-    private void updateUsernameInDatabase(String newUsername, String oldUsernameOrEmail) {
+    private void updateUsernameInDatabase(String newusername, String email) {
         Connection connection = null;
         try {
             // 建立数据库连接
             connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
 
             // 准备更新语句
-            String updateQuery = "UPDATE user SET username_mail = ? WHERE username_mail = ?";
+            String updateQuery = "UPDATE user SET username_mail = ? WHERE email = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 // 设置更新参数
-                preparedStatement.setString(1, newUsername);
-                preparedStatement.setString(2, oldUsernameOrEmail);
+                preparedStatement.setString(1, newusername);
+                preparedStatement.setString(2, email);
 
                 // 执行更新
                 preparedStatement.executeUpdate();
@@ -238,18 +236,18 @@ public class accMgWindow extends JFrame {
     }
 
     // 更新数据库中的email属性值
-    private void updateEmailInDatabase(String newEmail, String oldUsernameOrEmail) {
+    private void updateEmailInDatabase(String newemail, String username_mail) {
         Connection connection = null;
         try {
             // 建立数据库连接
             connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
 
             // 准备更新语句
-            String updateQuery = "UPDATE user SET email = ? WHERE email = ?";
+            String updateQuery = "UPDATE user SET email = ? WHERE username_mail = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 // 设置更新参数
-                preparedStatement.setString(1, newEmail);
-                preparedStatement.setString(2, oldUsernameOrEmail);
+                preparedStatement.setString(1, newemail);
+                preparedStatement.setString(2, username_mail);
 
                 // 执行更新
                 preparedStatement.executeUpdate();
