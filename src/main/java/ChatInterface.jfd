@@ -88,6 +88,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "aboutItem"
 						"text": "关于"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "aboutItemLister", false ) )
 					} )
 				} )
 			}

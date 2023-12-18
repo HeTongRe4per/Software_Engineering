@@ -20,7 +20,6 @@ public class ChatInterface extends JFrame  {
 
     public ChatInterface() {
 		initComponents();
-		sendPaneEmpty();
         if(checkFileExistence(FILE_PATH)){
             if(readbool()){
                 chatArea.setBackground(new Color(48, 48, 48, 255)); // Set background color to gray with alpha channel
@@ -35,11 +34,11 @@ public class ChatInterface extends JFrame  {
             }
             isdark=readbool();
         }
+        sendPaneEmpty();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void accountMangeItemListen() {
-		//
         accMgWindow ac =new accMgWindow(ChatInterface.this);
 		ac.setVisible(true);
 	}
@@ -103,7 +102,6 @@ public class ChatInterface extends JFrame  {
 	}
 
     private void changemodelListen() {
-        // TODO add your code here
         if (!isdark) {
             chatArea.setBackground(new Color(48, 48, 48, 255)); // Set background color to gray with alpha channel
             chatArea.setForeground(Color.white);
@@ -159,6 +157,10 @@ public class ChatInterface extends JFrame  {
     private boolean checkFileExistence(String filePath) {
         File file = new File(filePath);
         return file.exists();
+    }
+
+    private void aboutItemLister() {
+        new about().setVisible(true);
     }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -228,6 +230,7 @@ public class ChatInterface extends JFrame  {
 
                 //---- aboutItem ----
                 aboutItem.setText("\u5173\u4e8e");
+                aboutItem.addActionListener(e -> aboutItemLister());
                 helpMenu.add(aboutItem);
             }
             mainMenuBar.add(helpMenu);

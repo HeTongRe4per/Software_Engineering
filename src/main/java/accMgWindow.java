@@ -38,12 +38,10 @@ public class accMgWindow extends JFrame {
     private int dataOfFile = 0; // 文件字节内容
     private void DecFile(File encFile, File decFile) throws Exception {
         if (!encFile.exists()) {
-            System.out.println("加密文件不存在");
             return;
         }
 
         if (!decFile.exists()) {
-            System.out.println("解密文件已创建");
             decFile.createNewFile();
         }
 
