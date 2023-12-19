@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :::p, par l {comp chatScrollPane::::823:x, comp snedPanel:::::x}, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :p:8:p, comp chatScrollPane::::408:x, space u:::p, comp snedPanel:::p::p, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :::p, par l {comp chatScrollPane:::p:880:p, comp snedPanel:::::x}, space ::17:x}}"
+			"$verticalGroup": "par l {seq {space :::p, comp chatScrollPane:::p:440:p, space :p:9:p, comp snedPanel::::107:x, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "Chat Interface"
@@ -14,9 +14,21 @@ new FormModel {
 			"foreground": sfield java.awt.Color black
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
 			"minimumSize": new java.awt.Dimension( 200, 300 )
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {seq l {comp sendScrollPane::::781:x, space :::p, comp sendButton:::p:34:p, space :p:2:p}}"
-				"$verticalGroup": "par l {seq {space :0:0:x, par l {comp sendScrollPane:::::x, seq {space :0:0:x, comp sendButton:::p:65:p}}, space :0:0:x}}"
+			addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "chatWinKeyPressed", true ) )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "chatScrollPane"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "chatArea"
+					"editable": false
+					"font": new java.awt.Font( "黑体", 0, 14 )
+					"border": new javax.swing.border.BevelBorder( 1, null, null, null, null )
+				} )
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "807, 74:1.0"
+				"$rowSpecs": "69, 6, 29:1.0"
+				"$alignTop": true
+				"$alignLeft": true
 			} ) {
 				name: "snedPanel"
 				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
@@ -28,22 +40,19 @@ new FormModel {
 						addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "sendPaneFocusGained", false ) )
 						addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "sendPaneFocusLost", false ) )
 					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridwidth": 2
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "sendButton"
 					"icon": new com.jformdesigner.model.SwingIcon( 0, "/send.png" )
-					"maximumSize": new java.awt.Dimension( 30, 30 )
-					"minimumSize": new java.awt.Dimension( 30, 30 )
-					"preferredSize": new java.awt.Dimension( 30, 30 )
+					"maximumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+					"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+					"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "sendButtonListen", false ) )
-				} )
-			} )
-			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "chatScrollPane"
-				add( new FormComponent( "javax.swing.JTextArea" ) {
-					name: "chatArea"
-					"editable": false
-					"font": new java.awt.Font( "黑体", 0, 14 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridx": 1
+					"gridy": 2
 				} )
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
@@ -94,7 +103,7 @@ new FormModel {
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 5 )
-			"size": new java.awt.Dimension( 845, 555 )
+			"size": new java.awt.Dimension( 915, 630 )
 		} )
 	}
 }
