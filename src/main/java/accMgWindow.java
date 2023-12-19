@@ -19,7 +19,8 @@ import java.sql.ResultSet;
  * @author zhang
  */
 public class accMgWindow extends JFrame {
-
+    static String oldusername;
+    String oldemail;
     private ChatInterface parent;
     public accMgWindow(ChatInterface parent) {
         initComponents();
@@ -73,6 +74,7 @@ public class accMgWindow extends JFrame {
         L_file.delete();
     }
     private void readfile(File file) {
+
         try {
             Scanner scanner = new Scanner(file);
             StringBuilder stringBuilder = new StringBuilder();
@@ -107,16 +109,20 @@ public class accMgWindow extends JFrame {
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
-                        // 从结果集中获取其他列的值
+                        // 从结果集中获取另一列的值
                         String otherColumnValue = resultSet.getString(otherColumn);
 
                         // 更新 UI
                         if (columnToUpdate.equals("username_mail")) {
                             accountTextField.setText(parts[0]);
                             emailTextField.setText(otherColumnValue);
+                            oldusername = parts[0];
+                            oldemail = otherColumnValue;
                         } else {
                             accountTextField.setText(otherColumnValue);
                             emailTextField.setText(parts[0]);
+                            oldemail = parts[0];
+                            oldusername = otherColumnValue;
                         }
                         passwordField1.setEchoChar('*');
                     }
@@ -156,20 +162,21 @@ public class accMgWindow extends JFrame {
     }
 
     private void delAccountListen() {
-        //
-        new confirmDelAccountWindow(this).setVisible(true);
+        confirmDelAccountWindow confirmDialog = new confirmDelAccountWindow(this);
+        confirmDialog.setVisible(true);
 
-        delefile();
-        parent.dispose();
-        dispose();
-        new loginWindows().setVisible(true);
+        if (confirmDialog.isConfirmed()) {
+            delefile();
+            parent.dispose();
+            dispose();
+            new loginWindows().setVisible(true);
+        }
     }
 
     private void resetUserNameListen() {
-        String username=accountTextField.getText();
-        String email=emailTextField.getText();
+        String newusername=accountTextField.getText();
         //连接数据库并执行更新操作
-        updateUsernameInDatabase(email, username);
+        updateUsernameInDatabase(oldusername,newusername);
         // 删除文件
         delefile();
         // 关闭当前窗口和父窗口
@@ -180,10 +187,9 @@ public class accMgWindow extends JFrame {
     }
 
     private void resetEmailListen() {
-        String username=accountTextField.getText();
-        String email=emailTextField.getText();
+        String newemail=emailTextField.getText();
         // 连接数据库并执行更新操作
-        updateEmailInDatabase(username, email);
+        updateEmailInDatabase(oldemail,newemail);
 
         delefile();
         parent.dispose();
@@ -192,9 +198,7 @@ public class accMgWindow extends JFrame {
     }
 
     private void resetPasswdListen() {
-        //todo 账号邮箱
-        new passwdUpdateWindow2("123").setVisible(true);
-
+        new passwdUpdateWindow2(oldusername).setVisible(true);
         delefile();
         parent.dispose();
         dispose();
@@ -202,18 +206,18 @@ public class accMgWindow extends JFrame {
     }
 
     // 更新数据库中的username_mail属性值
-    private void updateUsernameInDatabase(String newusername, String email) {
+    private void updateUsernameInDatabase(String oldusername, String newusername) {
         Connection connection = null;
         try {
             // 建立数据库连接
             connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
 
             // 准备更新语句
-            String updateQuery = "UPDATE user SET username_mail = ? WHERE email = ?";
+            String updateQuery = "UPDATE user SET username_mail = ? WHERE username_mail = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 // 设置更新参数
-                preparedStatement.setString(1, newusername);
-                preparedStatement.setString(2, email);
+                preparedStatement.setString(1,newusername);
+                preparedStatement.setString(2,oldusername);
 
                 // 执行更新
                 preparedStatement.executeUpdate();
@@ -234,18 +238,18 @@ public class accMgWindow extends JFrame {
     }
 
     // 更新数据库中的email属性值
-    private void updateEmailInDatabase(String newemail, String username_mail) {
+    private void updateEmailInDatabase(String newemail, String oldemail) {
         Connection connection = null;
         try {
             // 建立数据库连接
             connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
 
             // 准备更新语句
-            String updateQuery = "UPDATE user SET email = ? WHERE username_mail = ?";
+            String updateQuery = "UPDATE user SET email = ? WHERE email = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 // 设置更新参数
-                preparedStatement.setString(1, newemail);
-                preparedStatement.setString(2, username_mail);
+                preparedStatement.setString(1, oldemail);
+                preparedStatement.setString(2, newemail);
 
                 // 执行更新
                 preparedStatement.executeUpdate();
@@ -277,6 +281,7 @@ public class accMgWindow extends JFrame {
             }
         }
     }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
