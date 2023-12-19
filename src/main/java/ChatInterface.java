@@ -315,7 +315,7 @@ public class ChatInterface extends JFrame  {
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(chatScrollPane, GroupLayout.PREFERRED_SIZE, 880, GroupLayout.PREFERRED_SIZE)
                         .addComponent(snedPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap(22, Short.MAX_VALUE))
+                    .addContainerGap(17, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -326,7 +326,7 @@ public class ChatInterface extends JFrame  {
                     .addComponent(snedPanel, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                     .addContainerGap())
         );
-        setSize(920, 630);
+        setSize(915, 630);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
