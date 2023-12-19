@@ -1,4 +1,3 @@
-import java.awt.*;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import java.sql.Connection;
@@ -16,26 +15,27 @@ import java.sql.SQLException;
  * @author zhang
  */
 public class confirmDelAccountWindow extends JDialog {
-    private boolean confirmed = false;
-    public confirmDelAccountWindow(Window owner) {
-        super(owner);
-        initComponents();
-    }
+    private accMgWindow parentAccMgWindow;
+    private ChatInterface parentLoginWindows;
 
-    public boolean isConfirmed() {
-        return confirmed;
+    public confirmDelAccountWindow(accMgWindow parentAccMgWindow, ChatInterface parentLoginWindows) {
+        super(parentAccMgWindow);
+        this.parentAccMgWindow = parentAccMgWindow;
+        this.parentLoginWindows = parentLoginWindows;
+        initComponents();
     }
 
     private void confirmDelListen() {
         String username = accMgWindow.oldusername;
         // 执行删除数据库操作
         deleteAccountFromDatabase(username);
-        // 在确认删除时设置为true
-        confirmed = true;
         // 关闭对话框
         this.setVisible(false);
         this.dispose();
-
+        // 关闭父窗口（accMgWindow）
+        parentAccMgWindow.dispose();
+        // 关闭登录窗口（loginWindows）
+        parentLoginWindows.dispose();
         // 打开loginWindows窗口
         new loginWindows().setVisible(true);
     }
