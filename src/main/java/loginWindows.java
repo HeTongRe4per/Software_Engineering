@@ -1,25 +1,13 @@
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.Arrays;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import javax.swing.*;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
+import java.sql.*;
 import java.util.Scanner;
 /*
  * Created by JFormDesigner on Thu Nov 30 13:18:45 CST 2023
@@ -104,11 +92,7 @@ public class loginWindows extends JFrame{
 
             isselect=remberPasswd.isSelected();
             boolisselect();
-            try {
-                remberPasswdListen();//。
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            remberPasswdListen();//。
             this.setVisible(false);
             this.dispose();
             new ChatInterface().setVisible(true);
@@ -134,7 +118,7 @@ public class loginWindows extends JFrame{
         username_mail=accountField.getText();
         password= new String(passwordField1.getPassword());
         // 连接数据库验证信息
-        Connection connection = null;
+        Connection connection;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
         } catch (SQLException e) {
@@ -192,7 +176,7 @@ public class loginWindows extends JFrame{
             throw new RuntimeException(e);
         }
     }
-    private String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
     private final int numOfEncAndDec = 0x99; // 加密解密秘钥
     private int dataOfFile = 0; // 文件字节内容
@@ -232,7 +216,15 @@ public class loginWindows extends JFrame{
         }
         return value;
     }
-    private void remberPasswdListen() throws IOException {
+    private void remberPasswdListen() {
+        try {
+            remberPasswdAction();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void remberPasswdAction() throws IOException {
         // 记住密码，加密保存账号和密码到文件
         File F_file = new File(FILE_PATH+"-F");
         F_file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
@@ -349,6 +341,21 @@ public class loginWindows extends JFrame{
         passwordField1.requestFocusInWindow();
     }
 
+    private void accountFieldKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_DOWN) {
+            passwordField1.requestFocusInWindow();
+        }
+    }
+
+    private void passwordField1KeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            loginButton.doClick();
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            accountField.requestFocus();
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -388,6 +395,12 @@ public class loginWindows extends JFrame{
             }
         });
         accountField.addActionListener(e -> accountFieldListen());
+        accountField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                accountFieldKeyPressed(e);
+            }
+        });
 
         //---- loginButton ----
         loginButton.setText("\u767b\u5f55");
@@ -400,10 +413,7 @@ public class loginWindows extends JFrame{
 
         //---- remberPasswd ----
         remberPasswd.setText("\u8bb0\u4f4f\u5bc6\u7801");
-        remberPasswd.addActionListener(e -> {try {
-            remberPasswdListen();} catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }});
+        remberPasswd.addActionListener(e -> remberPasswdListen());
 
         //---- forgotPasswdButton ----
         forgotPasswdButton.setText("\u5fd8\u8bb0\u5bc6\u7801");
@@ -422,58 +432,64 @@ public class loginWindows extends JFrame{
                 passwordField1FocusLost();
             }
         });
+        passwordField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                passwordField1KeyPressed(e);
+            }
+        });
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-                contentPaneLayout.createParallelGroup()
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(59, 59, 59)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(label2)
+                        .addComponent(label3))
+                    .addGap(18, 18, 18)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(label2)
-                                        .addComponent(label3))
-                                .addGap(18, 18, 18)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(remberPasswd)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                                .addComponent(forgotPasswdButton))
-                                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                        .addComponent(accountField, GroupLayout.Alignment.LEADING))
-                                .addGap(87, 87, 87))
+                            .addComponent(remberPasswd)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addComponent(forgotPasswdButton))
+                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addComponent(accountField, GroupLayout.Alignment.LEADING)
+                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                    .addGap(87, 87, 87))
+                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                    .addContainerGap(148, Short.MAX_VALUE)
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                .addContainerGap(148, Short.MAX_VALUE)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                                .addComponent(registerButton)
-                                                .addContainerGap())
-                                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                                .addComponent(label1)
-                                                .addGap(130, 130, 130))))
+                            .addComponent(registerButton)
+                            .addContainerGap())
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addComponent(label1)
+                            .addGap(130, 130, 130))))
         );
         contentPaneLayout.setVerticalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(label1)
-                                .addGap(27, 27, 27)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(label2)
-                                        .addComponent(accountField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                                .addGap(28, 28, 28)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(label3)
-                                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(forgotPasswdButton)
-                                        .addComponent(remberPasswd))
-                                .addGap(18, 18, 18)
-                                .addComponent(registerButton)
-                                .addContainerGap(11, Short.MAX_VALUE))
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(label1)
+                    .addGap(27, 27, 27)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label2)
+                        .addComponent(accountField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addGap(28, 28, 28)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label3)
+                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(forgotPasswdButton)
+                        .addComponent(remberPasswd))
+                    .addGap(18, 18, 18)
+                    .addComponent(registerButton)
+                    .addContainerGap(11, Short.MAX_VALUE))
         );
         setSize(430, 325);
         setLocationRelativeTo(null);
