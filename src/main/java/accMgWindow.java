@@ -202,7 +202,7 @@ public class accMgWindow extends JFrame {
 
         // 判断 newusername 是否满足复杂性要求的正则表达式
         if (!isValidUsername(newusername)) {
-            JOptionPane.showMessageDialog(this, "用户名不符合复杂性要求！", "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "用户名至少包含数字、（大、小）英文字母，长度为6~12！", "错误", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -301,7 +301,7 @@ public class accMgWindow extends JFrame {
 
         // 判断newemail是否满足复杂性要求的正则表达式
         if (!isValidEmail(newemail)) {
-            JOptionPane.showMessageDialog(this, "邮箱不符合复杂性要求！", "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "邮箱至少包含数字、（大、小）英文字母，长度为6~12！", "错误", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
