@@ -89,7 +89,7 @@ public class loginWindows extends JFrame{
         if(logverifyinfor()) {
             // 在验证成功的情况下，将username_mail的值赋给username
             username = accountField.getText();
-
+            username_s = username;
             isselect=remberPasswd.isSelected();
             boolisselect();
             remberPasswdListen();//。
@@ -515,4 +515,6 @@ public class loginWindows extends JFrame{
     public String getUsername() {
         return username;
     }
+
+    public static String username_s;
 }

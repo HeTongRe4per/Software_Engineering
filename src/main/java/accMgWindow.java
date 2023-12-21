@@ -194,7 +194,6 @@ public class accMgWindow extends JFrame {
     private void resetPasswdListen() {
         //todo 账号邮箱
         new passwdUpdateWindow2("123").setVisible(true);
-
         delefile();
         parent.dispose();
         dispose();
@@ -393,4 +392,5 @@ public class accMgWindow extends JFrame {
     private JButton resetPasswdButton;
     private JPasswordField passwordField1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
 }

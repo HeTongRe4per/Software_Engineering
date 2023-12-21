@@ -51,7 +51,10 @@ public class ChatInterface extends JFrame  {
 	private void sendButtonListen() {
 		if (sendButtonFlag) {
 			inputMessage = sendPane.getText();
-			chatArea.append("\n用户：\n" + inputMessage + "\n");
+
+            String user = loginWindows.username_s;
+            System.out.println(user);
+			chatArea.append(user + "：\n" + inputMessage + "\n");
 			sendPane.setText("");
 			sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
 			sendButtonFlag =false;  // 锁定按钮监听
@@ -59,7 +62,7 @@ public class ChatInterface extends JFrame  {
 			// 异步执行 chatApiHttpClient
 			CompletableFuture.supplyAsync(chatApiHttpClient::new)
 					.thenAcceptAsync(chatApiHttpClient -> {
-						chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n");
+						chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n\n");
 						sendButton.setEnabled(true);    // 解除发送按钮锁定
 						sendButtonFlag = true;  // 解除按钮监听锁定
 					});
