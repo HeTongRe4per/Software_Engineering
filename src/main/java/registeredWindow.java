@@ -43,7 +43,7 @@ public class registeredWindow extends JFrame {
 
         // 检查账号名是否匹配复杂性要求
         if (!isUsernameValid(username)) {
-            JOptionPane.showMessageDialog(null, "用户名至少包含数字、（大、小）英文字母，长度为6~12！", "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "用户名只能包含（大小写）字母、数字和下划线，长度在4到16位之间！", "错误", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -67,7 +67,7 @@ public class registeredWindow extends JFrame {
 
         // 检查密码是否匹配复杂性要求
         if (!isPasswordValid(password)) {
-            JOptionPane.showMessageDialog(null, "密码至少包含数字、（大、小）英文字母，长度为6~12！", "错误", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "密码至少包含数字、（大或小写）英文字母，长度为6~64！", "错误", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -90,15 +90,21 @@ public class registeredWindow extends JFrame {
 
     // 检查用户名是否符合复杂性要求的方法
     private boolean isUsernameValid(String username) {
-        // 用户名至少包含一个数字、一个小写字母、一个大写字母，总长度至少为6
-        String usernameRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$";
+        // 用户名只能包含一个数字、一个小写字母、一个大写字母，总长度至少为6
+        //String usernameRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$";
+
+        // 用户名只能包含字母、数字和下划线，长度在4到16位之间
+        String usernameRegex = "^[a-zA-Z0-9_]{4,16}$";
         return username.matches(usernameRegex);
     }
 
     // 检查密码是否符合复杂性要求的方法
     private boolean isPasswordValid(String password) {
         // 密码至少包含一个数字、一个小写字母、一个大写字母，总长度至少为6
-        String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$";
+        //String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$";
+
+        // 密码至少包含一个大写或小写字母，以及一个数字，总长度在6到64位之间
+        String passwordRegex = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9\\p{Punct}]{6,64}$";
         return password.matches(passwordRegex);
     }
 
