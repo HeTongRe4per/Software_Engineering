@@ -1,5 +1,8 @@
+import com.jgoodies.forms.factories.Borders;
+
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -51,7 +54,10 @@ public class ChatInterface extends JFrame  {
 	private void sendButtonListen() {
 		if (sendButtonFlag) {
 			inputMessage = sendPane.getText();
-			chatArea.append("\n用户：\n" + inputMessage + "\n");
+
+            String user = loginWindows.username_s;
+            System.out.println(user);
+			chatArea.append(user + "：\n" + inputMessage + "\n");
 			sendPane.setText("");
 			sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
 			sendButtonFlag =false;  // 锁定按钮监听
@@ -59,7 +65,7 @@ public class ChatInterface extends JFrame  {
 			// 异步执行 chatApiHttpClient
 			CompletableFuture.supplyAsync(chatApiHttpClient::new)
 					.thenAcceptAsync(chatApiHttpClient -> {
-						chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n");
+						chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n\n");
 						sendButton.setEnabled(true);    // 解除发送按钮锁定
 						sendButtonFlag = true;  // 解除按钮监听锁定
 					});
@@ -169,6 +175,11 @@ public class ChatInterface extends JFrame  {
             System.exit(0);
         }
     }
+
+    private void resetChat() {
+        chatAPI.resetInputString();
+        chatArea.setText("");
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         mainMenuBar = new JMenuBar();
@@ -176,13 +187,14 @@ public class ChatInterface extends JFrame  {
         accountMangeItem = new JMenuItem();
         logoutItem = new JMenuItem();
         toolMenu = new JMenu();
-        settingItem = new JMenuItem();
         changemodel = new JMenuItem();
+        menuItem1 = new JMenuItem();
+        settingItem = new JMenuItem();
         helpMenu = new JMenu();
         aboutItem = new JMenuItem();
         chatScrollPane = new JScrollPane();
         chatArea = new JTextArea();
-        snedPanel = new JPanel();
+        sendPanel = new JPanel();
         sendScrollPane = new JScrollPane();
         sendPane = new JTextPane();
         sendButton = new JButton();
@@ -191,7 +203,7 @@ public class ChatInterface extends JFrame  {
         setTitle("Chat Interface");
         setForeground(Color.black);
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
-        setMinimumSize(new Dimension(200, 300));
+        setMinimumSize(new Dimension(375, 400));
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -199,6 +211,7 @@ public class ChatInterface extends JFrame  {
             }
         });
         var contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
 
         //======== mainMenuBar ========
         {
@@ -224,16 +237,21 @@ public class ChatInterface extends JFrame  {
             {
                 toolMenu.setText("\u5de5\u5177");
 
-                //---- settingItem ----
-                settingItem.setText("\u8bbe\u7f6e");
-                settingItem.addActionListener(e -> settingItemListen());
-                toolMenu.add(settingItem);
-                toolMenu.addSeparator();
-
                 //---- changemodel ----
                 changemodel.setText("\u5207\u6362\u80cc\u666f\u8272");
                 changemodel.addActionListener(e -> changemodelListen());
                 toolMenu.add(changemodel);
+
+                //---- menuItem1 ----
+                menuItem1.setText("\u91cd\u5f00\u804a\u5929");
+                menuItem1.addActionListener(e -> resetChat());
+                toolMenu.add(menuItem1);
+                toolMenu.addSeparator();
+
+                //---- settingItem ----
+                settingItem.setText("\u8bbe\u7f6e");
+                settingItem.addActionListener(e -> settingItemListen());
+                toolMenu.add(settingItem);
             }
             mainMenuBar.add(toolMenu);
 
@@ -252,27 +270,26 @@ public class ChatInterface extends JFrame  {
 
         //======== chatScrollPane ========
         {
+            chatScrollPane.setBorder(Borders.DIALOG_BORDER);
 
             //---- chatArea ----
             chatArea.setEditable(false);
             chatArea.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
-            chatArea.setBorder(new BevelBorder(BevelBorder.LOWERED));
+            chatArea.setBorder(new EtchedBorder());
+            chatArea.setLineWrap(true);
             chatScrollPane.setViewportView(chatArea);
         }
+        contentPane.add(chatScrollPane, BorderLayout.CENTER);
 
-        //======== snedPanel ========
+        //======== sendPanel ========
         {
-            snedPanel.setLayout(new GridBagLayout());
-            ((GridBagLayout)snedPanel.getLayout()).columnWidths = new int[] {807, 74, 0};
-            ((GridBagLayout)snedPanel.getLayout()).rowHeights = new int[] {69, 6, 29, 0};
-            ((GridBagLayout)snedPanel.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-            ((GridBagLayout)snedPanel.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 1.0E-4};
 
             //======== sendScrollPane ========
             {
 
                 //---- sendPane ----
                 sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
+                sendPane.setBorder(new EmptyBorder(5, 5, 5, 5));
                 sendPane.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -291,9 +308,6 @@ public class ChatInterface extends JFrame  {
                 });
                 sendScrollPane.setViewportView(sendPane);
             }
-            snedPanel.add(sendScrollPane, new GridBagConstraints(0, 0, 2, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(0, 0, 0, 0), 0, 0));
 
             //---- sendButton ----
             sendButton.setIcon(new ImageIcon(getClass().getResource("/send.png")));
@@ -301,32 +315,32 @@ public class ChatInterface extends JFrame  {
             sendButton.setMinimumSize(null);
             sendButton.setPreferredSize(null);
             sendButton.addActionListener(e -> sendButtonListen());
-            snedPanel.add(sendButton, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
-                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(0, 0, 0, 0), 0, 0));
-        }
 
-        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
-        contentPane.setLayout(contentPaneLayout);
-        contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(chatScrollPane, GroupLayout.PREFERRED_SIZE, 880, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(snedPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap(17, Short.MAX_VALUE))
-        );
-        contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(chatScrollPane, GroupLayout.PREFERRED_SIZE, 440, GroupLayout.PREFERRED_SIZE)
-                    .addGap(9, 9, 9)
-                    .addComponent(snedPanel, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                    .addContainerGap())
-        );
-        setSize(915, 630);
+            GroupLayout sendPanelLayout = new GroupLayout(sendPanel);
+            sendPanel.setLayout(sendPanelLayout);
+            sendPanelLayout.setHorizontalGroup(
+                sendPanelLayout.createParallelGroup()
+                    .addGroup(sendPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(sendPanelLayout.createParallelGroup()
+                            .addGroup(sendPanelLayout.createSequentialGroup()
+                                .addGap(0, 852, Short.MAX_VALUE)
+                                .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(sendScrollPane))
+                        .addContainerGap())
+            );
+            sendPanelLayout.setVerticalGroup(
+                sendPanelLayout.createParallelGroup()
+                    .addGroup(sendPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(sendScrollPane, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(10, Short.MAX_VALUE))
+            );
+        }
+        contentPane.add(sendPanel, BorderLayout.SOUTH);
+        setSize(950, 655);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -337,13 +351,14 @@ public class ChatInterface extends JFrame  {
     private JMenuItem accountMangeItem;
     private JMenuItem logoutItem;
     private JMenu toolMenu;
-    private JMenuItem settingItem;
     private JMenuItem changemodel;
+    private JMenuItem menuItem1;
+    private JMenuItem settingItem;
     private JMenu helpMenu;
     private JMenuItem aboutItem;
     private JScrollPane chatScrollPane;
     private JTextArea chatArea;
-    private JPanel snedPanel;
+    private JPanel sendPanel;
     private JScrollPane sendScrollPane;
     private JTextPane sendPane;
     private JButton sendButton;
@@ -356,6 +371,8 @@ public class ChatInterface extends JFrame  {
     private boolean isdark=false;
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
+
+    public static String fornt = "微软雅黑";
 
 	// 自定义方法
 }

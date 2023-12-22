@@ -89,7 +89,7 @@ public class loginWindows extends JFrame{
         if(logverifyinfor()) {
             // 在验证成功的情况下，将username_mail的值赋给username
             username = accountField.getText();
-
+            username_s = username;
             isselect=remberPasswd.isSelected();
             boolisselect();
             remberPasswdListen();//。
@@ -250,12 +250,12 @@ public class loginWindows extends JFrame{
 
     private void EncFile(File srcFile, File encFile) throws Exception {
         if (!srcFile.exists()) {
-            System.out.println("source file not exist");
+            //System.out.println("source file not exist");
             return;
         }
 
         if (!encFile.exists()) {
-            System.out.println("encrypt file created");
+            //System.out.println("encrypt file created");
             encFile.createNewFile();
         }
         InputStream fis = new FileInputStream(srcFile);
@@ -272,12 +272,12 @@ public class loginWindows extends JFrame{
 
     private void DecFile(File encFile, File decFile) throws Exception {
         if (!encFile.exists()) {
-            System.out.println("加密文件不存在");
+            //System.out.println("加密文件不存在");
             return;
         }
 
         if (!decFile.exists()) {
-            System.out.println("解密文件已创建");
+            //System.out.println("解密文件已创建");
             decFile.createNewFile();
         }
 
@@ -350,8 +350,7 @@ public class loginWindows extends JFrame{
     private void passwordField1KeyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             loginButton.doClick();
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_UP) {
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             accountField.requestFocus();
         }
     }
@@ -515,4 +514,6 @@ public class loginWindows extends JFrame{
     public String getUsername() {
         return username;
     }
+
+    public static String username_s;
 }

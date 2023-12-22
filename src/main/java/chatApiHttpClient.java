@@ -37,8 +37,10 @@ public class chatApiHttpClient {
             buildJsonPayload.payload.append(buildJsonPayload.historyMessage);
 
             // 设置请求体
+            System.out.println(buildJsonPayload.payload.length());
             String jsonPayload = buildJsonPayload.payload.deleteCharAt( buildJsonPayload.payload.length() - 1).toString() + "]}";
             StringEntity entity = new StringEntity(jsonPayload, "UTF-8");
+            System.out.println("输入" + jsonPayload);
             httpPost.setEntity(entity);
 
             // 发送请求并获取响应
@@ -55,6 +57,7 @@ public class chatApiHttpClient {
                 // 处理传出Json
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(output.toString());
+                System.out.println("原始输出：" + jsonNode);
 
                 // 获取"content"字段的内容并传出响应内容
                 outputMessage = jsonNode
@@ -65,11 +68,13 @@ public class chatApiHttpClient {
                         .asText();
                 buildJsonPayload.payload.append(",");
                 buildJsonPayload.getOutputMessage();
+
                 // 添加助手输出
                 buildJsonPayload.payload.append(buildJsonPayload.historyReply);
                 // 删除尾随逗号并重载 JSON
                 buildJsonPayload.payload.deleteCharAt(  buildJsonPayload.payload.length() - 1);
                 buildJsonPayload.payload.append(",");
+                System.out.println("界面输出" + buildJsonPayload.payload.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
