@@ -56,16 +56,15 @@ public class ChatInterface extends JFrame  {
 			inputMessage = sendPane.getText();
 
             String user = loginWindows.username_s;
-            System.out.println(user);
 			chatArea.append(user + "：\n" + inputMessage + "\n");
 			sendPane.setText("");
 			sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
 			sendButtonFlag =false;  // 锁定按钮监听
 
-			// 异步执行 chatApiHttpClient
-			CompletableFuture.supplyAsync(chatApiHttpClient::new)
-					.thenAcceptAsync(chatApiHttpClient -> {
-						chatArea.append("\nChatGPT：\n" + chatApiHttpClient.outputMessage + "\n\n");
+			// 异步执行 chatAPI
+			CompletableFuture.supplyAsync(chatAPI::new)
+					.thenAcceptAsync(chatAPI -> {
+						chatArea.append("\nChatGPT：\n" + chatAPI.answer + "\n\n");
 						sendButton.setEnabled(true);    // 解除发送按钮锁定
 						sendButtonFlag = true;  // 解除按钮监听锁定
 					});
@@ -82,8 +81,10 @@ public class ChatInterface extends JFrame  {
 		// 处理特定的按键
 		if (keyCode == KeyEvent.VK_ENTER && e.isControlDown()) {
 			sendButton.doClick();
-		}
-	}
+		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+    }
 
 	private void sendPaneFocusGained() {
 		String temp = sendPane.getText();
@@ -171,7 +172,9 @@ public class ChatInterface extends JFrame  {
 
     private void chatWinKeyPressed(KeyEvent e) {
         // TODO 主窗口ESC快捷键终止主进程
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        if (e.getKeyCode() == 27) {
+            /*this.setVisible(false);
+            this.dispose();*/
             System.exit(0);
         }
     }
@@ -180,6 +183,12 @@ public class ChatInterface extends JFrame  {
         chatAPI.resetInputString();
         chatArea.setText("");
     }
+
+    private void chatAreaKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);
+    }
+
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         mainMenuBar = new JMenuBar();
@@ -371,7 +380,6 @@ public class ChatInterface extends JFrame  {
     private boolean isdark=false;
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
-
     public static String fornt = "微软雅黑";
 
 	// 自定义方法

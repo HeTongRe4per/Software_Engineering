@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:59:p, par t {comp label2:::p::p, comp label3:::p::p}, space s:::p, par t {seq {comp remberPasswd:::p::p, space ::26:x, comp forgotPasswdButton:::p::p}, comp loginButton::l::180:x, comp accountField::l:::x, comp passwordField1::l::180:x}, space :p:87:p}, seq t {space ::148:x, par l {seq t {comp registerButton:::p::p, space :::p}, seq t {comp label1:::p::p, space :p:130:p}}}}"
-			"$verticalGroup": "par l {seq l {space :p:20:p, comp label1:::p::p, space :p:27:p, par b {comp label2::b:p::p, comp accountField::b:p:25:p}, space :p:28:p, par b {comp label3::b:p::p, comp passwordField1::b:p:25:p}, space s:::p, comp loginButton:::p:25:p, space s:::p, par b {comp forgotPasswdButton::b:p::p, comp remberPasswd::b:p::p}, space s:::p, comp registerButton:::p::p, space ::11:x}}"
+			"$horizontalGroup": "par l {seq l {space :p:59:p, par t {comp label2:::p::p, comp label3:::p::p}, space s:::p, par t {seq {comp remberPasswd:::p::p, space ::39:x, comp forgotPasswdButton:::p::p}, comp loginButton::l::190:x, comp accountField::l:::x, comp passwordField1::l::190:x}, space :p:87:p}, seq t {space ::158:x, par l {seq t {comp registerButton:::p::p, space :::p}, seq t {comp label1:::p::p, space :p:130:p}}}}"
+			"$verticalGroup": "par l {seq l {space :p:20:p, comp label1:::p::p, space :p:27:p, par b {comp label2::b:p::p, comp accountField::b:p:25:p}, space :p:28:p, par b {comp label3::b:p::p, comp passwordField1::b:p:25:p}, space s:::p, comp loginButton:::p:25:p, space s:::p, par b {comp forgotPasswdButton::b:p::p, comp remberPasswd::b:p::p}, space s:::p, comp registerButton:::p::p, space ::13:x}}"
 		} ) {
 			name: "this"
 			"resizable": false
@@ -63,7 +63,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 430, 325 )
+			"size": new java.awt.Dimension( 440, 335 )
 		} )
 	}
 }

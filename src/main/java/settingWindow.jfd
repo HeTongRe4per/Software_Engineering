@@ -70,13 +70,13 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JComboBox" ) {
 					name: "comboBox1"
 					"model": new javax.swing.DefaultComboBoxModel {
-						selectedItem: "Default"
-						addElement( "Default" )
+						selectedItem: "Arc"
 						addElement( "Arc" )
 						addElement( "Arc - Orange" )
 						addElement( "Cyan light" )
 						addElement( "Light Flat" )
 						addElement( "Solarized Light" )
+						addElement( "Windows" )
 					}
 					addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "lookAndFeelBox", true ) )
 				}, new FormLayoutConstraints( null ) {
@@ -149,3 +149,4 @@ new FormModel {
 		} )
 	}
 }
+

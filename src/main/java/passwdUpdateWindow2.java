@@ -50,7 +50,7 @@ public class passwdUpdateWindow2 extends JFrame {
     // 检查密码是否符合复杂性要求的方法
     private boolean isPasswordValid(String password) {
         // 密码至少包含一个数字、一个小写字母、一个大写字母，总长度至少为6
-        String passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$";
+        String passwordRegex = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9\\p{Punct}]{6,64}$";
         return password.matches(passwordRegex);
     }
 

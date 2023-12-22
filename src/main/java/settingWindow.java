@@ -19,8 +19,10 @@ public class settingWindow extends JFrame{
         if(!loginWindows.checkFileExistence(FILE_PATH)){
             initWindow();
         }else{
-            //TODO 读取文件赋值url和apikey
-
+            readfile();
+        }
+        if (!loginWindows.checkFileExistence(FILE_PATH_2)) {
+            readthemeFile();
         }
     }
 
@@ -28,23 +30,26 @@ public class settingWindow extends JFrame{
     private void initWindow() {
         textField2.setText(Url);
         textField1.setText(ApiKey);
-
     }
     private void button2Linter() {
-        // TODO 判定输入链接格式和APIKEY格式,没问题则建立文件
-        try {
-            // 修改外观
-            UIManager.setLookAndFeel(main.lookAndFeel);
-        } catch (Exception e) {
-            e.printStackTrace();
+        String url = textField2.getText();
+        String apikey = textField1.getText();
+        if(url.equals("")||apikey.equals("")) {
+            JOptionPane.showMessageDialog(null,"请输入完整信息","错误",JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                settinginfor();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                themeSet();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            this.setVisible(false);
+            this.dispose();
         }
-        try {
-            settinginfor();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        this.setVisible(false);
-        this.dispose();
     }
     private void settinginfor() throws IOException {
         File file = new File(FILE_PATH);
@@ -53,13 +58,52 @@ public class settingWindow extends JFrame{
         String url, apikey, theme;
         url = textField2.getText();
         apikey = textField1.getText();
-        theme = main.lookAndFeel;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(url + "," + apikey);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private void themeSet() throws IOException {// TODO 主题文件写
+        File file = new File(FILE_PATH_2);
+        file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
+        file.createNewFile(); // 创建文件（如果不存在）
+        String theme;
+        theme = main.lookAndFeel;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(theme);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readthemeFile() {// TODO 主题文件读
+        File file = new File(FILE_PATH_2);
+        try {
+            // 创建Scanner对象读取文件
+            Scanner scanner = new Scanner(file);
+            // 使用StringBuilder拼接读取到的数据
+            StringBuilder stringBuilder = new StringBuilder();
+            // 读取文件内容
+            while (scanner.hasNext()) {
+                String data = scanner.next();
+                // 将字段添加到StringBuilder中
+                stringBuilder.append(data);
+            }
+            // 将StringBuilder的内容赋值给文本框
+            String Text = stringBuilder.toString();
+            String[] parts = Text.split(",");
+            // TODO 主题读取到UI
+
+
+            // 关闭Scanner
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void readfile(){
         File file = new File(FILE_PATH);
         try {
@@ -77,8 +121,8 @@ public class settingWindow extends JFrame{
             String Text = stringBuilder.toString();
             String[] parts = Text.split(",");
             //TODO 主界面读取文件赋值
-            //textField2.setText(parts[0]);
-            //textField2.setText(parts[1]);
+            textField2.setText(parts[0]);
+            textField1.setText(parts[1]);
             // 关闭Scanner
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -87,6 +131,7 @@ public class settingWindow extends JFrame{
     }
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\settinginfor";
+    private final String FILE_PATH_2 = localAppDATA+"\\CIF\\themeFile";
     private void button3Listen() {
         //
         this.setVisible(false);
@@ -97,13 +142,14 @@ public class settingWindow extends JFrame{
         String lookAndFeel = (String) e.getItem();
         try {
             switch (lookAndFeel) {
-                case "Default": main.lookAndFeel = UIManager.getSystemLookAndFeelClassName(); break;
+                case "Windows": main.lookAndFeel = UIManager.getSystemLookAndFeelClassName(); break;
                 case "Arc": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme"; break;
                 case "Arc - Orange": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme"; break;
                 case "Cyan light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme"; break;
                 case "Light Flat": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme"; break;
                 case "Solarized Light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme";
             }
+            themeSet();
         } catch (Exception exception) {
             exception.printStackTrace();
         }

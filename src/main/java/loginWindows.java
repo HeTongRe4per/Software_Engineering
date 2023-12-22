@@ -451,14 +451,14 @@ public class loginWindows extends JFrame{
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addComponent(remberPasswd)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                             .addComponent(forgotPasswdButton))
-                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                         .addComponent(accountField, GroupLayout.Alignment.LEADING)
-                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                     .addGap(87, 87, 87))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(148, Short.MAX_VALUE)
+                    .addContainerGap(158, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addComponent(registerButton)
@@ -488,9 +488,9 @@ public class loginWindows extends JFrame{
                         .addComponent(remberPasswd))
                     .addGap(18, 18, 18)
                     .addComponent(registerButton)
-                    .addContainerGap(11, Short.MAX_VALUE))
+                    .addContainerGap(13, Short.MAX_VALUE))
         );
-        setSize(430, 325);
+        setSize(440, 335);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
