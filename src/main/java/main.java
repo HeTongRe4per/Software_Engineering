@@ -20,9 +20,11 @@ public class main {
                     e.printStackTrace();
                     // 处理数据库连接异常
                 }
+
                 try {
                     // 设置本机系统外观
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    UIManager.setLookAndFeel(lookAndFeel);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -46,4 +48,6 @@ public class main {
         // 创建数据库连接
         return DriverManager.getConnection(url, username, password);
     }
+
+    public static String lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme"/*UIManager.getSystemLookAndFeelClassName()*/;
 }

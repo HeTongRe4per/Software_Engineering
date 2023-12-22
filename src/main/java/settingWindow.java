@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.io.*;
 import java.util.Scanner;
 /*
@@ -31,7 +32,12 @@ public class settingWindow extends JFrame{
     }
     private void button2Linter() {
         // TODO 判定输入链接格式和APIKEY格式,没问题则建立文件
-
+        try {
+            // 修改外观
+            UIManager.setLookAndFeel(main.lookAndFeel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             settinginfor();
         } catch (IOException e) {
@@ -44,9 +50,10 @@ public class settingWindow extends JFrame{
         File file = new File(FILE_PATH);
         file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
         file.createNewFile(); // 创建文件（如果不存在）
-        String url,apikey;
+        String url, apikey, theme;
         url = textField2.getText();
         apikey = textField1.getText();
+        theme = main.lookAndFeel;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(url + "," + apikey);
         } catch (IOException e) {
@@ -86,6 +93,22 @@ public class settingWindow extends JFrame{
         this.dispose();
     }
 
+    private void lookAndFeelBox(ItemEvent e) {
+        String lookAndFeel = (String) e.getItem();
+        try {
+            switch (lookAndFeel) {
+                case "Default": main.lookAndFeel = UIManager.getSystemLookAndFeelClassName(); break;
+                case "Arc": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme"; break;
+                case "Arc - Orange": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme"; break;
+                case "Cyan light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme"; break;
+                case "Light Flat": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme"; break;
+                case "Solarized Light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme";
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         layeredPane1 = new JLayeredPane();
@@ -95,6 +118,13 @@ public class settingWindow extends JFrame{
         textField1 = new JTextField();
         button2 = new JButton();
         button3 = new JButton();
+        layeredPane2 = new JLayeredPane();
+        label3 = new JLabel();
+        comboBox1 = new JComboBox<>();
+        label4 = new JLabel();
+        comboBox2 = new JComboBox<>();
+        label5 = new JLabel();
+        spinner1 = new JSpinner();
 
         //======== this ========
         setTitle("\u8bbe\u7f6e");
@@ -129,6 +159,71 @@ public class settingWindow extends JFrame{
         button3.setText("\u53d6\u6d88");
         button3.addActionListener(e -> button3Listen());
 
+        //======== layeredPane2 ========
+        {
+            layeredPane2.setBorder(new TitledBorder("\u98ce\u683c\u8bbe\u7f6e"));
+
+            //---- label3 ----
+            label3.setText("\u4e3b\u9898");
+            layeredPane2.add(label3, JLayeredPane.DEFAULT_LAYER);
+            label3.setBounds(new Rectangle(new Point(20, 30), label3.getPreferredSize()));
+
+            //---- comboBox1 ----
+            comboBox1.setModel(new DefaultComboBoxModel<>(new String[] {
+                "Default",
+                "Arc",
+                "Arc - Orange",
+                "Cyan light",
+                "Light Flat",
+                "Solarized Light"
+            }));
+            comboBox1.addItemListener(e -> lookAndFeelBox(e));
+            layeredPane2.add(comboBox1, JLayeredPane.DEFAULT_LAYER);
+            comboBox1.setBounds(55, 25, 95, 24);
+
+            //---- label4 ----
+            label4.setText("\u5b57\u4f53");
+            layeredPane2.add(label4, JLayeredPane.DEFAULT_LAYER);
+            label4.setBounds(20, 70, 30, label4.getPreferredSize().height);
+
+            //---- comboBox2 ----
+            comboBox2.setModel(new DefaultComboBoxModel<>(new String[] {
+                "\u5fae\u8f6f\u96c5\u9ed1",
+                "\u5fae\u8f6f\u96c5\u9ed1 Light",
+                "\u534e\u6587\u4e2d\u5b8b",
+                "\u534e\u6587\u4eff\u5b8b",
+                "\u534e\u6587\u5b8b\u4f53",
+                "\u534e\u6587\u5f69\u4e91",
+                "\u534e\u6587\u65b0\u9b4f",
+                "\u534e\u6587\u6977\u4f53",
+                "\u534e\u6587\u7425\u73c0",
+                "\u534e\u6587\u7ec6\u9ed1",
+                "\u534e\u6587\u884c\u6977",
+                "\u534e\u6587\u96b6\u4e66",
+                "\u5b8b\u4f53",
+                "\u5e7c\u5706",
+                "\u65b9\u6b63\u59da\u4f53",
+                "\u65b9\u6b63\u8212\u4f53",
+                "\u6977\u4f53",
+                "\u7b49\u7ebf",
+                "\u7b49\u7ebf Light",
+                "\u96b6\u4e66",
+                "\u9ed1\u4f53"
+            }));
+            layeredPane2.add(comboBox2, JLayeredPane.DEFAULT_LAYER);
+            comboBox2.setBounds(55, 65, 95, 24);
+
+            //---- label5 ----
+            label5.setText("\u5b57\u53f7");
+            layeredPane2.add(label5, JLayeredPane.DEFAULT_LAYER);
+            label5.setBounds(190, 30, 25, label5.getPreferredSize().height);
+
+            //---- spinner1 ----
+            spinner1.setModel(new SpinnerNumberModel(12, 8, 36, 1));
+            layeredPane2.add(spinner1, JLayeredPane.DEFAULT_LAYER);
+            spinner1.setBounds(225, 25, 55, 25);
+        }
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
@@ -141,7 +236,8 @@ public class settingWindow extends JFrame{
                             .addGap(0, 198, Short.MAX_VALUE)
                             .addComponent(button3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(button2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(button2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(layeredPane2, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
                     .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
@@ -149,13 +245,15 @@ public class settingWindow extends JFrame{
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addGap(17, 17, 17)
                     .addComponent(layeredPane1, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(layeredPane2, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(button2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(button3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
-        setSize(350, 205);
+        setSize(350, 315);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -168,6 +266,13 @@ public class settingWindow extends JFrame{
     private JTextField textField1;
     private JButton button2;
     private JButton button3;
+    private JLayeredPane layeredPane2;
+    private JLabel label3;
+    private JComboBox<String> comboBox1;
+    private JLabel label4;
+    private JComboBox<String> comboBox2;
+    private JLabel label5;
+    private JSpinner spinner1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 自定义变量

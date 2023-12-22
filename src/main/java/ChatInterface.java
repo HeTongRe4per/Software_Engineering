@@ -1,5 +1,8 @@
+import com.jgoodies.forms.factories.Borders;
+
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -200,7 +203,7 @@ public class ChatInterface extends JFrame  {
         setTitle("Chat Interface");
         setForeground(Color.black);
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
-        setMinimumSize(new Dimension(200, 300));
+        setMinimumSize(new Dimension(375, 400));
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -208,6 +211,7 @@ public class ChatInterface extends JFrame  {
             }
         });
         var contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
 
         //======== mainMenuBar ========
         {
@@ -266,14 +270,16 @@ public class ChatInterface extends JFrame  {
 
         //======== chatScrollPane ========
         {
+            chatScrollPane.setBorder(Borders.DIALOG_BORDER);
 
             //---- chatArea ----
             chatArea.setEditable(false);
             chatArea.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
-            chatArea.setBorder(new BevelBorder(BevelBorder.LOWERED));
+            chatArea.setBorder(new EtchedBorder());
             chatArea.setLineWrap(true);
             chatScrollPane.setViewportView(chatArea);
         }
+        contentPane.add(chatScrollPane, BorderLayout.CENTER);
 
         //======== sendPanel ========
         {
@@ -283,6 +289,7 @@ public class ChatInterface extends JFrame  {
 
                 //---- sendPane ----
                 sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
+                sendPane.setBorder(new EmptyBorder(5, 5, 5, 5));
                 sendPane.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -316,44 +323,24 @@ public class ChatInterface extends JFrame  {
                     .addGroup(sendPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(sendPanelLayout.createParallelGroup()
-                            .addComponent(sendScrollPane, GroupLayout.DEFAULT_SIZE, 868, Short.MAX_VALUE)
-                            .addGroup(GroupLayout.Alignment.TRAILING, sendPanelLayout.createSequentialGroup()
-                                .addGap(0, 792, Short.MAX_VALUE)
-                                .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(sendPanelLayout.createSequentialGroup()
+                                .addGap(0, 852, Short.MAX_VALUE)
+                                .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(sendScrollPane))
                         .addContainerGap())
             );
             sendPanelLayout.setVerticalGroup(
                 sendPanelLayout.createParallelGroup()
                     .addGroup(sendPanelLayout.createSequentialGroup()
-                        .addContainerGap(10, Short.MAX_VALUE)
+                        .addContainerGap()
                         .addComponent(sendScrollPane, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
+                        .addGap(10, 10, 10)
                         .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addContainerGap(10, Short.MAX_VALUE))
             );
         }
-
-        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
-        contentPane.setLayout(contentPaneLayout);
-        contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addComponent(sendPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(chatScrollPane, GroupLayout.PREFERRED_SIZE, 880, GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(23, Short.MAX_VALUE))
-        );
-        contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(chatScrollPane, GroupLayout.PREFERRED_SIZE, 440, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(sendPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        setSize(915, 640);
+        contentPane.add(sendPanel, BorderLayout.SOUTH);
+        setSize(950, 655);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -384,6 +371,8 @@ public class ChatInterface extends JFrame  {
     private boolean isdark=false;
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
+
+    public static String fornt = "微软雅黑";
 
 	// 自定义方法
 }
