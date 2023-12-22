@@ -1,3 +1,4 @@
+/*
 public class buildJsonPayload {
     public static StringBuilder payload = new StringBuilder("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
     public static String historyMessage;
@@ -13,3 +14,4 @@ public class buildJsonPayload {
         historyMessage = "{\"role\": \"user\", \"content\":\"" + ChatInterface.inputMessage + "\"},";
     }
 }
+*/

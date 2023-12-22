@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+
+/**
+ * @author zhang
+ */
 public class chatAPI {
 
     private static StringBuffer inputString = new StringBuffer("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
@@ -19,12 +23,17 @@ public class chatAPI {
     private String API_URL = settingWindow.Url;
     private String question = ChatInterface.inputMessage;
     public static String answer = "";
+    private static Integer  messageCount = 0;
 
     public chatAPI() {
-        try {
-            httpClient();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (messageCount < 15) {
+            try {
+                httpClient();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+
         }
     }
     private void httpClient () throws IOException {
@@ -37,11 +46,11 @@ public class chatAPI {
 
         // 添加用户输入
         buildInputMessages();
-        System.out.println("未\"-1\"输入" + inputString);
+        //System.out.println("未\"-1\"输入" + inputString);
 
         // 设置请求体
         String jsonPayload = inputString.deleteCharAt(inputString.length() - 1) + "]}";
-        System.out.println("真正输入" + jsonPayload);
+        //System.out.println("真正输入" + jsonPayload);
         StringEntity entity = new StringEntity(jsonPayload, "UTF-8");
         httpPost.setEntity(entity);
 
@@ -58,7 +67,7 @@ public class chatAPI {
             // 处理传出Json
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(output.toString());
-            System.out.println("原始输出：" + jsonNode);
+            //System.out.println("原始输出：" + jsonNode);
 
             // 获取"content"字段的内容并传出响应内容
             answer = jsonNode
@@ -69,11 +78,14 @@ public class chatAPI {
                     .asText();
             inputString.append(",");
 
+            // 添加回答到inputMessage
             buildOutputMessage();
 
+            // 删掉"}"添加","
             inputString.deleteCharAt(inputString.length() - 1);
             inputString.append(",");
             System.out.println("最终状态" + inputString);
+            messageCount++;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,5 +107,6 @@ public class chatAPI {
     public static void resetInputString() {
         inputString.setLength(0);
         inputString.append("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
+        messageCount = 0;
     }
 }

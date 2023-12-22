@@ -24,6 +24,9 @@ public class ChatInterface extends JFrame  {
 
     public ChatInterface() {
 		initComponents();
+        /*chatArea.setOpaque(false);
+        chatScrollPane.setOpaque(false);
+        chatScrollPane.getViewport().setOpaque(false);*/
         if(checkFileExistence(FILE_PATH)){
             if(readbool()) darkMode();
             else lightMode();
@@ -31,7 +34,9 @@ public class ChatInterface extends JFrame  {
         }
         sendPaneEmpty();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        chatArea.requestFocus();
+        //chatArea.requestFocus();
+        //chatScrollPane.getVerticalScrollBar();
+        //chatScrollPane.setValue(verticalScrollBar.getMaximum());
 	}
 
 	public void accountMangeItemListen() {
@@ -213,12 +218,6 @@ public class ChatInterface extends JFrame  {
         setForeground(Color.black);
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
         setMinimumSize(new Dimension(375, 400));
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                chatWinKeyPressed(e);
-            }
-        });
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -280,12 +279,22 @@ public class ChatInterface extends JFrame  {
         //======== chatScrollPane ========
         {
             chatScrollPane.setBorder(Borders.DIALOG_BORDER);
+            chatScrollPane.setAutoscrolls(true);
+            chatScrollPane.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 
             //---- chatArea ----
             chatArea.setEditable(false);
             chatArea.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
             chatArea.setBorder(new EtchedBorder());
             chatArea.setLineWrap(true);
+            chatArea.setWrapStyleWord(true);
+            chatArea.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+            chatArea.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    chatAreaKeyPressed(e);
+                }
+            });
             chatScrollPane.setViewportView(chatArea);
         }
         contentPane.add(chatScrollPane, BorderLayout.CENTER);
@@ -299,6 +308,7 @@ public class ChatInterface extends JFrame  {
                 //---- sendPane ----
                 sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
                 sendPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+                sendPane.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
                 sendPane.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -332,10 +342,10 @@ public class ChatInterface extends JFrame  {
                     .addGroup(sendPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(sendPanelLayout.createParallelGroup()
-                            .addGroup(sendPanelLayout.createSequentialGroup()
-                                .addGap(0, 852, Short.MAX_VALUE)
-                                .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
-                            .addComponent(sendScrollPane))
+                            .addComponent(sendScrollPane, GroupLayout.DEFAULT_SIZE, 1021, Short.MAX_VALUE)
+                            .addGroup(GroupLayout.Alignment.TRAILING, sendPanelLayout.createSequentialGroup()
+                                .addGap(0, 945, Short.MAX_VALUE)
+                                .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
             );
             sendPanelLayout.setVerticalGroup(
@@ -343,13 +353,13 @@ public class ChatInterface extends JFrame  {
                     .addGroup(sendPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(sendScrollPane, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(10, Short.MAX_VALUE))
+                        .addContainerGap(14, Short.MAX_VALUE))
             );
         }
         contentPane.add(sendPanel, BorderLayout.SOUTH);
-        setSize(950, 655);
+        setSize(1035, 620);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -381,6 +391,8 @@ public class ChatInterface extends JFrame  {
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
     public static String fornt = "微软雅黑";
+
+    private ImageIcon imageIcon = new ImageIcon("/background-250x167.png");
 
 	// 自定义方法
 }

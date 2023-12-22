@@ -216,12 +216,12 @@ public class settingWindow extends JFrame{
 
             //---- comboBox1 ----
             comboBox1.setModel(new DefaultComboBoxModel<>(new String[] {
-                "Default",
                 "Arc",
                 "Arc - Orange",
                 "Cyan light",
                 "Light Flat",
-                "Solarized Light"
+                "Solarized Light",
+                "Windows"
             }));
             comboBox1.addItemListener(e -> lookAndFeelBox(e));
             layeredPane2.add(comboBox1, JLayeredPane.DEFAULT_LAYER);
@@ -277,13 +277,13 @@ public class settingWindow extends JFrame{
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                        .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addGap(0, 198, Short.MAX_VALUE)
+                            .addGap(0, 204, Short.MAX_VALUE)
                             .addComponent(button3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(button2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-                        .addComponent(layeredPane2, GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
+                        .addComponent(layeredPane2, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
                     .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
