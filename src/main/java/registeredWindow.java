@@ -1,9 +1,10 @@
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.*;
 /*
  * Created by JFormDesigner on Wed Nov 29 23:01:29 CST 2023
  */
@@ -16,6 +17,7 @@ import java.sql.ResultSet;
 public class registeredWindow extends JFrame {
     public registeredWindow() {
         initComponents();
+        initWindow();
     }
 
     private void button2registerLinsten() {
@@ -172,6 +174,117 @@ public class registeredWindow extends JFrame {
         }
     }
 
+    private void accountFieldFocusGained() {
+        String temp = textField1.getText();
+        if (temp.equals(initUsernameText)) {
+            textField1.setText("");
+            textField1.setForeground(Color.BLACK);
+        }
+    }
+
+    private void accountFieldFocusLost() {
+        String temp = textField1.getText();
+        if (temp.isEmpty()) {
+            textField1.setText(initUsernameText);
+            textField1.setForeground(Color.GRAY);
+        }
+    }
+
+    private void emailFieldFocusGained() {
+        String temp = textField2.getText();
+        if (temp.equals(initEmailText)) {
+            textField2.setText("");
+            textField2.setForeground(Color.BLACK);
+        }
+    }
+
+    private void emailFieldFocusLost() {
+        String temp = textField2.getText();
+        if (temp.isEmpty()) {
+            textField2.setText(initEmailText);
+            textField2.setForeground(Color.GRAY);
+        }
+    }
+
+    private void passwordFieldFocusGained() {
+        String temp = passwordField1.getText();
+        if (temp.equals(initPasswordText)) {
+            passwordField1.setText("");
+            passwordField1.setForeground(Color.BLACK);
+            passwordField1.setEchoChar('*');
+        }
+    }
+
+    private void passwordFieldFocusLost() {
+        String temp = passwordField1.getText();
+        if (temp.isEmpty()) {
+            passwordField1.setText(initPasswordText);
+            passwordField1.setForeground(Color.GRAY);
+            passwordField1.setEchoChar((char) 0);
+        }
+    }
+
+    private void passwordConfirmFieldFocusGained() {
+        String temp = passwordField2.getText();
+        if (temp.equals(initConfirmPasswdText)) {
+            passwordField2.setText("");
+            passwordField2.setForeground(Color.BLACK);
+            passwordField2.setEchoChar('*');
+        }
+    }
+
+    private void passwordConfirmFieldFocusLost() {
+        String temp = passwordField2.getText();
+        if (temp.isEmpty()) {
+            passwordField2.setText(initConfirmPasswdText);
+            passwordField2.setForeground(Color.GRAY);
+            passwordField2.setEchoChar((char) 0);
+        }
+    }
+    
+    private void initWindow() {
+        textField1.setForeground(Color.GRAY);
+        textField2.setForeground(Color.GRAY);
+        passwordField1.setForeground(Color.GRAY);
+        passwordField2.setForeground(Color.GRAY);
+        passwordField1.setEchoChar((char) 0);
+        passwordField2.setEchoChar((char) 0);
+        textField1.setText(initUsernameText);
+        textField2.setText(initEmailText);
+        passwordField1.setText(initPasswordText);
+        passwordField2.setText(initConfirmPasswdText);
+    }
+
+    private void accountFieldKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_DOWN) {
+            textField2.requestFocusInWindow();
+        }
+    }
+
+    private void emailFieldKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_DOWN) {
+            passwordField1.requestFocusInWindow();
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            textField1.requestFocusInWindow();
+        }
+    }
+
+    private void passwordFieldKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_DOWN) {
+            passwordField2.requestFocusInWindow();
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            textField2.requestFocusInWindow();
+        }
+    }
+
+    private void passwordConfirmFieldKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            button2.doClick();
+        } else if (e.getKeyCode() ==KeyEvent.VK_UP) {
+            passwordField1.requestFocusInWindow();
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         button2 = new JButton();
@@ -194,11 +307,79 @@ public class registeredWindow extends JFrame {
         button2.setText("\u6ce8\u518c");
         button2.addActionListener(e -> button2registerLinsten());
 
+        //---- textField1 ----
+        textField1.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                accountFieldFocusGained();
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                accountFieldFocusLost();
+            }
+        });
+        textField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                accountFieldKeyPressed(e);
+            }
+        });
+
+        //---- textField2 ----
+        textField2.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                emailFieldFocusGained();
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                emailFieldFocusLost();
+            }
+        });
+        textField2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                emailFieldKeyPressed(e);
+            }
+        });
+
         //---- passwordField1 ----
         passwordField1.setEchoChar('*');
+        passwordField1.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                passwordFieldFocusGained();
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                passwordFieldFocusLost();
+            }
+        });
+        passwordField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                passwordFieldKeyPressed(e);
+            }
+        });
 
         //---- passwordField2 ----
         passwordField2.setEchoChar('*');
+        passwordField2.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                passwordConfirmFieldFocusGained();
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                passwordConfirmFieldFocusLost();
+            }
+        });
+        passwordField2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                passwordConfirmFieldKeyPressed(e);
+            }
+        });
 
         //---- label1 ----
         label1.setText("\u7528\u6237\u540d\uff1a");
@@ -217,7 +398,7 @@ public class registeredWindow extends JFrame {
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(34, Short.MAX_VALUE)
+                    .addContainerGap(36, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addGroup(contentPaneLayout.createParallelGroup()
@@ -275,4 +456,10 @@ public class registeredWindow extends JFrame {
     private JLabel label3;
     private JLabel label4;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
+    // 自定义变量
+    private String initUsernameText = "只允许字母数字和下划线";
+    private String initEmailText = "mail@example.com";
+    private String initPasswordText = "至少包含字母、数字";
+    private String initConfirmPasswdText = "再次输入密码";
 }

@@ -4,7 +4,7 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space ::34:x, par l {seq t {par l {comp label1::t:p::p, comp label4::t:p::p, comp label3::t:p::p, comp label2::t:p::p}, space :::p, par l {comp passwordField1:::p:170:p, comp textField1:::p:170:p, comp textField2::l:p:170:p, comp passwordField2::l:p:170:p}, space :p:38:p}, seq t {comp button2:::p:80:p, space :p:104:p}}}}"
+			"$horizontalGroup": "par l {seq {space ::36:x, par l {seq t {par l {comp label1::t:p::p, comp label4::t:p::p, comp label3::t:p::p, comp label2::t:p::p}, space :::p, par l {comp passwordField1:::p:170:p, comp textField1:::p:170:p, comp textField2::l:p:170:p, comp passwordField2::l:p:170:p}, space :p:38:p}, seq t {comp button2:::p:80:p, space :p:104:p}}}}"
 			"$verticalGroup": "par l {seq l {space :p:23:p, par b {comp textField1::b:p:25:p, comp label1::b:p::p}, space s:::p, par b {comp textField2::b:p:25:p, comp label2::b:p::p}, space s:::p, par b {comp passwordField1::b:p:25:p, comp label3::b:p::p}, space s:::p, par b {comp passwordField2::b:p:25:p, comp label4::b:p::p}, space s:::p, comp button2:::p:30:p, space :::p}}"
 		} ) {
 			name: "this"
@@ -20,17 +20,29 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField1"
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "accountFieldFocusGained", false ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "accountFieldFocusLost", false ) )
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "accountFieldKeyPressed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "textField2"
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "emailFieldFocusGained", false ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "emailFieldFocusLost", false ) )
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "emailFieldKeyPressed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JPasswordField" ) {
 				name: "passwordField1"
 				"echoChar": '*'
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "passwordFieldFocusGained", false ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "passwordFieldFocusLost", false ) )
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "passwordFieldKeyPressed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JPasswordField" ) {
 				name: "passwordField2"
 				"echoChar": '*'
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "passwordConfirmFieldFocusGained", false ) )
+				addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "passwordConfirmFieldFocusLost", false ) )
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "passwordConfirmFieldKeyPressed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
