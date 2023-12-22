@@ -9,6 +9,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.sql.*;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 /*
@@ -21,7 +22,6 @@ import java.util.concurrent.CompletableFuture;
  * @author zhang xp
  */
 public class ChatInterface extends JFrame  {
-
     public ChatInterface() {
 		initComponents();
         /*chatArea.setOpaque(false);
@@ -38,6 +38,66 @@ public class ChatInterface extends JFrame  {
         //chatScrollPane.getVerticalScrollBar();
         //chatScrollPane.setValue(verticalScrollBar.getMaximum());
 	}
+
+    private String Chatname(String name){
+        // 判断是根据 username_mail 还是 email 查询
+        String query;
+        String columnToUpdate;
+        String otherColumn;
+        if (!isUsernameMail(name)) {
+            query = "SELECT * FROM user WHERE username_mail = ?";
+            columnToUpdate = "username_mail";
+            otherColumn = "email";
+        } else {
+            query = "SELECT * FROM user WHERE email = ?";
+            columnToUpdate = "email";
+            otherColumn = "username_mail";
+        }
+        // 使用数据库连接函数创建连接
+        Connection connection = createMySQLConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, name);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // 从结果集中获取另一列的值
+                    String otherColumnValue = resultSet.getString(otherColumn);
+
+                    // 更新 UI
+                    if (columnToUpdate.equals("email")) {
+                        return otherColumnValue;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return name;
+    }
+
+    //判断是否邮箱登陆
+    private boolean isUsernameMail(String input) {
+        // 这里简单地通过包含 "@" 符号来判断是否是 email
+        return input.contains("@");
+    }
+    private Connection createMySQLConnection() {
+        Connection connection = null;
+        try {
+            // 建立数据库连接
+            connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
 
 	public void accountMangeItemListen() {
         accMgWindow ac =new accMgWindow(ChatInterface.this);
@@ -60,7 +120,7 @@ public class ChatInterface extends JFrame  {
 		if (sendButtonFlag) {
 			inputMessage = sendPane.getText();
 
-            String user = loginWindows.username_s;
+            String user = username;
 			chatArea.append(user + "：\n" + inputMessage + "\n");
 			sendPane.setText("");
 			sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
@@ -185,7 +245,7 @@ public class ChatInterface extends JFrame  {
     }
 
     private void resetChat() {
-        chatAPI.resetInputString();
+        //chatAPI.resetInputString();
         chatArea.setText("");
     }
 
@@ -391,6 +451,7 @@ public class ChatInterface extends JFrame  {
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
     public static String fornt = "微软雅黑";
+    String username = Chatname(loginWindows.username_s);
 
     private ImageIcon imageIcon = new ImageIcon("/background-250x167.png");
 

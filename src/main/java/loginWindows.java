@@ -19,7 +19,6 @@ import java.util.Scanner;
  * @author zhang
  */
 public class loginWindows extends JFrame{
-    private String username; // 添加用户名成员变量
 
     public loginWindows() {
         initComponents();
@@ -516,4 +515,5 @@ public class loginWindows extends JFrame{
     }
 
     public static String username_s;
+    private String username; // 添加用户名成员变量
 }
