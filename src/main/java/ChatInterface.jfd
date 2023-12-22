@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :::p, par l {comp chatScrollPane:::p:880:p, comp snedPanel:::::x}, space ::17:x}}"
-			"$verticalGroup": "par l {seq {space :::p, comp chatScrollPane:::p:440:p, space :p:9:p, comp snedPanel::::107:x, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :::p, par t {comp sendPanel:::p::p, comp chatScrollPane:::p:880:p}, space ::23:x}}"
+			"$verticalGroup": "par l {seq {space :::p, comp chatScrollPane:::p:440:p, space :::p, comp sendPanel:::p::p, space :::x}}"
 		} ) {
 			name: "this"
 			"title": "Chat Interface"
@@ -22,15 +22,14 @@ new FormModel {
 					"editable": false
 					"font": new java.awt.Font( "黑体", 0, 14 )
 					"border": new javax.swing.border.BevelBorder( 1, null, null, null, null )
+					"lineWrap": true
 				} )
 			} )
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-				"$columnSpecs": "807, 74:1.0"
-				"$rowSpecs": "69, 6, 29:1.0"
-				"$alignTop": true
-				"$alignLeft": true
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+				"$horizontalGroup": "par l {seq {space :::p, par l {comp sendScrollPane::l::868:x, seq t {space :0:792:x, comp sendButton:::p:76:p}}, space :::p}}"
+				"$verticalGroup": "par l {seq l {space ::10:x, comp sendScrollPane:::p:75:p, space :p:4:p, comp sendButton:::p::p, space :::p}}"
 			} ) {
-				name: "snedPanel"
+				name: "sendPanel"
 				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 					name: "sendScrollPane"
 					add( new FormComponent( "javax.swing.JTextPane" ) {
@@ -40,8 +39,6 @@ new FormModel {
 						addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "sendPaneFocusGained", false ) )
 						addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "sendPaneFocusLost", false ) )
 					} )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"gridwidth": 2
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "sendButton"
@@ -50,9 +47,6 @@ new FormModel {
 					"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 					"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "sendButtonListen", false ) )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"gridx": 1
-					"gridy": 2
 				} )
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
@@ -78,17 +72,22 @@ new FormModel {
 					name: "toolMenu"
 					"text": "工具"
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "settingItem"
-						"text": "设置"
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "settingItemListen", false ) )
+						name: "changemodel"
+						"text": "切换背景色"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "changemodelListen", false ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuItem1"
+						"text": "重开聊天"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "resetChat", false ) )
 					} )
 					add( new FormComponent( "javax.swing.JPopupMenu$Separator" ) {
 						name: "separator2"
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "changemodel"
-						"text": "切换背景色"
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "changemodelListen", false ) )
+						name: "settingItem"
+						"text": "设置"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "settingItemListen", false ) )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
@@ -103,7 +102,7 @@ new FormModel {
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 5 )
-			"size": new java.awt.Dimension( 915, 630 )
+			"size": new java.awt.Dimension( 915, 640 )
 		} )
 	}
 }
