@@ -282,7 +282,7 @@ public class accMgWindow extends JFrame {
         // 此处添加检查 username 复杂性的逻辑，例如：使用正则表达式判断 username 格式
         // 返回 true 表示 username 符合要求，返回 false 表示不符合要求
         // 示例逻辑：
-        return username.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$");
+        return username.matches("^[a-zA-Z0-9_]{4,16}$");
     }
 
     // 更新数据库中的email属性值
