@@ -16,15 +16,11 @@ import java.sql.ResultSet;
 
 
 /**
- * @author zhang
+ * @author zhang xp zy
  */
 public class accMgWindow extends JFrame {
-    static String oldusername;
-    String oldemail;
-    private ChatInterface parent;
-    public accMgWindow(ChatInterface parent) {
+    public accMgWindow() {
         initComponents();
-        this.parent=parent;
         if(loginWindows.checkFileExistence(FILE_PATH)){
             try {
                 default_input();
@@ -34,9 +30,7 @@ public class accMgWindow extends JFrame {
         }
 
     }
-    private static final String localAppDATA=System.getenv("LOCALAPPDATA");
-    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
-    private int dataOfFile = 0; // 文件字节内容
+
     private void DecFile(File encFile, File decFile) throws Exception {
         if (!encFile.exists()) {
             return;
@@ -49,6 +43,8 @@ public class accMgWindow extends JFrame {
         InputStream fis = new FileInputStream(encFile);
         OutputStream fos = new FileOutputStream(decFile);
 
+        // 文件字节内容
+        int dataOfFile;
         while ((dataOfFile = fis.read()) > -1) {
             // 加密解密秘钥
             int numOfEncAndDec = 0x99;
@@ -162,7 +158,7 @@ public class accMgWindow extends JFrame {
     }
 
     private void delAccountListen() {
-        confirmDelAccountWindow confirmDialog = new confirmDelAccountWindow(this,parent);
+        confirmDelAccountWindow confirmDialog = new confirmDelAccountWindow();
         confirmDialog.setVisible(true);
     }
 
@@ -180,9 +176,7 @@ public class accMgWindow extends JFrame {
 
     private void resetPasswdListen() {
         new passwdUpdateWindow2(oldusername).setVisible(true);
-        //parent.dispose();
-        //dispose();
-        //new loginWindows().setVisible(true);
+        new loginWindows().setVisible(true);
     }
 
     // 更新数据库中的username_mail属性值
@@ -220,9 +214,11 @@ public class accMgWindow extends JFrame {
                 // 执行更新
                 preparedStatement.executeUpdate();
             }
-            // 关闭当前窗口和父窗口
-            parent.dispose();
+
+            // TODO 关闭当前窗口和父窗口
+            closeWindow();
             dispose();
+
             // 打开新的登录窗口
             new loginWindows().setVisible(true);
 
@@ -319,23 +315,31 @@ public class accMgWindow extends JFrame {
                 // 执行更新
                 preparedStatement.executeUpdate();
             }
-            // 关闭当前窗口和父窗口
-            parent.dispose();
+            // TODO 关闭当前窗口和父窗口
+            closeWindow();
             dispose();
+
             // 打开新的登录窗口
             new loginWindows().setVisible(true);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
+        } catch (SQLException e) { e.printStackTrace(); }
+        finally {
             try {
                 // 关闭数据库连接
                 if (connection != null) {
                     connection.close();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            } catch (SQLException e) { e.printStackTrace(); }
+        }
+    }
+
+    public void setMainWindow (ChatInterface p) {
+        this.mainWin = p;
+    }
+
+    private void closeWindow() {
+        if (mainWin != null) {
+            mainWin.dispose();
         }
     }
 
@@ -511,4 +515,12 @@ public class accMgWindow extends JFrame {
     public static JButton resetPasswdButton;
     private JPasswordField passwordField1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
+
+    private static final String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
+    static String oldusername;
+    String oldemail;
+    private ChatInterface mainWin;
+
 }

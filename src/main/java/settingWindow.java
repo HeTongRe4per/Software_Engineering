@@ -253,6 +253,7 @@ public class settingWindow extends JFrame{
                 "Solarized Light",
                 "Windows"
             }));
+            comboBox1.setSelectedIndex(0);
             comboBox1.addItemListener(e -> lookAndFeelBox(e));
             layeredPane2.add(comboBox1, JLayeredPane.DEFAULT_LAYER);
             comboBox1.setBounds(55, 25, 95, 24);
@@ -296,7 +297,7 @@ public class settingWindow extends JFrame{
             label5.setBounds(190, 30, 25, label5.getPreferredSize().height);
 
             //---- spinner1 ----
-            spinner1.setModel(new SpinnerNumberModel(12, 8, 36, 1));
+            spinner1.setModel(new SpinnerNumberModel(14, 8, 36, 1));
             spinner1.addChangeListener(e -> fontSizeListener());
             layeredPane2.add(spinner1, JLayeredPane.DEFAULT_LAYER);
             spinner1.setBounds(225, 25, 55, 25);
@@ -355,7 +356,7 @@ public class settingWindow extends JFrame{
 
     // 自定义变量
     private String setingFont = "微软雅黑";
-    private Integer setingFontSize =12;
+    private Integer setingFontSize =14;
     public static String Url = "https://api.chatanywhere.com.cn";
     public static String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
 }

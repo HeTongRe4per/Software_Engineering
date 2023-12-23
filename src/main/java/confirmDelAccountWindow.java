@@ -18,10 +18,10 @@ public class confirmDelAccountWindow extends JDialog {
     private accMgWindow parentAccMgWindow;
     private ChatInterface parentLoginWindows;
 
-    public confirmDelAccountWindow(accMgWindow parentAccMgWindow, ChatInterface parentLoginWindows) {
-        super(parentAccMgWindow);
+    public confirmDelAccountWindow(/*accMgWindow parentAccMgWindow, ChatInterface parentLoginWindows*/) {
+        /*super(parentAccMgWindow);
         this.parentAccMgWindow = parentAccMgWindow;
-        this.parentLoginWindows = parentLoginWindows;
+        this.parentLoginWindows = parentLoginWindows;*/
         initComponents();
     }
 

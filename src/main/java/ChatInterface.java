@@ -100,8 +100,10 @@ public class ChatInterface extends JFrame  {
         return connection;
     }
 
+
+
 	public void accountMangeItemListen() {
-        accMgWindow ac =new accMgWindow(ChatInterface.this);
+        accMgWindow ac =new accMgWindow();
 		ac.setVisible(true);
 	}
 
@@ -117,25 +119,30 @@ public class ChatInterface extends JFrame  {
 		new settingWindow().setVisible(true);
 	}
 
-	private void sendButtonListen() {
-		if (sendButtonFlag) {
-			inputMessage = sendPane.getText();
+    private void sendButtonListen() {
+        if (sendButtonFlag) {
+            inputMessage = sendPane.getText();
 
             String user = username;
-			chatArea.append(user + "：\n" + inputMessage + "\n");
-			sendPane.setText("");
-			sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
-			sendButtonFlag =false;  // 锁定按钮监听
+            chatArea.append(user + "：\n" + inputMessage + "\n");
+            sendPane.setText("");
+            sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
+            sendButtonFlag = false;  // 锁定按钮监听
 
-			// 异步执行 chatAPI
-			CompletableFuture.supplyAsync(chatAPI::new)
-					.thenAcceptAsync(chatAPI -> {
-						chatArea.append("\nChatGPT：\n" + chatAPI.answer + "\n\n");
-						sendButton.setEnabled(true);    // 解除发送按钮锁定
-						sendButtonFlag = true;  // 解除按钮监听锁定
-					});
-		}
-	}
+            // 异步执行 chatAPI
+            CompletableFuture.supplyAsync(chatAPI::new)
+                    .thenAcceptAsync(chatAPI -> {
+                        chatArea.append("\nChatGPT：\n" + chatAPI.answer + "\n\n");
+
+                        // 滚动到最底部
+                        JScrollBar verticalScrollBar = sendScrollPane.getVerticalScrollBar();
+                        verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+
+                        sendButton.setEnabled(true);    // 解除发送按钮锁定
+                        sendButtonFlag = true;  // 解除按钮监听锁定
+                    });
+        }
+    }
 
 	private void sendPaneEmpty() {
 		sendPane.setText(initSendText);
@@ -227,6 +234,7 @@ public class ChatInterface extends JFrame  {
         }
         return value;
     }
+
     private boolean checkFileExistence(String filePath) {
         File file = new File(filePath);
         return file.exists();
@@ -474,10 +482,9 @@ public class ChatInterface extends JFrame  {
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
     public static String font = "微软雅黑";
-    public static Integer fontSize = 12;
+    public static Integer fontSize = 14;
     String username = Chatname(loginWindows.username_s);
 
     private ImageIcon imageIcon = new ImageIcon(getClass().getResource("background-250x167-semitransparent.png"));
-
 	// 自定义方法
 }

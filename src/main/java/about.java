@@ -45,8 +45,8 @@ public class about extends JFrame {
         if (egg.equals(5)) {
             egg = 0;
             try {
-                JOptionPane.showMessageDialog(this, "小彩蛋(。・ω・。)");
-                Desktop.getDesktop().browse(new URI("https://space.bilibili.com/199364052"));
+                JOptionPane.showMessageDialog(this, "小彩蛋 (。・ω・。)");
+                Desktop.getDesktop().browse(new URI("https://music.163.com/song?id=33367332"));
             } catch (IOException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }
@@ -96,7 +96,7 @@ public class about extends JFrame {
                         scrollPane1.setViewportView(label1);
                     }
                     layeredPane1.add(scrollPane1, JLayeredPane.DEFAULT_LAYER);
-                    scrollPane1.setBounds(5, 5, 355, 155);
+                    scrollPane1.setBounds(5, 5, 350, 155);
 
                     //---- button1 ----
                     button1.setText("Github");

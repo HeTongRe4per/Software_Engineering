@@ -78,6 +78,7 @@ new FormModel {
 						addElement( "Solarized Light" )
 						addElement( "Windows" )
 					}
+					"selectedIndex": 0
 					addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "lookAndFeelBox", true ) )
 				}, new FormLayoutConstraints( null ) {
 					"x": 55
@@ -136,7 +137,7 @@ new FormModel {
 				} )
 				add( new FormComponent( "javax.swing.JSpinner" ) {
 					name: "spinner1"
-					"model": new javax.swing.SpinnerNumberModel( 12, 8, 36, 1 )
+					"model": new javax.swing.SpinnerNumberModel( 14, 8, 36, 1 )
 					addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "fontSizeListener", false ) )
 				}, new FormLayoutConstraints( null ) {
 					"x": 225
