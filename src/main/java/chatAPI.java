@@ -26,17 +26,15 @@ public class chatAPI {
     private static Integer  messageCount = 0;
 
     public chatAPI() {
-        if (messageCount < 15) {
-            try {
-                httpClient();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        if (messageCount < 15) { // 防止token一次消耗过多导致报错，限制一次发送最多15个消息
+            try { httpClient(); } catch (IOException e) { throw new RuntimeException(e); }
         } else {
-
+            outMessageInputString();
+            try { httpClient(); } catch (IOException e) { throw new RuntimeException(e); }
         }
     }
-    private void httpClient () throws IOException {
+
+        private void httpClient () throws IOException {
         HttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(API_URL + "/v1/chat/completions");
 
@@ -84,12 +82,11 @@ public class chatAPI {
             // 删掉"}"添加","
             inputString.deleteCharAt(inputString.length() - 1);
             inputString.append(",");
-            //System.out.println("最终状态" + inputString);
             messageCount++;
+            System.out.println("最终状态" + inputString);
+            System.out.println("messageCount" + messageCount);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     private void buildInputMessages() {
@@ -108,5 +105,22 @@ public class chatAPI {
         inputString.setLength(0);
         inputString.append("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
         messageCount = 0;
+    }
+
+    public static void outMessageInputString() {
+        // 通过查找第二个“,{"role": "user", "content””前的逗号来移除最早的对话
+        int secondCommaIndex = inputString.indexOf(",{\"role\": \"user\", \"content\"");
+
+        // 如果找到第二个逗号，删除逗号及其之前的内容
+        if (secondCommaIndex != -1) {
+            inputString.delete(0, secondCommaIndex + 1);
+        } else {
+            // 如果未找到第二个逗号，直接清除整个 inputString
+            inputString.setLength(0);
+        }
+
+        // 在 inputString 前插入初始部分
+        inputString.insert(0, "{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
+        //System.out.println("超过后处理："+ inputString);
     }
 }

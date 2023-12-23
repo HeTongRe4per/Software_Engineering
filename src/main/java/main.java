@@ -16,32 +16,23 @@ public class main {
                 try {
                     Connection connection = createMySQLConnection();
                     // 在这里可以使用数据库连接执行其他操作
-
                     // 关闭数据库连接
                     connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    // 处理数据库连接异常
-                }
+                } catch (SQLException e) {  e.printStackTrace(); }
                 if(checkFileExistence(FILE_PATH)){
                     try {
                         readfile();
                         // 设置本机系统外观
                         //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                         UIManager.setLookAndFeel(lookAndFeel);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    } catch (Exception e) { e.printStackTrace(); }
                 } else {
                     try {
                         // 设置本机系统外观
                         //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                         UIManager.setLookAndFeel(lookAndFeel);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    } catch (Exception e) { e.printStackTrace(); }
                 }
-
                 new loginWindows().setVisible(true);
             }
         });
@@ -85,7 +76,7 @@ public class main {
             lookAndFeel = parts[2];
             ChatInterface.font = parts[0];
             ChatInterface.fontSize = Integer.parseInt(parts[1]);
-            System.out.println(lookAndFeel + ChatInterface.font + ChatInterface.fontSize);
+            //System.out.println(lookAndFeel + ChatInterface.font + ChatInterface.fontSize);
             // 关闭Scanner
             scanner.close();
         } catch (FileNotFoundException e) {

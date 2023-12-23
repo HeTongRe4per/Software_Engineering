@@ -81,8 +81,8 @@ public class confirmDelAccountWindow extends JDialog {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
         label2 = new JLabel();
-        cancelDelButton = new JButton();
         confirmDelButton = new JButton();
+        cancelDelButton = new JButton();
 
         //======== this ========
         setTitle("\u786e\u8ba4\u5220\u9664");
@@ -95,14 +95,14 @@ public class confirmDelAccountWindow extends JDialog {
         //---- label2 ----
         label2.setText("\u4f60\u7684\u8d26\u6237\u5c06\u4f1a\u6c38\u4e45\u5931\u53bb\uff01\uff08\u771f\u7684\u5f88\u4e45\uff01\uff09");
 
-        //---- cancelDelButton ----
-        cancelDelButton.setText("\u6211\u518d\u60f3\u60f3");
-        cancelDelButton.setSelected(true);
-        cancelDelButton.addActionListener(e -> cancelDelListen());
-
         //---- confirmDelButton ----
-        confirmDelButton.setText("\u786e\u8ba4\u5220\u9664");
+        confirmDelButton.setText("\u6211\u518d\u60f3\u60f3");
+        confirmDelButton.setSelected(true);
         confirmDelButton.addActionListener(e -> confirmDelListen());
+
+        //---- cancelDelButton ----
+        cancelDelButton.setText("\u786e\u8ba4\u5220\u9664");
+        cancelDelButton.addActionListener(e -> cancelDelListen());
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
@@ -113,16 +113,15 @@ public class confirmDelAccountWindow extends JDialog {
                     .addComponent(label2)
                     .addContainerGap(41, Short.MAX_VALUE))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addGap(0, 66, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addComponent(label1)
-                            .addGap(97, 97, 97))
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addComponent(cancelDelButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(confirmDelButton)
-                            .addGap(62, 62, 62))))
+                    .addGap(0, 115, Short.MAX_VALUE)
+                    .addComponent(label1)
+                    .addGap(97, 97, 97))
+                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                    .addContainerGap(69, Short.MAX_VALUE)
+                    .addComponent(confirmDelButton)
+                    .addGap(18, 18, 18)
+                    .addComponent(cancelDelButton)
+                    .addGap(57, 57, 57))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -131,13 +130,13 @@ public class confirmDelAccountWindow extends JDialog {
                     .addComponent(label1)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(label2)
-                    .addGap(37, 37, 37)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(cancelDelButton)
-                        .addComponent(confirmDelButton))
-                    .addContainerGap(27, Short.MAX_VALUE))
+                        .addComponent(confirmDelButton)
+                        .addComponent(cancelDelButton))
+                    .addGap(18, 18, 18))
         );
-        setSize(310, 190);
+        setSize(310, 200);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -145,7 +144,7 @@ public class confirmDelAccountWindow extends JDialog {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JLabel label1;
     private JLabel label2;
-    private JButton cancelDelButton;
     private JButton confirmDelButton;
+    private JButton cancelDelButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

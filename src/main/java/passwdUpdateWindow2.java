@@ -36,8 +36,10 @@ public class passwdUpdateWindow2 extends JFrame {
         if(newpassword.equals(surpassword)){
             if (updatePasswordInDatabase(newpassword)) {
                 JOptionPane.showMessageDialog(null, "密码修改成功！", "成功", JOptionPane.INFORMATION_MESSAGE);
+                accMgWindow.delefile();
                 this.setVisible(false);
                 this.dispose();
+                // TODO 这里需要添加一个关闭窗口的监听，当密码成功更改时，自动关闭主窗口和和账户管理
             } else {
                 JOptionPane.showMessageDialog(null, "密码修改失败！", "错误", JOptionPane.ERROR_MESSAGE);
             }
@@ -78,8 +80,8 @@ public class passwdUpdateWindow2 extends JFrame {
         button1 = new JButton();
 
         //======== this ========
-        setResizable(false);
         setTitle("\u4fee\u6539\u5bc6\u7801");
+        setResizable(false);
         var contentPane = getContentPane();
 
         //---- label1 ----
@@ -107,11 +109,11 @@ public class passwdUpdateWindow2 extends JFrame {
                             .addComponent(label2)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(passwordField2, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(64, Short.MAX_VALUE))
+                    .addContainerGap(62, Short.MAX_VALUE))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(228, Short.MAX_VALUE)
+                    .addContainerGap(241, Short.MAX_VALUE)
                     .addComponent(button1)
-                    .addGap(38, 38, 38))
+                    .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -119,17 +121,17 @@ public class passwdUpdateWindow2 extends JFrame {
                     .addGap(49, 49, 49)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(label1)
-                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                     .addGap(19, 19, 19)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(passwordField2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordField2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(label2))
-                    .addGap(18, 18, 18)
-                    .addComponent(button1, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(19, Short.MAX_VALUE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                    .addComponent(button1)
+                    .addContainerGap())
         );
         setSize(325, 205);
-        setLocationRelativeTo(getOwner());
+        setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -140,4 +142,6 @@ public class passwdUpdateWindow2 extends JFrame {
     private JPasswordField passwordField2;
     private JButton button1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
+
 }

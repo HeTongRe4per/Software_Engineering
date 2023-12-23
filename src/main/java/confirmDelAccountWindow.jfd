@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:51:p, comp label2:::p::p, space ::41:x}, seq t {space :0:66:x, par l {seq t {comp label1:::p::p, space :p:97:p}, seq t {comp confirmDelButton:::p::p, space s:::p, comp cancelDelButton:::p::p, space :p:62:p}}}}"
-			"$verticalGroup": "par l {seq l {space :p:38:p, comp label1:::p::p, space u:::p, comp label2:::p::p, space :p:37:p, par b {comp confirmDelButton::b:p::p, comp cancelDelButton::b:p::p}, space ::27:x}}"
+			"$horizontalGroup": "par l {seq {space :p:51:p, comp label2:::p::p, space ::41:x}, seq t {space :0:115:x, comp label1:::p::p, space :p:97:p}, seq t {space ::69:x, comp confirmDelButton:::p::p, space s:::p, comp cancelDelButton:::p::p, space :p:57:p}}"
+			"$verticalGroup": "par l {seq l {space :p:38:p, comp label1:::p::p, space u:::p, comp label2:::p::p, space ::40:x, par b {comp confirmDelButton::b:p::p, comp cancelDelButton::b:p::p}, space :p:18:p}}"
 		} ) {
 			name: "this"
 			"title": "确认删除"
@@ -33,7 +33,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 310, 190 )
+			"size": new java.awt.Dimension( 310, 200 )
 		} )
 	}
 }

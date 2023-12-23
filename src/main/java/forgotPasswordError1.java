@@ -43,20 +43,20 @@ public class forgotPasswordError1 extends JDialog {
             dialog1ContentPaneLayout.setHorizontalGroup(
                 dialog1ContentPaneLayout.createParallelGroup()
                     .addGroup(GroupLayout.Alignment.TRAILING, dialog1ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(156, Short.MAX_VALUE)
-                        .addComponent(button2, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(171, Short.MAX_VALUE)
+                        .addComponent(button2)
                         .addContainerGap())
                     .addGroup(dialog1ContentPaneLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
+                        .addGap(67, 67, 67)
                         .addGroup(dialog1ContentPaneLayout.createParallelGroup()
                             .addComponent(label4)
                             .addComponent(label3))
-                        .addContainerGap(73, Short.MAX_VALUE))
+                        .addContainerGap(78, Short.MAX_VALUE))
             );
             dialog1ContentPaneLayout.setVerticalGroup(
                 dialog1ContentPaneLayout.createParallelGroup()
                     .addGroup(dialog1ContentPaneLayout.createSequentialGroup()
-                        .addContainerGap(35, Short.MAX_VALUE)
+                        .addContainerGap(30, Short.MAX_VALUE)
                         .addComponent(label3)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label4)
@@ -64,7 +64,7 @@ public class forgotPasswordError1 extends JDialog {
                         .addComponent(button2)
                         .addContainerGap())
             );
-            dialog1.setSize(225, 155);
+            dialog1.setSize(255, 160);
             dialog1.setLocationRelativeTo(null);
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on

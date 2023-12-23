@@ -34,7 +34,7 @@ public class accMgWindow extends JFrame {
         }
 
     }
-    private final String localAppDATA=System.getenv("LOCALAPPDATA");
+    private static final String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
     private int dataOfFile = 0; // 文件字节内容
     private void DecFile(File encFile, File decFile) throws Exception {
@@ -180,10 +180,9 @@ public class accMgWindow extends JFrame {
 
     private void resetPasswdListen() {
         new passwdUpdateWindow2(oldusername).setVisible(true);
-        delefile();
-        parent.dispose();
-        dispose();
-        new loginWindows().setVisible(true);
+        //parent.dispose();
+        //dispose();
+        //new loginWindows().setVisible(true);
     }
 
     // 更新数据库中的username_mail属性值
@@ -328,7 +327,6 @@ public class accMgWindow extends JFrame {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // 处理数据库连接异常
         } finally {
             try {
                 // 关闭数据库连接
@@ -384,7 +382,7 @@ public class accMgWindow extends JFrame {
         return email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
     }
 
-    private void delefile(){
+    public static void delefile(){
         String fp=localAppDATA+"\\CIF";
         File directory = new File(fp);
         if (directory.isDirectory()) {
@@ -449,52 +447,52 @@ public class accMgWindow extends JFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(label3, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(39, 39, 39)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(label3, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addGroup(contentPaneLayout.createParallelGroup()
+                            .addComponent(delAccountButton, GroupLayout.Alignment.TRAILING)
+                            .addGroup(contentPaneLayout.createSequentialGroup()
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(passwordField1, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(emailTextField, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
                                 .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(contentPaneLayout.createSequentialGroup()
-                                                        .addComponent(accountTextField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(resetUserNameButton))
-                                                .addComponent(delAccountButton, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                                        .addComponent(passwordField1)
-                                                        .addGap(10, 10, 10)
-                                                        .addComponent(resetPasswdButton, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(resetEmailButton, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(resetEmailButton, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(resetPasswdButton, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(accountTextField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(resetUserNameButton, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)))
+                    .addContainerGap(32, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(accountTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(resetUserNameButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(resetEmailButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(resetPasswdButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                                .addComponent(delAccountButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27))
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(49, 49, 49)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(accountTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(resetUserNameButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(resetEmailButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(resetPasswdButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                    .addComponent(delAccountButton)
+                    .addGap(27, 27, 27))
         );
         setSize(395, 275);
         setLocationRelativeTo(null);
@@ -510,7 +508,7 @@ public class accMgWindow extends JFrame {
     private JTextField emailTextField;
     private JButton resetUserNameButton;
     private JButton resetEmailButton;
-    private JButton resetPasswdButton;
+    public static JButton resetPasswdButton;
     private JPasswordField passwordField1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

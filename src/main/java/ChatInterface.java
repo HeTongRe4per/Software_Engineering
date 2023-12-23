@@ -144,7 +144,7 @@ public class ChatInterface extends JFrame  {
 
 	private void sendPaneKeyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		// 处理特定的按键
+		// ESC快捷退出
 		if (keyCode == KeyEvent.VK_ENTER && e.isControlDown()) {
 			sendButton.doClick();
 		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -237,16 +237,13 @@ public class ChatInterface extends JFrame  {
     }
 
     private void chatWinKeyPressed(KeyEvent e) {
-        // TODO 主窗口ESC快捷键终止主进程
         if (e.getKeyCode() == 27) {
-            /*this.setVisible(false);
-            this.dispose();*/
             System.exit(0);
         }
     }
 
     private void resetChat() {
-        //chatAPI.resetInputString();
+        chatAPI.resetInputString();
         chatArea.setText("");
     }
 

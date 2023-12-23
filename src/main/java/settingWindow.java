@@ -140,14 +140,12 @@ public class settingWindow extends JFrame{
             // 将StringBuilder的内容赋值给文本框
             String Text = stringBuilder.toString();
             String[] parts = Text.split(",");
-            //TODO 主界面读取文件赋值
+            //主界面读取文件赋值
             textField2.setText(parts[0]);
             textField1.setText(parts[1]);
             // 关闭Scanner
             scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (FileNotFoundException e) { e.printStackTrace(); }
     }
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\settinginfor";

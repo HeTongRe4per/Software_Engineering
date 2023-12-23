@@ -18,13 +18,20 @@ new FormModel {
 					add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
 						name: "layeredPane1"
 						"border": new javax.swing.border.EtchedBorder( 1, null, null )
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label1"
-							"text": "<html>\n本程序是2021级信计一班2023软件工程“言谈智友”小组的课设\n<br>本软件使用Java和SQL语言编写，开源在github</br>\n<br></br>\n<br>小组组员：<br/>\n<br>可行性&项目进度:席祥，唐正阳</br>\n<br>需求:朱恒坚，王行杭</br>\n<br>设计:覃志帆，刘骥潇</br>\n<br>编码:许鹏，张力，张越</br>\n<br>测试:喻博文，姚雨果</br>\n</html>"
+						add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+							name: "scrollPane1"
+							add( new FormComponent( "javax.swing.JTextArea" ) {
+								name: "label1"
+								"text": "本程序是2021级信计一班2023软件工程“言谈智友”小组的课设\n本软件使用Java和SQL语言编写，开源在github\n\n小组组员：\n可行性&项目进度:席祥，唐正阳\n需求:朱恒坚，王行杭\n设计:覃志帆，刘骥潇\n编码:许鹏，张力，张越\n测试:喻博文，姚雨果"
+								"wrapStyleWord": true
+								"lineWrap": true
+								"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+								"editable": false
+							} )
 						}, new FormLayoutConstraints( null ) {
 							"location": new java.awt.Point( 140, 415 )
 							"size": new java.awt.Dimension( 310, 190 )
-							"x": 10
+							"x": 5
 							"y": 5
 							"width": 355
 							"height": 155
@@ -59,6 +66,16 @@ new FormModel {
 							"width": 120
 							"height": 45
 						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label2"
+							"icon": new com.jformdesigner.model.SwingIcon( 0, "/painted_eggshell-50x45.png" )
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "label2MouseClicked", false ) )
+						}, new FormLayoutConstraints( null ) {
+							"x": 20
+							"y": 180
+							"width": 50
+							"height": 50
+						} )
 					}, new FormLayoutConstraints( class java.lang.String ) {
 						"value": "Center"
 					} )
@@ -70,7 +87,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 400, 300 )
+			"size": new java.awt.Dimension( 400, 305 )
 		} )
 	}
 }
