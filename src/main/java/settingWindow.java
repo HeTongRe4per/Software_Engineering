@@ -37,7 +37,7 @@ public class settingWindow extends JFrame{
         ChatInterface.font = setingFont;
         ChatInterface.fontSize = setingFontSize;
         ChatInterface.refreshWin();
-        if(url.equals("")||apikey.equals("")) {
+        if(url.isEmpty() || apikey.isEmpty()) {
             JOptionPane.showMessageDialog(null,"请输入完整信息","错误",JOptionPane.ERROR_MESSAGE);
         } else {
             try {
@@ -59,7 +59,7 @@ public class settingWindow extends JFrame{
         File file = new File(FILE_PATH);
         file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
         file.createNewFile(); // 创建文件（如果不存在）
-        String url, apikey, theme;
+        String url, apikey;
         url = textField2.getText();
         apikey = textField1.getText();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {

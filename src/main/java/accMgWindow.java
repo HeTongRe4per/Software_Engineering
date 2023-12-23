@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 
 
 /**
- * @author zhang xp zy
+ * @author zhang RDLS 小样
  */
 public class accMgWindow extends JFrame {
     public accMgWindow() {
@@ -69,6 +69,7 @@ public class accMgWindow extends JFrame {
         readfile(L_file);
         L_file.delete();
     }
+
     private void readfile(File file) {
 
         try {
@@ -140,6 +141,7 @@ public class accMgWindow extends JFrame {
             e.printStackTrace();
         }
     }
+
     private boolean isUsernameMail(String input) {
         // 根据需要实现判断是 username_mail 还是 email 的逻辑
         // 这里简单地通过包含 "@" 符号来判断是否是 email
@@ -175,8 +177,9 @@ public class accMgWindow extends JFrame {
     }
 
     private void resetPasswdListen() {
-        new passwdUpdateWindow2(oldusername).setVisible(true);
-        new loginWindows().setVisible(true);
+        //new passwdUpdateWindow2(oldusername).setVisible(true);
+        passwdUpdateWin = new passwdUpdateWindow2(oldusername);
+        passwdUpdateWin.setVisible(true);
     }
 
     // 更新数据库中的username_mail属性值
@@ -216,11 +219,12 @@ public class accMgWindow extends JFrame {
             }
 
             // TODO 关闭当前窗口和父窗口
-            closeWindow();
             dispose();
+            loginWindows.mainWin.dispose();
 
             // 打开新的登录窗口
-            new loginWindows().setVisible(true);
+            main.loginWin = new loginWindows();
+            main.loginWin.setVisible(true);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -315,12 +319,14 @@ public class accMgWindow extends JFrame {
                 // 执行更新
                 preparedStatement.executeUpdate();
             }
+
             // TODO 关闭当前窗口和父窗口
-            closeWindow();
             dispose();
+            loginWindows.mainWin.dispose();
 
             // 打开新的登录窗口
-            new loginWindows().setVisible(true);
+            main.loginWin = new loginWindows();
+            main.loginWin.setVisible(true);
 
         } catch (SQLException e) { e.printStackTrace(); }
         finally {
@@ -330,16 +336,6 @@ public class accMgWindow extends JFrame {
                     connection.close();
                 }
             } catch (SQLException e) { e.printStackTrace(); }
-        }
-    }
-
-    public void setMainWindow (ChatInterface p) {
-        this.mainWin = p;
-    }
-
-    private void closeWindow() {
-        if (mainWin != null) {
-            mainWin.dispose();
         }
     }
 
@@ -516,11 +512,12 @@ public class accMgWindow extends JFrame {
     private JPasswordField passwordField1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
+    // 自定义变量
 
+    static passwdUpdateWindow2 passwdUpdateWin;
     private static final String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
     static String oldusername;
     String oldemail;
-    private ChatInterface mainWin;
 
 }

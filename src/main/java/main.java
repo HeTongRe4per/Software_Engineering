@@ -33,11 +33,12 @@ public class main {
                         UIManager.setLookAndFeel(lookAndFeel);
                     } catch (Exception e) { e.printStackTrace(); }
                 }
-                new loginWindows().setVisible(true);
+                loginWin = new loginWindows();
+                loginWin.setVisible(true);
             }
         });
     }
-//
+
     public static Connection createMySQLConnection() throws SQLException {
         String url = "jdbc:mysql://database.hetong-re4per.icu/chatgpt_account";
         String username = "chatgpt";
@@ -53,7 +54,6 @@ public class main {
         // 创建数据库连接
         return DriverManager.getConnection(url, username, password);
     }
-
 
     private static void readfile(){
         // 主题文件读
@@ -92,5 +92,7 @@ public class main {
     public static String lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme";
     static String localAppDATA=System.getenv("LOCALAPPDATA");
     static String FILE_PATH = localAppDATA+"\\CIF\\themeFile";
+    static loginWindows loginWin;
+
 
 }

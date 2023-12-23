@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 
 /**
- * @author zhang xp
+ * @author zhang RDLS 小样
  */
 public class ChatInterface extends JFrame  {
     public ChatInterface() {
@@ -35,9 +35,6 @@ public class ChatInterface extends JFrame  {
         sendPaneEmpty();
         refreshWin();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //chatArea.requestFocus();
-        //chatScrollPane.getVerticalScrollBar();
-        //chatScrollPane.setValue(verticalScrollBar.getMaximum());
 	}
 
     private String Chatname(String name){
@@ -89,6 +86,7 @@ public class ChatInterface extends JFrame  {
         // 这里简单地通过包含 "@" 符号来判断是否是 email
         return input.contains("@");
     }
+
     private Connection createMySQLConnection() {
         Connection connection = null;
         try {
@@ -100,11 +98,9 @@ public class ChatInterface extends JFrame  {
         return connection;
     }
 
-
-
 	public void accountMangeItemListen() {
-        accMgWindow ac =new accMgWindow();
-		ac.setVisible(true);
+        accMgWin = new accMgWindow();
+		accMgWin.setVisible(true);
 	}
 
 	private void logoutItemListen() {
@@ -210,6 +206,7 @@ public class ChatInterface extends JFrame  {
             e.printStackTrace();
         }
     }
+
     private boolean readbool(){
         boolean value=false;
         File file=new File(FILE_PATH);
@@ -260,11 +257,9 @@ public class ChatInterface extends JFrame  {
         chatArea.setFont(setFont);
     }
 
-
     private void chatAreaKeyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);
     }
-
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -475,6 +470,8 @@ public class ChatInterface extends JFrame  {
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
 	// 自定义变量
+
+    static accMgWindow accMgWin;
 	final String initSendText = "Message ChatGPT...";
 	static String inputMessage = "";
 	boolean sendButtonFlag = true;
@@ -484,7 +481,6 @@ public class ChatInterface extends JFrame  {
     public static String font = "微软雅黑";
     public static Integer fontSize = 14;
     String username = Chatname(loginWindows.username_s);
-
     private ImageIcon imageIcon = new ImageIcon(getClass().getResource("background-250x167-semitransparent.png"));
 	// 自定义方法
 }

@@ -18,10 +18,10 @@ import java.nio.charset.StandardCharsets;
  */
 public class chatAPI {
 
-    private static StringBuffer inputString = new StringBuffer("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
-    private String API_KEY = settingWindow.ApiKey;
-    private String API_URL = settingWindow.Url;
-    private String question = ChatInterface.inputMessage;
+    private static final StringBuffer inputString = new StringBuffer("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
+    private final String API_KEY = settingWindow.ApiKey;
+    private final String API_URL = settingWindow.Url;
+    private final String question = ChatInterface.inputMessage;
     public static String answer = "";
     private static Integer  messageCount = 0;
 

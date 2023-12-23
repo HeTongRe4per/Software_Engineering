@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 
 /**
- * @author zhang
+ * @author zhang RDLS 小样
  */
 public class loginWindows extends JFrame{
 
@@ -91,10 +91,11 @@ public class loginWindows extends JFrame{
             username_s = username;
             isselect=remberPasswd.isSelected();
             boolisselect();
-            remberPasswdListen();//。
+            remberPasswdListen();
+            mainWin = new ChatInterface();
+            mainWin.setVisible(true);
             this.setVisible(false);
             this.dispose();
-            new ChatInterface().setVisible(true);
         }else {
             JOptionPane.showMessageDialog(null, "账号或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
         }
@@ -175,11 +176,7 @@ public class loginWindows extends JFrame{
             throw new RuntimeException(e);
         }
     }
-    private final String localAppDATA=System.getenv("LOCALAPPDATA");
-    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
-    private final int numOfEncAndDec = 0x99; // 加密解密秘钥
-    private int dataOfFile = 0; // 文件字节内容
-    private boolean isselect = false;
+
     private void boolisselect(){
         File file=new File(FILE_PATH+"boolean");
         try {
@@ -191,6 +188,7 @@ public class loginWindows extends JFrame{
             e.printStackTrace();
         }
     }
+
     private boolean readbool(){
         boolean value=false;
         File file=new File(FILE_PATH+"boolean");
@@ -353,7 +351,6 @@ public class loginWindows extends JFrame{
             accountField.requestFocus();
         }
     }
-
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -507,13 +504,15 @@ public class loginWindows extends JFrame{
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 自定义变量
+
+    static ChatInterface mainWin;
     private final String accountInit = "请输入用户名或邮箱";
     private final String passwordInit = "请输入密码";
-
-    public String getUsername() {
-        return username;
-    }
-
     public static String username_s;
     private String username; // 添加用户名成员变量
+    private boolean isselect = false;
+    private final String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
+    private final int numOfEncAndDec = 0x99; // 加密解密秘钥
+    private int dataOfFile = 0; // 文件字节内容
 }

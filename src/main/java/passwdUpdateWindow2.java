@@ -12,37 +12,15 @@ import java.sql.SQLException;
 
 
 /**
- * @author zhang
+ * @author zhang RDLS 小样
  */
 public class passwdUpdateWindow2 extends JFrame {
-    private String username_mail;
-
-    ChatInterface chatInterface = new ChatInterface();
-    accMgWindow accMgWindow = new accMgWindow();
     public passwdUpdateWindow2(String username_mail) {
         this.username_mail = username_mail;
         initComponents();
-        setAccMgWindow(accMgWindow);
-        setChatInterface(chatInterface);
         this.setVisible(true);
     }
 
-    public void setChatInterface(ChatInterface chatInterface) {
-        this.chatInterface = chatInterface;
-    }
-
-    public void setAccMgWindow(accMgWindow accMgWindow){
-        this.accMgWindow = accMgWindow;
-    }
-
-    private void closeWindow() {
-        if (chatInterface != null) {
-            chatInterface.dispose();
-        }
-        if (accMgWindow != null) {
-            accMgWindow.dispose();
-        }
-    }
     private boolean buttonSureListen() {
         boolean flag=true;
         String newpassword,surpassword;
@@ -59,12 +37,14 @@ public class passwdUpdateWindow2 extends JFrame {
             if (updatePasswordInDatabase(newpassword)) {
                 JOptionPane.showMessageDialog(null, "密码修改成功！", "成功", JOptionPane.INFORMATION_MESSAGE);
                 accMgWindow.delefile();
-                this.setVisible(false);
-                this.dispose();
-                // TODO 这里需要添加一个关闭窗口的监听，当密码成功更改时，自动关闭主窗口和和账户管理
-                closeWindow();
-                /*accMgWindow.reserPasswdFlag = true;
-                accMgWindow.confirmResetPasswd();*/
+
+                // 当密码成功更改时，自动关闭主窗口和和账户管理
+                dispose();
+                ChatInterface.accMgWin.dispose();
+                loginWindows.mainWin.dispose();
+
+                main.loginWin = new loginWindows();
+                main.loginWin.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "密码修改失败！", "错误", JOptionPane.ERROR_MESSAGE);
             }
@@ -168,6 +148,5 @@ public class passwdUpdateWindow2 extends JFrame {
     private JButton button1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
-    ChatInterface mainWin = new ChatInterface();
-    accMgWindow accMgWin = new accMgWindow();
+    private String username_mail;
 }
