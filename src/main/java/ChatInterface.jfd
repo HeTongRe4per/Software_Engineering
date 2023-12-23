@@ -11,27 +11,6 @@ new FormModel {
 			"foreground": sfield java.awt.Color black
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
 			"minimumSize": new java.awt.Dimension( 375, 400 )
-			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "chatScrollPane"
-				"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
-				"autoscrolls": true
-				"cursor": &Cursor0 new java.awt.Cursor( 2 )
-				add( new FormComponent( "javax.swing.JTextArea" ) {
-					name: "chatArea"
-					"editable": false
-					"font": new java.awt.Font( "黑体", 0, 14 )
-					"border": new javax.swing.border.EtchedBorder( 1, null, null )
-					"lineWrap": true
-					"wrapStyleWord": true
-					"cursor": #Cursor0
-					auxiliary() {
-						"JavaCodeGenerator.variableModifiers": 10
-					}
-					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "chatAreaKeyPressed", true ) )
-				} )
-			}, new FormLayoutConstraints( class java.lang.String ) {
-				"value": "Center"
-			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 				"$horizontalGroup": "par l {seq {space :::p, par l {comp sendScrollPane::::1021:x, seq t {space :0:945:x, comp sendButton:::p:76:p}}, space :::p}}"
 				"$verticalGroup": "par l {seq l {space :::p, comp sendScrollPane:::p:75:p, space :::p, comp sendButton:::p::p, space ::14:x}}"
@@ -59,6 +38,35 @@ new FormModel {
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {
 				"value": "South"
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+				name: "panel1"
+				auxiliary() {
+					"JavaCodeGenerator.customCreateCode": "new JPanel() {\n    {\n        this.setOpaque(false);\n        this.setLayout(new BorderLayout());\n    }\n    public void paintComponent(Graphics g) {\n        int x = getWidth() - imageIcon.getIconWidth();\n        int y = getHeight() - imageIcon.getIconHeight();\n        g.drawImage(imageIcon.getImage(), x, y - 13, this);\n        super.paintComponents(g);\n    }\n};"
+				}
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "chatScrollPane"
+					"border": sfield com.jgoodies.forms.factories.Borders DIALOG_BORDER
+					"autoscrolls": true
+					"cursor": &Cursor0 new java.awt.Cursor( 2 )
+					add( new FormComponent( "javax.swing.JTextArea" ) {
+						name: "chatArea"
+						"editable": false
+						"font": new java.awt.Font( "黑体", 0, 14 )
+						"border": new javax.swing.border.EtchedBorder( 1, null, null )
+						"lineWrap": true
+						"wrapStyleWord": true
+						"cursor": #Cursor0
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 10
+						}
+						addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "chatAreaKeyPressed", true ) )
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "Center"
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "mainMenuBar"

@@ -24,9 +24,9 @@ import java.util.concurrent.CompletableFuture;
 public class ChatInterface extends JFrame  {
     public ChatInterface() {
 		initComponents();
-        /*chatArea.setOpaque(false);
+        chatArea.setOpaque(false);
         chatScrollPane.setOpaque(false);
-        chatScrollPane.getViewport().setOpaque(false);*/
+        chatScrollPane.getViewport().setOpaque(false);
         if(checkFileExistence(FILE_PATH)){
             if(readbool()) darkMode();
             else lightMode();
@@ -273,12 +273,24 @@ public class ChatInterface extends JFrame  {
         settingItem = new JMenuItem();
         helpMenu = new JMenu();
         aboutItem = new JMenuItem();
-        chatScrollPane = new JScrollPane();
-        chatArea = new JTextArea();
         sendPanel = new JPanel();
         sendScrollPane = new JScrollPane();
         sendPane = new JTextPane();
         sendButton = new JButton();
+        panel1 = new JPanel() {
+            {
+                this.setOpaque(false);
+                this.setLayout(new BorderLayout());
+            }
+            public void paintComponent(Graphics g) {
+                int x = getWidth() - imageIcon.getIconWidth();
+                int y = getHeight() - imageIcon.getIconHeight();
+                g.drawImage(imageIcon.getImage(), x, y - 13, this);
+                super.paintComponents(g);
+            }
+        };
+        chatScrollPane = new JScrollPane();
+        chatArea = new JTextArea();
 
         //======== this ========
         setTitle("Chat Interface");
@@ -343,29 +355,6 @@ public class ChatInterface extends JFrame  {
         }
         setJMenuBar(mainMenuBar);
 
-        //======== chatScrollPane ========
-        {
-            chatScrollPane.setBorder(Borders.DIALOG_BORDER);
-            chatScrollPane.setAutoscrolls(true);
-            chatScrollPane.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-
-            //---- chatArea ----
-            chatArea.setEditable(false);
-            chatArea.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
-            chatArea.setBorder(new EtchedBorder());
-            chatArea.setLineWrap(true);
-            chatArea.setWrapStyleWord(true);
-            chatArea.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-            chatArea.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    chatAreaKeyPressed(e);
-                }
-            });
-            chatScrollPane.setViewportView(chatArea);
-        }
-        contentPane.add(chatScrollPane, BorderLayout.CENTER);
-
         //======== sendPanel ========
         {
 
@@ -426,6 +415,35 @@ public class ChatInterface extends JFrame  {
             );
         }
         contentPane.add(sendPanel, BorderLayout.SOUTH);
+
+        //======== panel1 ========
+        {
+            panel1.setLayout(new BorderLayout());
+
+            //======== chatScrollPane ========
+            {
+                chatScrollPane.setBorder(Borders.DIALOG_BORDER);
+                chatScrollPane.setAutoscrolls(true);
+                chatScrollPane.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+
+                //---- chatArea ----
+                chatArea.setEditable(false);
+                chatArea.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
+                chatArea.setBorder(new EtchedBorder());
+                chatArea.setLineWrap(true);
+                chatArea.setWrapStyleWord(true);
+                chatArea.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+                chatArea.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        chatAreaKeyPressed(e);
+                    }
+                });
+                chatScrollPane.setViewportView(chatArea);
+            }
+            panel1.add(chatScrollPane, BorderLayout.CENTER);
+        }
+        contentPane.add(panel1, BorderLayout.CENTER);
         setSize(1035, 620);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
@@ -442,12 +460,13 @@ public class ChatInterface extends JFrame  {
     private JMenuItem settingItem;
     private JMenu helpMenu;
     private JMenuItem aboutItem;
-    private JScrollPane chatScrollPane;
-    private static JTextArea chatArea;
     private JPanel sendPanel;
     private JScrollPane sendScrollPane;
     private JTextPane sendPane;
     private JButton sendButton;
+    private JPanel panel1;
+    private JScrollPane chatScrollPane;
+    private static JTextArea chatArea;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
 	// 自定义变量
@@ -461,7 +480,7 @@ public class ChatInterface extends JFrame  {
     public static Integer fontSize = 12;
     String username = Chatname(loginWindows.username_s);
 
-    private ImageIcon imageIcon = new ImageIcon("/background-250x167.png");
+    private ImageIcon imageIcon = new ImageIcon(getClass().getResource("background-250x167-semitransparent.png"));
 
 	// 自定义方法
 }
