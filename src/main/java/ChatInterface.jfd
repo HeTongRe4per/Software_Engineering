@@ -24,6 +24,9 @@ new FormModel {
 					"lineWrap": true
 					"wrapStyleWord": true
 					"cursor": #Cursor0
+					auxiliary() {
+						"JavaCodeGenerator.variableModifiers": 10
+					}
 					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "chatAreaKeyPressed", true ) )
 				} )
 			}, new FormLayoutConstraints( class java.lang.String ) {

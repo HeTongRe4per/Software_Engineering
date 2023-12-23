@@ -21,7 +21,7 @@ public class settingWindow extends JFrame{
         }else{
             readfile();
         }
-        if (!loginWindows.checkFileExistence(FILE_PATH_2)) {
+        if (loginWindows.checkFileExistence(FILE_PATH_2)) {
             readthemeFile();
         }
     }
@@ -34,6 +34,9 @@ public class settingWindow extends JFrame{
     private void button2Linter() {
         String url = textField2.getText();
         String apikey = textField1.getText();
+        ChatInterface.font = setingFont;
+        ChatInterface.fontSize = setingFontSize;
+        ChatInterface.refreshWin();
         if(url.equals("")||apikey.equals("")) {
             JOptionPane.showMessageDialog(null,"请输入完整信息","错误",JOptionPane.ERROR_MESSAGE);
         } else {
@@ -42,13 +45,14 @@ public class settingWindow extends JFrame{
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            try {
-                themeSet();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            
             this.setVisible(false);
             this.dispose();
+        }
+        try {
+            themeSet();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     private void settinginfor() throws IOException {
@@ -65,20 +69,23 @@ public class settingWindow extends JFrame{
         }
     }
 
-    private void themeSet() throws IOException {// TODO 主题文件写
+    private void themeSet() throws IOException {
+        // 主题文件写
         File file = new File(FILE_PATH_2);
         file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
         file.createNewFile(); // 创建文件（如果不存在）
-        String theme;
-        theme = main.lookAndFeel;
+        String theme = main.lookAndFeel;
+        String font = setingFont;
+        Integer fontSz = setingFontSize;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(theme);
+            writer.write(font+ "," + fontSz + "," + theme);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void readthemeFile() {// TODO 主题文件读
+    private void readthemeFile() {
+        // 主题文件读
         File file = new File(FILE_PATH_2);
         try {
             // 创建Scanner对象读取文件
@@ -94,9 +101,22 @@ public class settingWindow extends JFrame{
             // 将StringBuilder的内容赋值给文本框
             String Text = stringBuilder.toString();
             String[] parts = Text.split(",");
-            // TODO 主题读取到UI
-
-
+            String font = parts[0];
+            Integer fontSize = Integer.parseInt(parts[1]);
+            String lookAndFeel = parts[2];
+            String setingTheme = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme";
+            switch (lookAndFeel) {
+                case "java.swing.plaf.windows.WindowsLookAndFeel" : setingTheme = "Windows"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme": setingTheme = "Arc"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme": setingTheme = "Arc - Orange"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme": setingTheme = "Cyan light"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme": setingTheme = "Light Flat"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme": setingTheme = "Solarized Light";
+            }
+            // 主题读取到UI
+            comboBox2.setSelectedItem(font);
+            comboBox1.setSelectedItem(setingTheme);
+            spinner1.setValue(fontSize);
             // 关闭Scanner
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -153,6 +173,18 @@ public class settingWindow extends JFrame{
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+    }
+
+    private void fontSizeListener() {
+        // 字号监听
+        setingFontSize = Integer.valueOf(spinner1.getValue().toString()) ;
+        //System.out.println("字号输出：\"" + setingFontSize + "\"");
+    }
+
+    private void fontListener(ItemEvent e) {
+        // 字体修改监听
+        setingFont = e.getItem().toString();
+        //System.out.println("字体输出：\"" + ChatInterface.font + "\"");
     }
 
     private void initComponents() {
@@ -256,6 +288,7 @@ public class settingWindow extends JFrame{
                 "\u96b6\u4e66",
                 "\u9ed1\u4f53"
             }));
+            comboBox2.addItemListener(e -> fontListener(e));
             layeredPane2.add(comboBox2, JLayeredPane.DEFAULT_LAYER);
             comboBox2.setBounds(55, 65, 95, 24);
 
@@ -266,6 +299,7 @@ public class settingWindow extends JFrame{
 
             //---- spinner1 ----
             spinner1.setModel(new SpinnerNumberModel(12, 8, 36, 1));
+            spinner1.addChangeListener(e -> fontSizeListener());
             layeredPane2.add(spinner1, JLayeredPane.DEFAULT_LAYER);
             spinner1.setBounds(225, 25, 55, 25);
         }
@@ -322,6 +356,8 @@ public class settingWindow extends JFrame{
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 自定义变量
+    private String setingFont = "微软雅黑";
+    private Integer setingFontSize =12;
     public static String Url = "https://api.chatanywhere.com.cn";
     public static String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
 }

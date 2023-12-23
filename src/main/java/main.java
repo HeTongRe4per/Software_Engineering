@@ -65,29 +65,7 @@ public class main {
 
 
     private static void readfile(){
-        File file = new File(FILE_PATH);
-        try {
-            // 创建Scanner对象读取文件
-            Scanner scanner = new Scanner(file);
-            // 使用StringBuilder拼接读取到的数据
-            StringBuilder stringBuilder = new StringBuilder();
-            // 读取文件内容
-            while (scanner.hasNext()) {
-                String data = scanner.next();
-                // 将字段添加到StringBuilder中
-                stringBuilder.append(data);
-            }
-            // 将StringBuilder的内容赋值给文本框
-            lookAndFeel = stringBuilder.toString();
-            // 关闭Scanner
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*private static boolean readBool() {
-        boolean value = false;
+        // 主题文件读
         File file = new File(FILE_PATH);
         try {
             // 创建Scanner对象读取文件
@@ -102,21 +80,25 @@ public class main {
             }
             // 将StringBuilder的内容赋值给文本框
             String Text = stringBuilder.toString();
-            value = Boolean.parseBoolean(Text);
+            String[] parts = Text.split(",");
+            // 主题读取到UI
+            lookAndFeel = parts[2];
+            ChatInterface.font = parts[0];
+            ChatInterface.fontSize = Integer.parseInt(parts[1]);
+            System.out.println(lookAndFeel + ChatInterface.font + ChatInterface.fontSize);
             // 关闭Scanner
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return value;
-    }*/
+    }
 
     public static boolean checkFileExistence(String filePath) {
         File file = new File(filePath);
         return file.exists();
     }
 
-    public static String lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme"/*UIManager.getSystemLookAndFeelClassName()*/;
+    public static String lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme";
     static String localAppDATA=System.getenv("LOCALAPPDATA");
     static String FILE_PATH = localAppDATA+"\\CIF\\themeFile";
 

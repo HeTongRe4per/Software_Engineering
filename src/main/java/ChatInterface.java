@@ -33,6 +33,7 @@ public class ChatInterface extends JFrame  {
             isdark=readbool();
         }
         sendPaneEmpty();
+        refreshWin();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //chatArea.requestFocus();
         //chatScrollPane.getVerticalScrollBar();
@@ -249,6 +250,12 @@ public class ChatInterface extends JFrame  {
         chatArea.setText("");
     }
 
+    public static void refreshWin() {
+        Font setFont = new Font(font, Font.PLAIN, fontSize);
+        chatArea.setFont(setFont);
+    }
+
+
     private void chatAreaKeyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);
     }
@@ -436,7 +443,7 @@ public class ChatInterface extends JFrame  {
     private JMenu helpMenu;
     private JMenuItem aboutItem;
     private JScrollPane chatScrollPane;
-    private JTextArea chatArea;
+    private static JTextArea chatArea;
     private JPanel sendPanel;
     private JScrollPane sendScrollPane;
     private JTextPane sendPane;
@@ -450,7 +457,8 @@ public class ChatInterface extends JFrame  {
     private boolean isdark=false;
     private String localAppDATA=System.getenv("LOCALAPPDATA");
     private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
-    public static String fornt = "微软雅黑";
+    public static String font = "微软雅黑";
+    public static Integer fontSize = 12;
     String username = Chatname(loginWindows.username_s);
 
     private ImageIcon imageIcon = new ImageIcon("/background-250x167.png");

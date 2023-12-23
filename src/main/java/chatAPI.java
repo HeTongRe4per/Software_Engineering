@@ -84,7 +84,7 @@ public class chatAPI {
             // 删掉"}"添加","
             inputString.deleteCharAt(inputString.length() - 1);
             inputString.append(",");
-            System.out.println("最终状态" + inputString);
+            //System.out.println("最终状态" + inputString);
             messageCount++;
 
         } catch (Exception e) {

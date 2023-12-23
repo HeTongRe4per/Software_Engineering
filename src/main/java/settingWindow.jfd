@@ -119,6 +119,7 @@ new FormModel {
 						addElement( "隶书" )
 						addElement( "黑体" )
 					}
+					addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "fontListener", true ) )
 				}, new FormLayoutConstraints( null ) {
 					"x": 55
 					"y": 65
@@ -136,6 +137,7 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JSpinner" ) {
 					name: "spinner1"
 					"model": new javax.swing.SpinnerNumberModel( 12, 8, 36, 1 )
+					addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "fontSizeListener", false ) )
 				}, new FormLayoutConstraints( null ) {
 					"x": 225
 					"y": 25
