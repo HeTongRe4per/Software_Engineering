@@ -83,8 +83,8 @@ public class chatAPI {
             inputString.deleteCharAt(inputString.length() - 1);
             inputString.append(",");
             messageCount++;
-            System.out.println("最终状态" + inputString);
-            System.out.println("messageCount" + messageCount);
+            //System.out.println("最终状态" + inputString);
+            //System.out.println("会话数：" + messageCount);
 
         } catch (Exception e) { e.printStackTrace(); }
     }

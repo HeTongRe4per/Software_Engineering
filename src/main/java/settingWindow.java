@@ -3,6 +3,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.*;
+import java.util.Objects;
 import java.util.Scanner;
 /*
  * Created by JFormDesigner on Thu Nov 30 08:55:23 CST 2023
@@ -23,38 +24,14 @@ public class settingWindow extends JFrame{
         }
         if (loginWindows.checkFileExistence(FILE_PATH_2)) {
             readthemeFile();
-        }
+        } else checkThemeChange1 = "Arc";
     }
-
 
     private void initWindow() {
         textField2.setText(Url);
         textField1.setText(ApiKey);
     }
-    private void button2Linter() {
-        String url = textField2.getText();
-        String apikey = textField1.getText();
-        ChatInterface.font = setingFont;
-        ChatInterface.fontSize = setingFontSize;
-        ChatInterface.refreshWin();
-        if(url.isEmpty() || apikey.isEmpty()) {
-            JOptionPane.showMessageDialog(null,"请输入完整信息","错误",JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                settinginfor();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            
-            this.setVisible(false);
-            this.dispose();
-        }
-        try {
-            themeSet();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     private void settinginfor() throws IOException {
         File file = new File(FILE_PATH);
         file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
@@ -104,18 +81,45 @@ public class settingWindow extends JFrame{
             String font = parts[0];
             Integer fontSize = Integer.parseInt(parts[1]);
             String lookAndFeel = parts[2];
-            String setingTheme = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme";
+            String settingTheme = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme";
             switch (lookAndFeel) {
-                case "java.swing.plaf.windows.WindowsLookAndFeel" : setingTheme = "Windows"; break;
-                case "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme": setingTheme = "Arc"; break;
-                case "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme": setingTheme = "Arc - Orange"; break;
-                case "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme": setingTheme = "Cyan light"; break;
-                case "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme": setingTheme = "Light Flat"; break;
-                case "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme": setingTheme = "Solarized Light";
+                case "com.sun.java.swing.plaf.windows.WindowsLookAndFeel": settingTheme = "Windows"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme": settingTheme = "Arc"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme": settingTheme = "Arc - Orange"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme": settingTheme = "Arc Dark"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme": settingTheme = "Arc Dark - Orange"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme": settingTheme = "Carbon"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme": settingTheme = "Cobalt 2"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme": settingTheme = "Cyan light"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme": settingTheme = "Dark Flat"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme": settingTheme = "Dark purple"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme": settingTheme = "Dracula"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatGradiantoDarkFuchsiaIJTheme": settingTheme = "Gradianto Dark Fuchsia"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme": settingTheme = "Gradianto Deep Ocean"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme": settingTheme = "Gradianto Midnight Blue"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme": settingTheme = "Gradianto Nature Green"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme": settingTheme = "Gray"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkHardIJTheme": settingTheme = "Gruvbox Dark Hard"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkMediumIJTheme": settingTheme = "Gruvbox Dark Medium"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme": settingTheme = "Gruvbox Dark Soft"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme": settingTheme = "Hiberbee Dark"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatHighContrastIJTheme": settingTheme = "High contrast"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme": settingTheme = "Light Flat"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme": settingTheme = "Material Design Dark"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatMonocaiIJTheme": settingTheme = "Monocai"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme": settingTheme = "Monokai Pro"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatNordIJTheme": settingTheme = "Nord"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme": settingTheme = "One Dark"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme": settingTheme = "Solarized Dark"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme": settingTheme = "Solarized Light"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatSpacegrayIJTheme": settingTheme = "Spacegray"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatVuesionIJTheme": settingTheme = "Vuesion"; break;
+                case "com.formdev.flatlaf.intellijthemes.FlatXcodeDarkIJTheme": settingTheme = "Xcode-Dark";
             }
+            checkThemeChange1 = settingTheme;
             // 主题读取到UI
             comboBox2.setSelectedItem(font);
-            comboBox1.setSelectedItem(setingTheme);
+            comboBox1.setSelectedItem(settingTheme);
             spinner1.setValue(fontSize);
             // 关闭Scanner
             scanner.close();
@@ -147,25 +151,78 @@ public class settingWindow extends JFrame{
             scanner.close();
         } catch (FileNotFoundException e) { e.printStackTrace(); }
     }
-    private String localAppDATA=System.getenv("LOCALAPPDATA");
-    private final String FILE_PATH = localAppDATA+"\\CIF\\settinginfor";
-    private final String FILE_PATH_2 = localAppDATA+"\\CIF\\themeFile";
+
     private void button3Listen() {
-        //
         this.setVisible(false);
         this.dispose();
     }
 
+    private void button2Linter() {
+        String url = textField2.getText();
+        String apikey = textField1.getText();
+        ChatInterface.font = setingFont;
+        ChatInterface.fontSize = setingFontSize;
+        ChatInterface.refreshWin();
+        if(url.isEmpty() || apikey.isEmpty()) {
+            JOptionPane.showMessageDialog(null,"请输入完整信息","错误",JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                settinginfor();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                themeSet();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if (!Objects.equals(checkThemeChange1, checkThemeChange2))
+            {
+                JOptionPane.showMessageDialog(this,"主题修改需要重启程序","提示",JOptionPane.INFORMATION_MESSAGE);
+            }
+            //System.out.println(checkThemeChange1 + " | " + checkThemeChange2);
+            this.setVisible(false);
+            this.dispose();
+        }
+    }
+
     private void lookAndFeelBox(ItemEvent e) {
         String lookAndFeel = (String) e.getItem();
+        checkThemeChange2 = lookAndFeel;
         try {
             switch (lookAndFeel) {
                 case "Windows": main.lookAndFeel = UIManager.getSystemLookAndFeelClassName(); break;
                 case "Arc": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme"; break;
                 case "Arc - Orange": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme"; break;
+                case "Arc Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme"; break;
+                case "Arc Dark - Orange": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme";break;
+                case "Carbon": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme"; break;
+                case "Cobalt 2": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme"; break;
                 case "Cyan light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme"; break;
+                case "Dark Flat": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme"; break;
+                case "Dark purple": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme"; break;
+                case "Dracula": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme"; break;
+                case "Gradianto Dark Fuchsia": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDarkFuchsiaIJTheme"; break;
+                case "Gradianto Deep Ocean": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme"; break;
+                case "Gradianto Midnight Blue": main.lookAndFeel =  "com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme"; break;
+                case "Gradianto Nature Green": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme"; break;
+                case "Gray": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme"; break;
+                case "Gruvbox Dark Hard": main.lookAndFeel =  "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkHardIJTheme"; break;
+                case "Gruvbox Dark Medium": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkMediumIJTheme"; break;
+                case "Gruvbox Dark Soft": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme"; break;
+                case "Hiberbee Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme"; break;
+                case "High contrast": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHighContrastIJTheme"; break;
                 case "Light Flat": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme"; break;
-                case "Solarized Light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme";
+                case "Material Design Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme"; break;
+                case "Monocai": main.lookAndFeel =  "com.formdev.flatlaf.intellijthemes.FlatMonocaiIJTheme"; break;
+                case "Monokai Pro": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme"; break;
+                case "Nord": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatNordIJTheme"; break;
+                case "One Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme"; break;
+                case "Solarized Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme"; break;
+                case "Solarized Light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme"; break;
+                case "Spacegray": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSpacegrayIJTheme"; break;
+                case "Vuesion": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatVuesionIJTheme"; break;
+                case "Xcode-Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatXcodeDarkIJTheme";
             }
             themeSet();
         } catch (Exception exception) {
@@ -248,10 +305,36 @@ public class settingWindow extends JFrame{
             comboBox1.setModel(new DefaultComboBoxModel<>(new String[] {
                 "Arc",
                 "Arc - Orange",
+                "Arc Dark",
+                "Arc Dark - Orange",
+                "Carbon",
+                "Cobalt 2",
                 "Cyan light",
+                "Dark Flat",
+                "Dark purple",
+                "Dracula",
+                "Gradianto Dark Fuchsia",
+                "Gradianto Deep Ocean",
+                "Gradianto Midnight Blue",
+                "Gradianto Nature Green",
+                "Gray",
+                "Gruvbox Dark Hard",
+                "Gruvbox Dark Medium",
+                "Gruvbox Dark Soft",
+                "Hiberbee Dark",
+                "High contrast",
                 "Light Flat",
+                "Material Design Dark",
+                "Monocai",
+                "Monokai Pro",
+                "Nord",
+                "One Dark",
+                "Solarized Dark",
                 "Solarized Light",
-                "Windows"
+                "Spacegray",
+                "Vuesion",
+                "Windows",
+                "Xcode-Dark"
             }));
             comboBox1.setSelectedIndex(0);
             comboBox1.addItemListener(e -> lookAndFeelBox(e));
@@ -355,8 +438,14 @@ public class settingWindow extends JFrame{
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 自定义变量
+
+    private String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String FILE_PATH = localAppDATA+"\\CIF\\settinginfor";
+    private final String FILE_PATH_2 = localAppDATA+"\\CIF\\themeFile";
     private String setingFont = "微软雅黑";
     private Integer setingFontSize =14;
     public static String Url = "https://api.chatanywhere.com.cn";
     public static String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
+    private String checkThemeChange1;
+    private String checkThemeChange2;
 }

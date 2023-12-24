@@ -45,7 +45,7 @@ public class about extends JFrame {
         if (egg.equals(5)) {
             egg = 0;
             try {
-                JOptionPane.showMessageDialog(this, "小彩蛋 (。・ω・。)");
+                JOptionPane.showMessageDialog(this, "小彩蛋 (。・ω・。)", "彩蛋", JOptionPane.INFORMATION_MESSAGE);
                 Desktop.getDesktop().browse(new URI("https://music.163.com/song?id=33367332"));
             } catch (IOException | URISyntaxException ex) {
                 throw new RuntimeException(ex);

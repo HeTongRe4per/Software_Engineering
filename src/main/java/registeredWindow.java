@@ -17,6 +17,7 @@ import java.sql.*;
 public class registeredWindow extends JFrame {
     public registeredWindow() {
         initComponents();
+        originalColor = textField1.getForeground();
         initWindow();
     }
 
@@ -150,7 +151,7 @@ public class registeredWindow extends JFrame {
         // 使用正则表达式验证邮箱格式
         //String emailRegex = "^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$\n";
         String emailRegex = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
-        System.out.println(email.matches(emailRegex));
+        //System.out.println(email.matches(emailRegex));
         return email.matches(emailRegex);
     }
 
@@ -181,7 +182,7 @@ public class registeredWindow extends JFrame {
         String temp = textField1.getText();
         if (temp.equals(initUsernameText)) {
             textField1.setText("");
-            textField1.setForeground(Color.BLACK);
+            textField1.setForeground(originalColor);
         }
     }
 
@@ -197,7 +198,7 @@ public class registeredWindow extends JFrame {
         String temp = textField2.getText();
         if (temp.equals(initEmailText)) {
             textField2.setText("");
-            textField2.setForeground(Color.BLACK);
+            textField2.setForeground(originalColor);
         }
     }
 
@@ -213,7 +214,7 @@ public class registeredWindow extends JFrame {
         String temp = passwordField1.getText();
         if (temp.equals(initPasswordText)) {
             passwordField1.setText("");
-            passwordField1.setForeground(Color.BLACK);
+            passwordField1.setForeground(originalColor);
             passwordField1.setEchoChar('*');
         }
     }
@@ -231,7 +232,7 @@ public class registeredWindow extends JFrame {
         String temp = passwordField2.getText();
         if (temp.equals(initConfirmPasswdText)) {
             passwordField2.setText("");
-            passwordField2.setForeground(Color.BLACK);
+            passwordField2.setForeground(originalColor);
             passwordField2.setEchoChar('*');
         }
     }
@@ -465,4 +466,5 @@ public class registeredWindow extends JFrame {
     private String initEmailText = "mail@example.com";
     private String initPasswordText = "至少包含字母、数字";
     private String initConfirmPasswdText = "再次输入密码";
+    private Color originalColor;
 }

@@ -22,6 +22,7 @@ public class loginWindows extends JFrame{
 
     public loginWindows() {
         initComponents();
+        originalColor = accountField.getForeground(); //获取原始文字颜色
         LoginWindowInit();
         if(checkFileExistence(FILE_PATH)&&checkFileExistence(FILE_PATH+"boolean")){
             if(readbool()){
@@ -50,7 +51,7 @@ public class loginWindows extends JFrame{
         String temp = accountField.getText();
         if (temp.equals(accountInit)) {
             accountField.setText("");
-            accountField.setForeground(Color.BLACK);
+            accountField.setForeground(originalColor);
         }
     }
 
@@ -68,7 +69,7 @@ public class loginWindows extends JFrame{
         String temp = String.valueOf(passwordField1.getPassword());
         if (temp.equals(passwordInit)) {
             passwordField1.setText("");
-            passwordField1.setForeground(Color.BLACK);
+            passwordField1.setForeground(originalColor);
             passwordField1.setEchoChar('*');
         }
     }
@@ -102,11 +103,15 @@ public class loginWindows extends JFrame{
     }
 
     private void registerButtonlinsten() {
-        new registeredWindow().setVisible(true);
+        //setEnabled(false);
+        registeredWindow win = new registeredWindow();
+        win.setVisible(true);
     }
 
     private void forgotPasswdButtonLinsten() {
-        new forgotPasswordWindow().setVisible(true);
+        //setEnabled(false);
+        forgotPasswordWindow win = new forgotPasswordWindow();
+        win.setVisible(true);
     }
 
     private boolean logverifyinfor(){
@@ -513,4 +518,6 @@ public class loginWindows extends JFrame{
     private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
     private final int numOfEncAndDec = 0x99; // 加密解密秘钥
     private int dataOfFile = 0; // 文件字节内容
+    //原始文字颜色
+    private Color originalColor;
 }

@@ -24,12 +24,12 @@ new FormModel {
 				name: "confirmDelButton"
 				"text": "我再想想"
 				"selected": true
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "confirmDelListen", false ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cancelDelListen", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "cancelDelButton"
 				"text": "确认删除"
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cancelDelListen", false ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "confirmDelListen", false ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

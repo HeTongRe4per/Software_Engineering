@@ -8,9 +8,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.*;
 import java.sql.*;
-import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 /*
  * Created by JFormDesigner on Thu Dec 07 23:57:49 CST 2023
@@ -24,14 +22,10 @@ import java.util.concurrent.CompletableFuture;
 public class ChatInterface extends JFrame  {
     public ChatInterface() {
 		initComponents();
+        OriginalColor = sendPanel.getForeground();
         chatArea.setOpaque(false);
         chatScrollPane.setOpaque(false);
         chatScrollPane.getViewport().setOpaque(false);
-        if(checkFileExistence(FILE_PATH)){
-            if(readbool()) darkMode();
-            else lightMode();
-            isdark=readbool();
-        }
         sendPaneEmpty();
         refreshWin();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,21 +98,18 @@ public class ChatInterface extends JFrame  {
 	}
 
 	private void logoutItemListen() {
-		//
-		this.setVisible(false);
 		this.dispose();
-		new loginWindows().setVisible(true);
+		main.loginWin = new loginWindows();
+        main.loginWin.setVisible(true);
 	}
 
 	private void settingItemListen() {
-		//
 		new settingWindow().setVisible(true);
 	}
 
     private void sendButtonListen() {
         if (sendButtonFlag) {
             inputMessage = sendPane.getText();
-
             String user = username;
             chatArea.append(user + "：\n" + inputMessage + "\n");
             sendPane.setText("");
@@ -128,16 +119,25 @@ public class ChatInterface extends JFrame  {
             // 异步执行 chatAPI
             CompletableFuture.supplyAsync(chatAPI::new)
                     .thenAcceptAsync(chatAPI -> {
-                        chatArea.append("\nChatGPT：\n" + chatAPI.answer + "\n\n");
-
-                        // 滚动到最底部
-                        JScrollBar verticalScrollBar = sendScrollPane.getVerticalScrollBar();
-                        verticalScrollBar.setValue(verticalScrollBar.getMaximum());
-
-                        sendButton.setEnabled(true);    // 解除发送按钮锁定
-                        sendButtonFlag = true;  // 解除按钮监听锁定
+                        SwingUtilities.invokeLater(() -> {
+                            chatArea.append("\nChatGPT：\n" + chatAPI.answer + "\n\n");
+                            setScrollPaneBar();
+                            sendButton.setEnabled(true);    // 解除发送按钮锁定
+                            sendButtonFlag = true;  // 解除按钮监听锁定
+                        });
                     });
         }
+    }
+
+    private void setScrollPaneBar() {
+        SwingUtilities.invokeLater(() -> {
+            // 滚动到最底部
+            chatScrollBar = chatScrollPane.getVerticalScrollBar();
+            if (chatScrollBar != null) {
+                // 必须先获取一次chatScrollBar.getMaximum()，否则滚动不到最底部, swing bug
+                chatScrollBar.setValue(chatScrollBar.getMaximum());
+            }
+        });
     }
 
 	private void sendPaneEmpty() {
@@ -158,8 +158,7 @@ public class ChatInterface extends JFrame  {
 	private void sendPaneFocusGained() {
 		String temp = sendPane.getText();
 		if (temp.equals(initSendText)) {
-            if (!isdark) sendPane.setForeground(Color.BLACK);
-            else sendPane.setForeground(Color.WHITE);
+            sendPane.setForeground(OriginalColor);
 			sendPane.setText("");
 		}
 	}
@@ -170,72 +169,6 @@ public class ChatInterface extends JFrame  {
 			sendPaneEmpty();
 		}
 	}
-
-    private void changemodelListen() {
-        if (!isdark) darkMode();
-        else lightMode();
-        isdark = !isdark;
-        sendPane.requestFocus();
-        boolisdark();
-    }
-
-    private void darkMode() {
-        chatArea.setBackground(new Color(48, 48, 48, 255));
-        chatArea.setForeground(Color.WHITE);
-        sendPane.setBackground(new Color(48, 48, 48, 255));
-        sendPane.setForeground(Color.WHITE);
-        sendPane.setCaretColor(Color.WHITE);
-    }
-
-    private void lightMode() {
-        chatArea.setBackground(Color.WHITE);
-        chatArea.setForeground(new Color(48, 48, 48, 255));
-        sendPane.setBackground(Color.WHITE);
-        sendPane.setForeground(new Color(48, 48, 48, 255));
-        sendPane.setCaretColor(Color.BLACK);
-    }
-
-    private void boolisdark(){
-        File file=new File(FILE_PATH);
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(String.valueOf(isdark));
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private boolean readbool(){
-        boolean value=false;
-        File file=new File(FILE_PATH);
-        try {
-            // 创建Scanner对象读取文件
-            Scanner scanner = new Scanner(file);
-            // 使用StringBuilder拼接读取到的数据
-            StringBuilder stringBuilder = new StringBuilder();
-            // 读取文件内容
-            while (scanner.hasNext()) {
-                String data = scanner.next();
-                // 将字段添加到StringBuilder中
-                stringBuilder.append(data);
-            }
-            // 将StringBuilder的内容赋值给文本框
-            String Text = stringBuilder.toString();
-            value = Boolean.parseBoolean(Text);
-            // 关闭Scanner
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return value;
-    }
-
-    private boolean checkFileExistence(String filePath) {
-        File file = new File(filePath);
-        return file.exists();
-    }
 
     private void aboutItemLister() {
         new about().setVisible(true);
@@ -262,7 +195,6 @@ public class ChatInterface extends JFrame  {
         accountMangeItem = new JMenuItem();
         logoutItem = new JMenuItem();
         toolMenu = new JMenu();
-        changemodel = new JMenuItem();
         menuItem1 = new JMenuItem();
         settingItem = new JMenuItem();
         helpMenu = new JMenu();
@@ -318,11 +250,6 @@ public class ChatInterface extends JFrame  {
             {
                 toolMenu.setText("\u5de5\u5177");
 
-                //---- changemodel ----
-                changemodel.setText("\u5207\u6362\u80cc\u666f\u8272");
-                changemodel.addActionListener(e -> changemodelListen());
-                toolMenu.add(changemodel);
-
                 //---- menuItem1 ----
                 menuItem1.setText("\u91cd\u5f00\u804a\u5929");
                 menuItem1.addActionListener(e -> resetChat());
@@ -356,7 +283,7 @@ public class ChatInterface extends JFrame  {
             {
 
                 //---- sendPane ----
-                sendPane.setFont(new Font("\u9ed1\u4f53", Font.PLAIN, 14));
+                sendPane.setFont(new Font("\u5fae\u8f6f\u96c5\u9ed1", Font.PLAIN, 14));
                 sendPane.setBorder(new EmptyBorder(5, 5, 5, 5));
                 sendPane.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
                 sendPane.addKeyListener(new KeyAdapter() {
@@ -383,6 +310,7 @@ public class ChatInterface extends JFrame  {
             sendButton.setMaximumSize(null);
             sendButton.setMinimumSize(null);
             sendButton.setPreferredSize(null);
+            sendButton.setToolTipText("\u53ef\u4ee5\u4f7f\u7528Ctrl+Enter\u5feb\u6377\u53d1\u9001");
             sendButton.addActionListener(e -> sendButtonListen());
 
             GroupLayout sendPanelLayout = new GroupLayout(sendPanel);
@@ -394,8 +322,8 @@ public class ChatInterface extends JFrame  {
                         .addGroup(sendPanelLayout.createParallelGroup()
                             .addComponent(sendScrollPane, GroupLayout.DEFAULT_SIZE, 1021, Short.MAX_VALUE)
                             .addGroup(GroupLayout.Alignment.TRAILING, sendPanelLayout.createSequentialGroup()
-                                .addGap(0, 945, Short.MAX_VALUE)
-                                .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 961, Short.MAX_VALUE)
+                                .addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
             );
             sendPanelLayout.setVerticalGroup(
@@ -419,6 +347,7 @@ public class ChatInterface extends JFrame  {
                 chatScrollPane.setBorder(Borders.DIALOG_BORDER);
                 chatScrollPane.setAutoscrolls(true);
                 chatScrollPane.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+                chatScrollPane.setFocusable(false);
 
                 //---- chatArea ----
                 chatArea.setEditable(false);
@@ -449,7 +378,6 @@ public class ChatInterface extends JFrame  {
     private JMenuItem accountMangeItem;
     private JMenuItem logoutItem;
     private JMenu toolMenu;
-    private JMenuItem changemodel;
     private JMenuItem menuItem1;
     private JMenuItem settingItem;
     private JMenu helpMenu;
@@ -464,8 +392,8 @@ public class ChatInterface extends JFrame  {
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
 	// 自定义变量
-
     static accMgWindow accMgWin;
+    private JScrollBar chatScrollBar;
 	final String initSendText = "Message ChatGPT...";
 	static String inputMessage = "";
 	boolean sendButtonFlag = true;
@@ -475,6 +403,7 @@ public class ChatInterface extends JFrame  {
     public static String font = "微软雅黑";
     public static Integer fontSize = 14;
     String username = Chatname(loginWindows.username_s);
-    private ImageIcon imageIcon = new ImageIcon(getClass().getResource("background-250x167-semitransparent.png"));
+    private final ImageIcon imageIcon = new ImageIcon(getClass().getResource("background-250x167-semitransparent.png"));
+    private Color OriginalColor;
 	// 自定义方法
 }
