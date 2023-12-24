@@ -102,12 +102,10 @@ public class loginWindows extends JFrame{
     }
 
     private void registerButtonlinsten() {
-        //
         new registeredWindow().setVisible(true);
     }
 
     private void forgotPasswdButtonLinsten() {
-        //
         new forgotPasswordWindow().setVisible(true);
     }
 

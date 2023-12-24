@@ -6,6 +6,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+
+/**
+ * @author zhang RDLS 小样
+ */
 public class main {
 
     public static void main(String[] args) {
@@ -93,6 +97,4 @@ public class main {
     static String localAppDATA=System.getenv("LOCALAPPDATA");
     static String FILE_PATH = localAppDATA+"\\CIF\\themeFile";
     static loginWindows loginWin;
-
-
 }

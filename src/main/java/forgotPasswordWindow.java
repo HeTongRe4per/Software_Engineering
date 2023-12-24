@@ -7,7 +7,7 @@ import java.sql.*;
 
 
 /**
- * @author zhang
+ * @author zhang RDLS 小样
  */
 public class forgotPasswordWindow extends JFrame {
     public forgotPasswordWindow() {

@@ -1,6 +1,10 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
+/**
+ * @author 小样
+ */
 public class PasswordHasher {
     public static String hashPasswordSHA256(String password) {
         try {

@@ -241,12 +241,6 @@ public class ChatInterface extends JFrame  {
         new about().setVisible(true);
     }
 
-    private void chatWinKeyPressed(KeyEvent e) {
-        if (e.getKeyCode() == 27) {
-            System.exit(0);
-        }
-    }
-
     private void resetChat() {
         chatAPI.resetInputString();
         chatArea.setText("");

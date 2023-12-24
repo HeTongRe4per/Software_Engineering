@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 
 /**
- * @author zhang
+ * @author zhang RDLS
  */
 public class settingWindow extends JFrame{
     public settingWindow() {

@@ -218,7 +218,7 @@ public class accMgWindow extends JFrame {
                 preparedStatement.executeUpdate();
             }
 
-            // TODO 关闭当前窗口和父窗口
+            // 关闭当前窗口和父窗口
             dispose();
             loginWindows.mainWin.dispose();
 
@@ -320,7 +320,7 @@ public class accMgWindow extends JFrame {
                 preparedStatement.executeUpdate();
             }
 
-            // TODO 关闭当前窗口和父窗口
+            // 关闭当前窗口和父窗口
             dispose();
             loginWindows.mainWin.dispose();
 
@@ -519,5 +519,4 @@ public class accMgWindow extends JFrame {
     private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
     static String oldusername;
     String oldemail;
-
 }

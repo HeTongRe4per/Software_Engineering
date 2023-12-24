@@ -12,16 +12,11 @@ import java.sql.SQLException;
 
 
 /**
- * @author zhang
+ * @author zhang RDLS 小样
  */
 public class confirmDelAccountWindow extends JDialog {
-    private accMgWindow parentAccMgWindow;
-    private ChatInterface parentLoginWindows;
 
-    public confirmDelAccountWindow(/*accMgWindow parentAccMgWindow, ChatInterface parentLoginWindows*/) {
-        /*super(parentAccMgWindow);
-        this.parentAccMgWindow = parentAccMgWindow;
-        this.parentLoginWindows = parentLoginWindows;*/
+    public confirmDelAccountWindow() {
         initComponents();
     }
 
@@ -30,14 +25,13 @@ public class confirmDelAccountWindow extends JDialog {
         // 执行删除数据库操作
         deleteAccountFromDatabase(username);
         // 关闭对话框
-        this.setVisible(false);
-        this.dispose();
+        dispose();
         // 关闭父窗口（accMgWindow）
-        parentAccMgWindow.dispose();
+        ChatInterface.accMgWin.dispose();
         // 关闭登录窗口（loginWindows）
-        parentLoginWindows.dispose();
         // 打开loginWindows窗口
-        new loginWindows().setVisible(true);
+        main.loginWin = new loginWindows();
+        main.loginWin.setVisible(true);
     }
 
     // 从数据库中删除账号的方法

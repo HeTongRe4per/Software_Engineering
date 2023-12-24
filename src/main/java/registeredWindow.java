@@ -12,7 +12,7 @@ import java.sql.*;
 
 
 /**
- * @author zhang
+ * @author zhang RDLS 小样
  */
 public class registeredWindow extends JFrame {
     public registeredWindow() {
@@ -97,6 +97,7 @@ public class registeredWindow extends JFrame {
 
         // 用户名只能包含字母、数字和下划线，长度在4到16位之间
         String usernameRegex = "^[a-zA-Z0-9_]{4,16}$";
+        //System.out.println(username.matches(usernameRegex));
         return username.matches(usernameRegex);
     }
 
@@ -147,7 +148,9 @@ public class registeredWindow extends JFrame {
     // 检查邮箱是否符合格式要求的方法
     private boolean isEmailValid(String email) {
         // 使用正则表达式验证邮箱格式
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        //String emailRegex = "^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$\n";
+        String emailRegex = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
+        System.out.println(email.matches(emailRegex));
         return email.matches(emailRegex);
     }
 
