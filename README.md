@@ -27,11 +27,8 @@
 ├── lib/              # 需要的lib
 ├── src/main/         # 存放源代码
 │   ├── java/         # 源码
-│   ├── resource/     # 资源
+│   └── resource/     # 资源
 ├── target/classes/   # 调试生成
-├── docs/             # 存放文档
-│   ├── requirements/ # 存放项目依赖的文档
-│   └── design/       # 存放设计文档
 ├── README.md         # 项目说明文件
 ├── LICENSES          # 许可证
 ├── pom.xml           # Maven依赖项等
