@@ -191,38 +191,101 @@ public class settingWindow extends JFrame{
         checkThemeChange2 = lookAndFeel;
         try {
             switch (lookAndFeel) {
-                case "Windows": main.lookAndFeel = UIManager.getSystemLookAndFeelClassName(); break;
-                case "Arc": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme"; break;
-                case "Arc - Orange": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme"; break;
-                case "Arc Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme"; break;
-                case "Arc Dark - Orange": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme";break;
-                case "Carbon": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme"; break;
-                case "Cobalt 2": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme"; break;
-                case "Cyan light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme"; break;
-                case "Dark Flat": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme"; break;
-                case "Dark purple": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme"; break;
-                case "Dracula": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme"; break;
-                case "Gradianto Dark Fuchsia": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDarkFuchsiaIJTheme"; break;
-                case "Gradianto Deep Ocean": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme"; break;
-                case "Gradianto Midnight Blue": main.lookAndFeel =  "com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme"; break;
-                case "Gradianto Nature Green": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme"; break;
-                case "Gray": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme"; break;
-                case "Gruvbox Dark Hard": main.lookAndFeel =  "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkHardIJTheme"; break;
-                case "Gruvbox Dark Medium": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkMediumIJTheme"; break;
-                case "Gruvbox Dark Soft": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme"; break;
-                case "Hiberbee Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme"; break;
-                case "High contrast": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHighContrastIJTheme"; break;
-                case "Light Flat": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme"; break;
-                case "Material Design Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme"; break;
-                case "Monocai": main.lookAndFeel =  "com.formdev.flatlaf.intellijthemes.FlatMonocaiIJTheme"; break;
-                case "Monokai Pro": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme"; break;
-                case "Nord": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatNordIJTheme"; break;
-                case "One Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme"; break;
-                case "Solarized Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme"; break;
-                case "Solarized Light": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme"; break;
-                case "Spacegray": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSpacegrayIJTheme"; break;
-                case "Vuesion": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatVuesionIJTheme"; break;
-                case "Xcode-Dark": main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatXcodeDarkIJTheme";
+                case "Arc":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme";
+                    break;
+                case "Arc - Orange":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme";
+                    break;
+                case "Arc Dark":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme";
+                    break;
+                case "Arc Dark - Orange":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme";
+                    break;
+                case "Carbon":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme";
+                    break;
+                case "Cobalt 2":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme";
+                    break;
+                case "Cyan light":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme";
+                    break;
+                case "Dark Flat":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme";
+                    break;
+                case "Dark purple":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme";
+                    break;
+                case "Dracula":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme";
+                    break;
+                case "Gradianto Dark Fuchsia":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDarkFuchsiaIJTheme";
+                    break;
+                case "Gradianto Deep Ocean":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme";
+                    break;
+                case "Gradianto Midnight Blue":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme";
+                    break;
+                case "Gradianto Nature Green":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme";
+                    break;
+                case "Gray":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme";
+                    break;
+                case "Gruvbox Dark Hard":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkHardIJTheme";
+                    break;
+                case "Gruvbox Dark Medium":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkMediumIJTheme";
+                    break;
+                case "Gruvbox Dark Soft":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme";
+                    break;
+                case "Hiberbee Dark":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme";
+                    break;
+                case "High contrast":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHighContrastIJTheme";
+                    break;
+                case "Light Flat":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme";
+                    break;
+                case "Material Design Dark":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme";
+                    break;
+                case "Monocai":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMonocaiIJTheme";
+                    break;
+                case "Monokai Pro":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme";
+                    break;
+                case "Nord":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatNordIJTheme";
+                    break;
+                case "One Dark":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme";
+                    break;
+                case "Solarized Dark":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme";
+                    break;
+                case "Solarized Light":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme";
+                    break;
+                case "Spacegray":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSpacegrayIJTheme";
+                    break;
+                case "Vuesion":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatVuesionIJTheme";
+                    break;
+                case "Xcode-Dark":
+                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatXcodeDarkIJTheme";
+                    break;
+                case "Windows":
+                    main.lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
             }
             themeSet();
         } catch (Exception exception) {

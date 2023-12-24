@@ -77,9 +77,9 @@ public class main {
             String Text = stringBuilder.toString();
             String[] parts = Text.split(",");
             // 主题读取到UI
-            lookAndFeel = parts[2];
             ChatInterface.font = parts[0];
             ChatInterface.fontSize = Integer.parseInt(parts[1]);
+            lookAndFeel = parts[2];
             //System.out.println(lookAndFeel + ChatInterface.font + ChatInterface.fontSize);
             // 关闭Scanner
             scanner.close();
