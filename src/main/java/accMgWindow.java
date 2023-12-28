@@ -1,12 +1,9 @@
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
+import java.sql.*;
 import java.util.Scanner;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 
 /*
@@ -113,13 +110,13 @@ public class accMgWindow extends JFrame {
                         if (columnToUpdate.equals("username_mail")) {
                             accountTextField.setText(parts[0]);
                             emailTextField.setText(otherColumnValue);
-                            oldusername = parts[0];
-                            oldemail = otherColumnValue;
+                            oldUsername = parts[0];
+                            oldEmail = otherColumnValue;
                         } else {
                             accountTextField.setText(otherColumnValue);
                             emailTextField.setText(parts[0]);
-                            oldemail = parts[0];
-                            oldusername = otherColumnValue;
+                            oldEmail = parts[0];
+                            oldUsername = otherColumnValue;
                         }
                         passwordField1.setEchoChar('*');
                     }
@@ -160,6 +157,7 @@ public class accMgWindow extends JFrame {
     }
 
     private void delAccountListen() {
+        ChatInterface.accMgWin.setEnabled(false);
         confirmDelAccountWindow confirmDialog = new confirmDelAccountWindow();
         confirmDialog.setVisible(true);
     }
@@ -167,18 +165,19 @@ public class accMgWindow extends JFrame {
     private void resetUserNameListen() {
         String newusername = accountTextField.getText();
         //连接数据库并执行更新操作
-        updateUsernameInDatabase(oldusername, newusername);
+        updateUsernameInDatabase(oldUsername, newusername);
     }
 
     private void resetEmailListen() {
         String newemail = emailTextField.getText();
         // 连接数据库并执行更新操作
-        updateEmailInDatabase(oldemail, newemail);
+        updateEmailInDatabase(oldEmail, newemail);
     }
 
     private void resetPasswdListen() {
         //new passwdUpdateWindow2(oldusername).setVisible(true);
-        passwdUpdateWin = new passwdUpdateWindow2(oldusername);
+        ChatInterface.accMgWin.setEnabled(false);
+        passwdUpdateWin = new passwdUpdateWindow2(oldUsername);
         passwdUpdateWin.setVisible(true);
     }
 
@@ -223,8 +222,8 @@ public class accMgWindow extends JFrame {
             loginWindows.mainWin.dispose();
 
             // 打开新的登录窗口
-            main.loginWin = new loginWindows();
-            main.loginWin.setVisible(true);
+            Main.loginWin = new loginWindows();
+            Main.loginWin.setVisible(true);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -325,8 +324,8 @@ public class accMgWindow extends JFrame {
             loginWindows.mainWin.dispose();
 
             // 打开新的登录窗口
-            main.loginWin = new loginWindows();
-            main.loginWin.setVisible(true);
+            Main.loginWin = new loginWindows();
+            Main.loginWin.setVisible(true);
 
         } catch (SQLException e) { e.printStackTrace(); }
         finally {
@@ -382,17 +381,23 @@ public class accMgWindow extends JFrame {
         return email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
     }
 
-    public static void delefile(){
-        String fp=localAppDATA+"\\CIF";
+    static void delefile(){
+        String fp=localAppDATA+"\\Wise_Conversations";
         File directory = new File(fp);
         if (directory.isDirectory()) {
             File[] files = directory.listFiles();
-            for (File file : files) {
-                if (file.isFile()) {
-                    file.delete();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        file.delete();
+                    }
                 }
             }
         }
+    }
+
+    private void thisWindowClosing() {
+        loginWindows.mainWin.setEnabled(true);
     }
 
     private void initComponents() {
@@ -412,6 +417,12 @@ public class accMgWindow extends JFrame {
         setTitle("\u8d26\u53f7\u7ba1\u7406");
         setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing();
+            }
+        });
         var contentPane = getContentPane();
 
         //---- label1 ----
@@ -490,7 +501,7 @@ public class accMgWindow extends JFrame {
                         .addComponent(label3, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
                         .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(resetPasswdButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                     .addComponent(delAccountButton)
                     .addGap(27, 27, 27))
         );
@@ -516,7 +527,7 @@ public class accMgWindow extends JFrame {
 
     static passwdUpdateWindow2 passwdUpdateWin;
     private static final String localAppDATA=System.getenv("LOCALAPPDATA");
-    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
-    static String oldusername;
-    String oldemail;
+    private final String FILE_PATH = localAppDATA+"\\Wise_Conversations\\credentials";
+    static String oldUsername;
+    String oldEmail;
 }

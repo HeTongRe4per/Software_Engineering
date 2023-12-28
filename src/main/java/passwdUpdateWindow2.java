@@ -1,6 +1,8 @@
 import javax.swing.*;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -40,11 +42,14 @@ public class passwdUpdateWindow2 extends JFrame {
 
                 // 当密码成功更改时，自动关闭主窗口和和账户管理
                 dispose();
-                ChatInterface.accMgWin.dispose();
-                loginWindows.mainWin.dispose();
-
-                main.loginWin = new loginWindows();
-                main.loginWin.setVisible(true);
+                if (ChatInterface.accMgWin != null) {
+                    ChatInterface.accMgWin.dispose();
+                    loginWindows.mainWin.dispose();
+                } if (Main.loginWin != null) {
+                    loginWindows.forgotPasswordWin.dispose();
+                }
+                Main.loginWin = new loginWindows();
+                Main.loginWin.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "密码修改失败！", "错误", JOptionPane.ERROR_MESSAGE);
             }
@@ -76,6 +81,30 @@ public class passwdUpdateWindow2 extends JFrame {
         }
     }
 
+    private void passwordField1KeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_DOWN){
+            passwordField2.requestFocus();
+        }
+    }
+
+    private void passwordField2KeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            button1.doClick();
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            passwordField1.requestFocus();
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            button1.requestFocus();
+        }
+    }
+
+    private void thisWindowClosing() {
+        if (ChatInterface.accMgWin != null) {
+            ChatInterface.accMgWin.setEnabled(true);
+        } if (loginWindows.forgotPasswordWin !=null) {
+            loginWindows.forgotPasswordWin.setEnabled(true);
+        }
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -87,6 +116,12 @@ public class passwdUpdateWindow2 extends JFrame {
         //======== this ========
         setTitle("\u4fee\u6539\u5bc6\u7801");
         setResizable(false);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing();
+            }
+        });
         var contentPane = getContentPane();
 
         //---- label1 ----
@@ -94,6 +129,23 @@ public class passwdUpdateWindow2 extends JFrame {
 
         //---- label2 ----
         label2.setText("\u786e\u8ba4\u5bc6\u7801\uff1a");
+
+        //---- passwordField1 ----
+        passwordField1.setEchoChar('*');
+        passwordField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                passwordField1KeyPressed(e);
+            }
+        });
+
+        //---- passwordField2 ----
+        passwordField2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                passwordField2KeyPressed(e);
+            }
+        });
 
         //---- button1 ----
         button1.setText("\u786e\u8ba4");
@@ -116,7 +168,7 @@ public class passwdUpdateWindow2 extends JFrame {
                             .addComponent(passwordField2, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap(62, Short.MAX_VALUE))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(241, Short.MAX_VALUE)
+                    .addContainerGap(243, Short.MAX_VALUE)
                     .addComponent(button1)
                     .addContainerGap())
         );
@@ -131,7 +183,7 @@ public class passwdUpdateWindow2 extends JFrame {
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(passwordField2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(label2))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                     .addComponent(button1)
                     .addContainerGap())
         );

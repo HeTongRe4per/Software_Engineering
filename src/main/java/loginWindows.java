@@ -24,16 +24,19 @@ public class loginWindows extends JFrame{
         initComponents();
         originalColor = accountField.getForeground(); //获取原始文字颜色
         LoginWindowInit();
-        if(checkFileExistence(FILE_PATH)&&checkFileExistence(FILE_PATH+"boolean")){
-            if(readbool()){
+        if(checkFileExistence(FILE_PATH)&&checkFileExistence(FILE_PATH + "boolean")){
+            if(readBool()){
                 remberPasswd.setSelected(true);
                 try {
+                    accountField.setForeground(originalColor);
+                    passwordField1.setForeground(originalColor);
                     default_input();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         }
+        //loginButton.requestFocusInWindow();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     //。。
@@ -84,37 +87,65 @@ public class loginWindows extends JFrame{
         }
     }
 
-    private void loginButtonLinster() {
-        //
-        if(logverifyinfor()) {
-            // 在验证成功的情况下，将username_mail的值赋给username
-            username = accountField.getText();
-            username_s = username;
-            isselect=remberPasswd.isSelected();
-            boolisselect();
-            remberPasswdListen();
-            mainWin = new ChatInterface();
-            mainWin.setVisible(true);
-            this.setVisible(false);
-            this.dispose();
-        }else {
-            JOptionPane.showMessageDialog(null, "账号或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
-        }
+    private void loginButtonListener() {
+        loginButton.setEnabled(false);
+        registerButton.setEnabled(false);
+        forgotPasswdButton.setEnabled(false);
+        // 创建 SwingWorker
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                // 在后台线程中执行登录验证
+                return logVerifyInfo();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    // 获取 doInBackground 返回的结果
+                    boolean isValid = get();
+
+                    if (isValid) {
+                        // 在验证成功的情况下，将username_mail的值赋给username
+                        // 添加用户名成员变量
+                        username_s = accountField.getText();
+                        isSelect = remberPasswd.isSelected();
+                        boolIsSelect();
+                        remberPasswdListen();
+                        mainWin = new ChatInterface();
+                        mainWin.setVisible(true);
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "账号或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
+                        loginButton.setEnabled(true);
+                        registerButton.setEnabled(true);
+                        forgotPasswdButton.setEnabled(true);
+                    }
+                } catch (Exception e) {
+                    loginButton.setEnabled(true);
+                    registerButton.setEnabled(true);
+                    forgotPasswdButton.setEnabled(true);
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        // 执行 SwingWorker
+        worker.execute();
     }
 
     private void registerButtonlinsten() {
-        //setEnabled(false);
-        registeredWindow win = new registeredWindow();
-        win.setVisible(true);
+        Main.loginWin.setEnabled(false);
+        new registeredWindow().setVisible(true);
     }
 
     private void forgotPasswdButtonLinsten() {
-        //setEnabled(false);
-        forgotPasswordWindow win = new forgotPasswordWindow();
-        win.setVisible(true);
+        Main.loginWin.setEnabled(false);
+        forgotPasswordWin = new forgotPasswordWindow();
+        forgotPasswordWin.setVisible(true);
     }
 
-    private boolean logverifyinfor(){
+    private boolean logVerifyInfo(){
         //数据库验证
         boolean flag = false;
         String  username_mail,password;
@@ -125,6 +156,7 @@ public class loginWindows extends JFrame{
         try {
             connection = DriverManager.getConnection("jdbc:mysql://database.hetong-re4per.icu/chatgpt_account", "chatgpt", "zl221021@Chatgpt");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "服务器连接失败，请检查网络或请联系管理员！", "错误", JOptionPane.ERROR_MESSAGE);
             throw new RuntimeException(e);
         }
 
@@ -180,19 +212,19 @@ public class loginWindows extends JFrame{
         }
     }
 
-    private void boolisselect(){
+    private void boolIsSelect(){
         File file=new File(FILE_PATH+"boolean");
         try {
             FileWriter fileWriter = new FileWriter(file);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(String.valueOf(isselect));
+            bufferedWriter.write(String.valueOf(isSelect));
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private boolean readbool(){
+    private boolean readBool(){
         boolean value=false;
         File file=new File(FILE_PATH+"boolean");
         try {
@@ -331,7 +363,7 @@ public class loginWindows extends JFrame{
             e.printStackTrace();
         }
     }
-    public static boolean checkFileExistence(String filePath) {
+    static boolean checkFileExistence(String filePath) {
         File file = new File(filePath);
         return file.exists();
     }
@@ -352,6 +384,14 @@ public class loginWindows extends JFrame{
             loginButton.doClick();
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             accountField.requestFocus();
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            loginButton.requestFocus();
+        }
+    }
+
+    private void loginButtonKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            passwordField1.requestFocus();
         }
     }
     private void initComponents() {
@@ -402,7 +442,7 @@ public class loginWindows extends JFrame{
 
         //---- loginButton ----
         loginButton.setText("\u767b\u5f55");
-        loginButton.addActionListener(e -> loginButtonLinster());
+        loginButton.addActionListener(e -> loginButtonListener());
 
         //---- registerButton ----
         registerButton.setText("\u6ca1\u6709\u8d26\u53f7\uff1f\u70b9\u6211\u6ce8\u518c");
@@ -442,54 +482,54 @@ public class loginWindows extends JFrame{
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(59, 59, 59)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addComponent(label2)
-                        .addComponent(label3))
-                    .addGap(18, 18, 18)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(remberPasswd)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                            .addComponent(forgotPasswdButton))
-                        .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                        .addComponent(accountField, GroupLayout.Alignment.LEADING)
-                        .addComponent(passwordField1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-                    .addGap(87, 87, 87))
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(158, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addComponent(registerButton)
-                            .addContainerGap())
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                            .addComponent(label1)
-                            .addGap(130, 130, 130))))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(162, 162, 162)
+                            .addComponent(label1))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(52, 52, 52)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addComponent(label2)
+                                .addComponent(label3))
+                            .addGap(18, 18, 18)
+                            .addGroup(contentPaneLayout.createParallelGroup()
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(GroupLayout.Alignment.LEADING, contentPaneLayout.createSequentialGroup()
+                                        .addComponent(remberPasswd)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(forgotPasswdButton))
+                                    .addComponent(loginButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(passwordField1, GroupLayout.Alignment.LEADING)
+                                    .addComponent(accountField, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(registerButton)))))
+                    .addGap(26, 26, 26))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(20, 20, 20)
+                    .addGap(25, 25, 25)
                     .addComponent(label1)
-                    .addGap(27, 27, 27)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(label2)
                         .addComponent(accountField, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                     .addGap(28, 28, 28)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label3)
-                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label3))
                     .addGap(18, 18, 18)
                     .addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(forgotPasswdButton)
-                        .addComponent(remberPasswd))
+                        .addComponent(remberPasswd)
+                        .addComponent(forgotPasswdButton))
                     .addGap(18, 18, 18)
                     .addComponent(registerButton)
-                    .addContainerGap(13, Short.MAX_VALUE))
+                    .addContainerGap())
         );
-        setSize(440, 335);
+        setSize(420, 330);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -509,15 +549,15 @@ public class loginWindows extends JFrame{
     // 自定义变量
 
     static ChatInterface mainWin;
+    static forgotPasswordWindow forgotPasswordWin;
     private final String accountInit = "请输入用户名或邮箱";
     private final String passwordInit = "请输入密码";
-    public static String username_s;
-    private String username; // 添加用户名成员变量
-    private boolean isselect = false;
+    static String username_s;
+    private boolean isSelect = false;
     private final String localAppDATA=System.getenv("LOCALAPPDATA");
-    private final String FILE_PATH = localAppDATA+"\\CIF\\credentials";
+    private final String FILE_PATH = localAppDATA+"\\Wise_Conversations\\credentials";
     private final int numOfEncAndDec = 0x99; // 加密解密秘钥
     private int dataOfFile = 0; // 文件字节内容
     //原始文字颜色
-    private Color originalColor;
+    private final Color originalColor;
 }

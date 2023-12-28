@@ -4,6 +4,8 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -53,6 +55,10 @@ public class about extends JFrame {
         }
     }
 
+    private void thisWindowClosing() {
+        loginWindows.mainWin.setEnabled(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -68,6 +74,12 @@ public class about extends JFrame {
         setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
         setTitle("\u5173\u4e8e");
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing();
+            }
+        });
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -88,7 +100,7 @@ public class about extends JFrame {
                     {
 
                         //---- label1 ----
-                        label1.setText("\u672c\u7a0b\u5e8f\u662f2021\u7ea7\u4fe1\u8ba1\u4e00\u73ed2023\u8f6f\u4ef6\u5de5\u7a0b\u201c\u8a00\u8c08\u667a\u53cb\u201d\u5c0f\u7ec4\u7684\u8bfe\u8bbe\n\u672c\u8f6f\u4ef6\u4f7f\u7528Java\u548cSQL\u8bed\u8a00\u7f16\u5199\uff0c\u5f00\u6e90\u5728github\n\n\u5c0f\u7ec4\u7ec4\u5458\uff1a\n\u53ef\u884c\u6027&\u9879\u76ee\u8fdb\u5ea6:\u5e2d\u7965\uff0c\u5510\u6b63\u9633\n\u9700\u6c42:\u6731\u6052\u575a\uff0c\u738b\u884c\u676d\n\u8bbe\u8ba1:\u8983\u5fd7\u5e06\uff0c\u5218\u9aa5\u6f47\n\u7f16\u7801:\u8bb8\u9e4f\uff0c\u5f20\u529b\uff0c\u5f20\u8d8a\n\u6d4b\u8bd5:\u55bb\u535a\u6587\uff0c\u59da\u96e8\u679c");
+                        label1.setText("\u672c\u7a0b\u5e8f\u662f2021\u7ea7\u4fe1\u8ba1\u4e00\u73ed2023\u8f6f\u4ef6\u5de5\u7a0b\u201c\u8a00\u8c08\u667a\u53cb\u201d\u5c0f\u7ec4\u7684\u8bfe\u8bbe\n\u672c\u8f6f\u4ef6\u4f7f\u7528Java\u548cSQL\u8bed\u8a00\u7f16\u5199\uff0c\u5f00\u6e90\u5728github\n\n\u5c0f\u7ec4\u7ec4\u5458\uff1a\n\u53ef\u884c\u6027\u4e0e\u9879\u76ee\u89c4\u5212\uff1a\u738b\u884c\u676d\u3001\u5e2d\u7965\u3001\u5510\u6b63\u9633\n\u8bbe\u8ba1\uff1a\u8983\u5fd7\u5e06\u3001\u5218\u9aa5\u6f47\n\u9700\u6c42\u5206\u6790\uff1a\u6731\u6052\u575a\u3001\u8d75\u65e0\u5fcc\n\u7f16\u7801\uff1a\u5f20\u8d8a\u3001\u8bb8\u9e4f\u3001\u5f20\u529b\n\u6d4b\u8bd5\uff1a\u59da\u96e8\u679c\u3001\u55bb\u535a\u6587");
                         label1.setWrapStyleWord(true);
                         label1.setLineWrap(true);
                         label1.setBorder(null);

@@ -1,4 +1,8 @@
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.*;
 /*
  * Created by JFormDesigner on Thu Nov 30 10:22:31 CST 2023
@@ -19,8 +23,7 @@ public class forgotPasswordWindow extends JFrame {
         if(forpassverinfor()){
             String username_mail = textField1.getText();
             new passwdUpdateWindow2(username_mail).setVisible(true);
-            this.setVisible(false);
-            this.dispose();
+            loginWindows.forgotPasswordWin.setEnabled(false);
         }
     }
 
@@ -110,6 +113,26 @@ public class forgotPasswordWindow extends JFrame {
         }
     }
 
+    private void textField1KeyPressed(KeyEvent e) {
+         if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_ENTER) {
+             textField2.requestFocus();
+         }
+    }
+
+    private void textField2KeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            button1.requestFocus();
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+            textField1.requestFocus();
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            button1.doClick();
+        }
+    }
+
+    private void thisWindowClosing() {
+        Main.loginWin.setEnabled(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -122,6 +145,12 @@ public class forgotPasswordWindow extends JFrame {
         setTitle("\u5fd8\u8bb0\u5bc6\u7801");
         setIconImage(null);
         setResizable(false);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing();
+            }
+        });
         var contentPane = getContentPane();
 
         //---- label1 ----
@@ -129,6 +158,22 @@ public class forgotPasswordWindow extends JFrame {
 
         //---- label2 ----
         label2.setText("\u90ae\u7bb1\uff1a");
+
+        //---- textField1 ----
+        textField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                textField1KeyPressed(e);
+            }
+        });
+
+        //---- textField2 ----
+        textField2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                textField2KeyPressed(e);
+            }
+        });
 
         //---- button1 ----
         button1.setText("\u4e0b\u4e00\u6b65");

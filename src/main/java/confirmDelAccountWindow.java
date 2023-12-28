@@ -1,5 +1,6 @@
 import javax.swing.*;
-import javax.swing.GroupLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,7 +22,7 @@ public class confirmDelAccountWindow extends JDialog {
     }
 
     private void confirmDelListen() {
-        String username = accMgWindow.oldusername;
+        String username = accMgWindow.oldUsername;
         // 执行删除数据库操作
         deleteAccountFromDatabase(username);
         // 关闭对话框
@@ -29,12 +30,13 @@ public class confirmDelAccountWindow extends JDialog {
         // 关闭父窗口（accMgWindow）
         ChatInterface.accMgWin.dispose();
         // 打开loginWindows窗口
-        main.loginWin = new loginWindows();
-        main.loginWin.setVisible(true);
+        Main.loginWin = new loginWindows();
+        Main.loginWin.setVisible(true);
     }
 
     private void cancelDelListen() {
         // 取消删除
+        ChatInterface.accMgWin.setEnabled(true);
         this.setVisible(false);
         this.dispose();
     }
@@ -70,6 +72,10 @@ public class confirmDelAccountWindow extends JDialog {
         }
     }
 
+    private void thisWindowClosing() {
+        ChatInterface.accMgWin.setEnabled(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -80,6 +86,12 @@ public class confirmDelAccountWindow extends JDialog {
         //======== this ========
         setTitle("\u786e\u8ba4\u5220\u9664");
         setResizable(false);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing();
+            }
+        });
         var contentPane = getContentPane();
 
         //---- label1 ----
@@ -110,7 +122,7 @@ public class confirmDelAccountWindow extends JDialog {
                     .addComponent(label1)
                     .addGap(97, 97, 97))
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(69, Short.MAX_VALUE)
+                    .addContainerGap(73, Short.MAX_VALUE)
                     .addComponent(confirmDelButton)
                     .addGap(18, 18, 18)
                     .addComponent(cancelDelButton)
@@ -123,7 +135,7 @@ public class confirmDelAccountWindow extends JDialog {
                     .addComponent(label1)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(label2)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(confirmDelButton)
                         .addComponent(cancelDelButton))

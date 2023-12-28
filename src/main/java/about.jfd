@@ -10,6 +10,7 @@ new FormModel {
 			"resizable": false
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
 			"title": "关于"
+			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowClosing", "thisWindowClosing", false ) )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 				name: "dialogPane"
 				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
@@ -22,7 +23,7 @@ new FormModel {
 							name: "scrollPane1"
 							add( new FormComponent( "javax.swing.JTextArea" ) {
 								name: "label1"
-								"text": "本程序是2021级信计一班2023软件工程“言谈智友”小组的课设\n本软件使用Java和SQL语言编写，开源在github\n\n小组组员：\n可行性&项目进度:席祥，唐正阳\n需求:朱恒坚，王行杭\n设计:覃志帆，刘骥潇\n编码:许鹏，张力，张越\n测试:喻博文，姚雨果"
+								"text": "本程序是2021级信计一班2023软件工程“言谈智友”小组的课设\n本软件使用Java和SQL语言编写，开源在github\n\n小组组员：\n可行性与项目规划：王行杭、席祥、唐正阳\n设计：覃志帆、刘骥潇\n需求分析：朱恒坚、赵无忌\n编码：张越、许鹏、张力\n测试：姚雨果、喻博文"
 								"wrapStyleWord": true
 								"lineWrap": true
 								"border": sfield com.jformdesigner.model.FormObject NULL_VALUE

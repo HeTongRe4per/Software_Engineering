@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :::p, par l {comp layeredPane1::l::336:x, seq t {space :0:204:x, comp button3:::p:60:p, space u:::p, comp button2:::p:60:p}, comp layeredPane2::l::336:x}, space :::p}}"
-			"$verticalGroup": "par l {seq l {space :p:17:p, comp layeredPane1:::p:106:p, space :::p, comp layeredPane2:::p:111:p, space :::x, par l {comp button2:::p:25:p, comp button3::l:p:25:p}, space :::p}}"
+			"$horizontalGroup": "par l {seq {space :::p, par l {seq t {space :0:204:x, comp button3:::p:60:p, space u:::p, comp button2:::p:60:p}, comp layeredPane2::l::336:x, comp layeredPane1::l::336:x}, space :::p}}"
+			"$verticalGroup": "par l {seq l {space :p:17:p, comp layeredPane1::::248:x, space :::p, comp layeredPane2:::p:111:p, space :::p, par l {comp button2:::p:25:p, comp button3::l:p:25:p}, space :::p}}"
 		} ) {
 			name: "this"
 			"title": "设置"
@@ -13,6 +13,7 @@ new FormModel {
 			"$locationPolicy": 1
 			"resizable": false
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
+			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowClosing", "thisWindowClosing", false ) )
 			add( new FormContainer( "javax.swing.JLayeredPane", new FormLayoutManager( class javax.swing.JLayeredPane ) ) {
 				name: "layeredPane1"
 				"border": new javax.swing.border.TitledBorder( "API设置" )
@@ -20,31 +21,111 @@ new FormModel {
 					name: "label1"
 					"text": "接口URL："
 				}, new FormLayoutConstraints( null ) {
-					"x": 20
+					"location": new java.awt.Point( 215, 435 )
+					"x": 30
 					"y": 25
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "label2"
 					"text": "API："
 				}, new FormLayoutConstraints( null ) {
-					"x": 40
+					"location": new java.awt.Point( 245, 475 )
+					"x": 60
 					"y": 65
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField2"
 				}, new FormLayoutConstraints( null ) {
-					"height": 25
-					"x": 85
+					"location": new java.awt.Point( 285, 430 )
+					"size": new java.awt.Dimension( 200, 25 )
+					"x": 100
 					"y": 20
 					"width": 200
 				} )
 				add( new FormComponent( "javax.swing.JTextField" ) {
 					name: "textField1"
 				}, new FormLayoutConstraints( null ) {
-					"width": 200
-					"height": 25
-					"x": 85
+					"location": new java.awt.Point( 285, 470 )
+					"size": new java.awt.Dimension( 200, 25 )
+					"x": 100
 					"y": 60
+					"width": 200
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "comboBox3"
+					"model": new javax.swing.DefaultComboBoxModel {
+						selectedItem: "默认"
+						addElement( "默认" )
+						addElement( "英语翻译和改进者" )
+						addElement( "英英词典(附中文解释)" )
+						addElement( "提示生成器" )
+						addElement( "正则生成器" )
+						addElement( "符号设计" )
+						addElement( "文章续写" )
+						addElement( "文字冒险游戏" )
+						addElement( "海绵宝宝的神奇海螺" )
+						addElement( "小说家" )
+						addElement( "占星师" )
+						addElement( "Loris" )
+						addElement( "自定义" )
+					}
+					addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "comboBox3ItemStateChanged", false ) )
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 285, 510 )
+					"size": new java.awt.Dimension( 85, 25 )
+					"x": 55
+					"y": 100
+					"width": 95
+					"height": 25
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label6"
+					"text": "人格"
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 515, 170 )
+					"x": 20
+					"y": 105
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label7"
+					"text": "记忆长度"
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 515, 205 )
+					"x": 175
+					"y": 105
+				} )
+				add( new FormComponent( "javax.swing.JSpinner" ) {
+					name: "spinner2"
+					"model": new javax.swing.SpinnerNumberModel( 15, 1, 30, 1 )
+					"toolTipText": "修改AI记忆长度，建议10~15"
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 380, 235 )
+					"x": 230
+					"y": 100
+					"width": 70
+					"height": 25
+				} )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane1"
+					add( new FormComponent( "javax.swing.JTextArea" ) {
+						name: "textArea1"
+						addEvent( new FormEvent( "java.awt.event.FocusListener", "focusGained", "textArea1FocusGained", false ) )
+						addEvent( new FormEvent( "java.awt.event.FocusListener", "focusLost", "textArea1FocusLost", false ) )
+					} )
+				}, new FormLayoutConstraints( null ) {
+					"x": 35
+					"y": 155
+					"width": 265
+					"height": 65
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label8"
+					"text": "自定义人格："
+				}, new FormLayoutConstraints( null ) {
+					"location": new java.awt.Point( 390, 225 )
+					"size": new java.awt.Dimension( 75, 17 )
+					"x": 20
+					"y": 135
 				} )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
@@ -105,7 +186,7 @@ new FormModel {
 						addElement( "Xcode-Dark" )
 					}
 					"selectedIndex": 0
-					addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "lookAndFeelBox", true ) )
+					addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "lookAndFeelBox", false ) )
 				}, new FormLayoutConstraints( null ) {
 					"x": 55
 					"y": 25
@@ -146,7 +227,6 @@ new FormModel {
 						addElement( "隶书" )
 						addElement( "黑体" )
 					}
-					addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "fontListener", true ) )
 				}, new FormLayoutConstraints( null ) {
 					"x": 55
 					"y": 65
@@ -157,24 +237,23 @@ new FormModel {
 					name: "label5"
 					"text": "字号"
 				}, new FormLayoutConstraints( null ) {
-					"x": 190
+					"x": 195
 					"y": 30
 					"width": 25
 				} )
 				add( new FormComponent( "javax.swing.JSpinner" ) {
 					name: "spinner1"
 					"model": new javax.swing.SpinnerNumberModel( 14, 8, 36, 1 )
-					addEvent( new FormEvent( "javax.swing.event.ChangeListener", "stateChanged", "fontSizeListener", false ) )
 				}, new FormLayoutConstraints( null ) {
-					"x": 225
+					"x": 230
 					"y": 25
-					"width": 55
+					"width": 70
 					"height": 25
 				} )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 350, 315 )
+			"size": new java.awt.Dimension( 350, 450 )
 		} )
 	}
 }

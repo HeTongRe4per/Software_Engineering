@@ -25,10 +25,11 @@
 .
 ├── .idea/            # IDEA生成
 ├── lib/              # 需要的lib
-├── src/main/         # 存放源代码
+├── src/Main/         # 存放源代码
 │   ├── java/         # 源码
 │   └── resource/     # 资源
-├── target/classes/   # 调试生成
+├── target/classes/   # 
+├── doc          
 ├── README.md         # 项目说明文件
 ├── LICENSES          # 许可证
 ├── pom.xml           # Maven依赖项等

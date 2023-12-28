@@ -1,7 +1,10 @@
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ItemEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
@@ -17,14 +20,26 @@ import java.util.Scanner;
 public class settingWindow extends JFrame{
     public settingWindow() {
         initComponents();
+        OriginalColor = textArea1.getForeground();
         if(!loginWindows.checkFileExistence(FILE_PATH)){
             initWindow();
+            settingLength = 15;
         }else{
-            readfile();
+            readApiFile();
         }
         if (loginWindows.checkFileExistence(FILE_PATH_2)) {
-            readthemeFile();
+            readThemeFile();
         } else checkThemeChange1 = "Arc";
+        if (checkFileExistence(FILE_PATH_3)) {
+            readCustomizePromptFile();
+            textArea1.setText(customizePromptContent);
+            checkPromptChange1 = ChatInterface.prompt;
+        } else checkPromptChange1 = "默认";
+        if (Objects.equals(ChatInterface.prompt, "自定义")) {
+            textArea1.setEditable(true);
+        } else {
+            initPromptArea();
+        }
     }
 
     private void initWindow() {
@@ -32,28 +47,54 @@ public class settingWindow extends JFrame{
         textField1.setText(ApiKey);
     }
 
-    private void settinginfor() throws IOException {
+    private void settingInfo() throws IOException { // API写
         File file = new File(FILE_PATH);
         file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
         file.createNewFile(); // 创建文件（如果不存在）
         String url, apikey;
         url = textField2.getText();
         apikey = textField1.getText();
+        ChatInterface.prompt = (String) comboBox3.getSelectedItem();
+        settingLength = Integer.valueOf(spinner2.getValue().toString());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(url + "," + apikey);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            writer.write(url + "," + apikey + "," + ChatInterface.prompt  + "," + settingLength);
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
-    private void themeSet() throws IOException {
+    private void readApiFile() {
+        File file = new File(FILE_PATH);
+        try {
+            // 创建Scanner对象读取文件
+            Scanner scanner = new Scanner(file);
+            // 使用StringBuilder拼接读取到的数据
+            StringBuilder stringBuilder = new StringBuilder();
+            // 读取文件内容
+            while (scanner.hasNext()) {
+                String data = scanner.next();
+                // 将字段添加到StringBuilder中
+                stringBuilder.append(data);
+            }
+            // 将StringBuilder的内容赋值给文本框
+            String Text = stringBuilder.toString();
+            String[] parts = Text.split(",");
+            //主界面读取文件赋值
+            textField2.setText(parts[0]);
+            textField1.setText(parts[1]);
+            comboBox3.setSelectedItem(parts[2]);
+            spinner2.setValue(Integer.parseInt(parts[3]));
+            // 关闭Scanner
+            scanner.close();
+        } catch (FileNotFoundException | NumberFormatException e) { e.printStackTrace(); }
+    }
+
+    private void themeWrite() throws IOException {
         // 主题文件写
         File file = new File(FILE_PATH_2);
         file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
         file.createNewFile(); // 创建文件（如果不存在）
-        String theme = main.lookAndFeel;
-        String font = setingFont;
-        Integer fontSz = setingFontSize;
+        String theme = Main.lookAndFeel;
+        String font = settingFont;
+        Integer fontSz = settingFontSize;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(font+ "," + fontSz + "," + theme);
         } catch (IOException e) {
@@ -61,7 +102,7 @@ public class settingWindow extends JFrame{
         }
     }
 
-    private void readthemeFile() {
+    private void readThemeFile() {
         // 主题文件读
         File file = new File(FILE_PATH_2);
         try {
@@ -128,8 +169,18 @@ public class settingWindow extends JFrame{
         }
     }
 
-    private void readfile(){
-        File file = new File(FILE_PATH);
+    private void writeCustomizePrompt() throws IOException { // 自定义写
+        File file = new File(FILE_PATH_3);
+        file.getParentFile().mkdirs(); // 创建父文件夹（如果不存在）
+        file.createNewFile(); // 创建文件（如果不存在）
+        String temp = customizePromptContent;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(temp);
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    private void readCustomizePromptFile() {
+        File file = new File(FILE_PATH_3);
         try {
             // 创建Scanner对象读取文件
             Scanner scanner = new Scanner(file);
@@ -142,167 +193,181 @@ public class settingWindow extends JFrame{
                 stringBuilder.append(data);
             }
             // 将StringBuilder的内容赋值给文本框
-            String Text = stringBuilder.toString();
-            String[] parts = Text.split(",");
-            //主界面读取文件赋值
-            textField2.setText(parts[0]);
-            textField1.setText(parts[1]);
+            customizePromptContent = stringBuilder.toString();
             // 关闭Scanner
             scanner.close();
         } catch (FileNotFoundException e) { e.printStackTrace(); }
     }
 
-    private void button3Listen() {
-        this.setVisible(false);
+    private void button3Listen() { // 取消
+        loginWindows.mainWin.setEnabled(true);
         this.dispose();
     }
 
-    private void button2Linter() {
+    private void button2Linter() { // 确认
         String url = textField2.getText();
         String apikey = textField1.getText();
-        ChatInterface.font = setingFont;
-        ChatInterface.fontSize = setingFontSize;
+        String settingCustomPrompt = textArea1.getText();
+        String checkThemeChange2 = (String) comboBox1.getSelectedItem();
+        ChatInterface.prompt = (String) comboBox3.getSelectedItem();
+        settingLength = Integer.valueOf(spinner2.getValue().toString());
+        settingFont = (String) comboBox2.getSelectedItem();
+        settingFontSize = Integer.valueOf(spinner1.getValue().toString());
+        String checkPromptChange2 = ChatInterface.prompt;
+        ChatInterface.font = settingFont;
+        ChatInterface.fontSize = settingFontSize;
         ChatInterface.refreshWin();
-        if(url.isEmpty() || apikey.isEmpty()) {
-            JOptionPane.showMessageDialog(null,"请输入完整信息","错误",JOptionPane.ERROR_MESSAGE);
+        if(!url.matches("^(?:https?://)?(?:(?:[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\\.)+[A-Za-z]{2,}|localhost|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})(?::\\d+)?(?:/\\S*)?$" )) {
+            JOptionPane.showMessageDialog(null, "URL格式错误，请检查", "错误", JOptionPane.ERROR_MESSAGE);
+        } else if (!apikey.matches("sk-[a-zA-Z0-9]{48}")) {
+            JOptionPane.showMessageDialog(null, "API格式错误，请检查", "错误", JOptionPane.ERROR_MESSAGE);
+        } else if (Objects.equals(ChatInterface.prompt, "自定义") && (settingCustomPrompt.isEmpty() || Objects.equals(settingCustomPrompt, "自定义人格，“人格”下拉框选择“自定义”时有效"))) {
+            JOptionPane.showMessageDialog(null, "自定义人格不能为空！", "错误", JOptionPane.ERROR_MESSAGE);
         } else {
+            ChatInterface.promptContent = textArea1.getText();
             try {
-                settinginfor();
+                settingInfo();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             try {
-                themeSet();
+                themeWrite();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             if (!Objects.equals(checkThemeChange1, checkThemeChange2))
             {
-                JOptionPane.showMessageDialog(this,"主题修改需要重启程序","提示",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,"主题修改需要重启应用","提示",JOptionPane.INFORMATION_MESSAGE);
+            }
+            if (!Objects.equals(checkPromptChange1, checkPromptChange2)) {
+                JOptionPane.showMessageDialog(this,"修改人格将新开对话","提示",JOptionPane.INFORMATION_MESSAGE);
+                ChatInterface.resetChat();
+            } try {
+                writeCustomizePrompt();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
             //System.out.println(checkThemeChange1 + " | " + checkThemeChange2);
+            loginWindows.mainWin.setEnabled(true);
             this.setVisible(false);
             this.dispose();
         }
     }
 
-    private void lookAndFeelBox(ItemEvent e) {
-        String lookAndFeel = (String) e.getItem();
-        checkThemeChange2 = lookAndFeel;
+    private void lookAndFeelBox() {
+        //String lookAndFeel = (String) e.getItem();
+        String lookAndFeel = (String) comboBox1.getSelectedItem();
         try {
-            switch (lookAndFeel) {
-                case "Arc":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme";
-                    break;
-                case "Arc - Orange":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme";
-                    break;
-                case "Arc Dark":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme";
-                    break;
-                case "Arc Dark - Orange":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme";
-                    break;
-                case "Carbon":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme";
-                    break;
-                case "Cobalt 2":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme";
-                    break;
-                case "Cyan light":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme";
-                    break;
-                case "Dark Flat":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme";
-                    break;
-                case "Dark purple":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme";
-                    break;
-                case "Dracula":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme";
-                    break;
-                case "Gradianto Dark Fuchsia":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDarkFuchsiaIJTheme";
-                    break;
-                case "Gradianto Deep Ocean":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme";
-                    break;
-                case "Gradianto Midnight Blue":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme";
-                    break;
-                case "Gradianto Nature Green":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme";
-                    break;
-                case "Gray":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme";
-                    break;
-                case "Gruvbox Dark Hard":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkHardIJTheme";
-                    break;
-                case "Gruvbox Dark Medium":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkMediumIJTheme";
-                    break;
-                case "Gruvbox Dark Soft":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme";
-                    break;
-                case "Hiberbee Dark":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme";
-                    break;
-                case "High contrast":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHighContrastIJTheme";
-                    break;
-                case "Light Flat":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme";
-                    break;
-                case "Material Design Dark":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme";
-                    break;
-                case "Monocai":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMonocaiIJTheme";
-                    break;
-                case "Monokai Pro":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme";
-                    break;
-                case "Nord":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatNordIJTheme";
-                    break;
-                case "One Dark":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme";
-                    break;
-                case "Solarized Dark":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme";
-                    break;
-                case "Solarized Light":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme";
-                    break;
-                case "Spacegray":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSpacegrayIJTheme";
-                    break;
-                case "Vuesion":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatVuesionIJTheme";
-                    break;
-                case "Xcode-Dark":
-                    main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatXcodeDarkIJTheme";
-                    break;
-                case "Windows":
-                    main.lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+            if (lookAndFeel != null) {
+                switch (lookAndFeel) {
+                    case "Arc":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcIJTheme"; break;
+                    case "Arc - Orange":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme"; break;
+                    case "Arc Dark":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme"; break;
+                    case "Arc Dark - Orange":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme"; break;
+                    case "Carbon":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme"; break;
+                    case "Cobalt 2":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme"; break;
+                    case "Cyan light":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme"; break;
+                    case "Dark Flat":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkFlatIJTheme"; break;
+                    case "Dark purple":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme"; break;
+                    case "Dracula":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatDraculaIJTheme"; break;
+                    case "Gradianto Dark Fuchsia":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDarkFuchsiaIJTheme"; break;
+                    case "Gradianto Deep Ocean":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme"; break;
+                    case "Gradianto Midnight Blue":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme"; break;
+                    case "Gradianto Nature Green":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGradiantoNatureGreenIJTheme"; break;
+                    case "Gray":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGrayIJTheme"; break;
+                    case "Gruvbox Dark Hard":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkHardIJTheme"; break;
+                    case "Gruvbox Dark Medium":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkMediumIJTheme"; break;
+                    case "Gruvbox Dark Soft":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkSoftIJTheme"; break;
+                    case "Hiberbee Dark":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme"; break;
+                    case "High contrast":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatHighContrastIJTheme"; break;
+                    case "Light Flat":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme"; break;
+                    case "Material Design Dark":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme"; break;
+                    case "Monocai":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMonocaiIJTheme"; break;
+                    case "Monokai Pro":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme"; break;
+                    case "Nord":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatNordIJTheme"; break;
+                    case "One Dark":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme"; break;
+                    case "Solarized Dark":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme"; break;
+                    case "Solarized Light":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme"; break;
+                    case "Spacegray":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatSpacegrayIJTheme"; break;
+                    case "Vuesion":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatVuesionIJTheme"; break;
+                    case "Xcode-Dark":
+                        Main.lookAndFeel = "com.formdev.flatlaf.intellijthemes.FlatXcodeDarkIJTheme"; break;
+                    case "Windows":
+                        Main.lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+                }
             }
-            themeSet();
+            themeWrite();
+            //System.out.println("Theme: " + lookAndFeel);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    private void fontSizeListener() {
-        // 字号监听
-        setingFontSize = Integer.valueOf(spinner1.getValue().toString()) ;
-        //System.out.println("字号输出：\"" + setingFontSize + "\"");
+    private void thisWindowClosing() {
+        loginWindows.mainWin.setEnabled(true);
     }
 
-    private void fontListener(ItemEvent e) {
-        // 字体修改监听
-        setingFont = e.getItem().toString();
-        //System.out.println("字体输出：\"" + ChatInterface.font + "\"");
+    private void initPromptArea() {
+        textArea1.setText("自定义人格，“人格”下拉框选择“自定义”时有效");
+        textArea1.setForeground(Color.GRAY);
+        textArea1.setEditable(false);
+    }
+
+    private void textArea1FocusGained() {
+        if (textArea1.getText().equals("自定义人格，“人格”下拉框选择“自定义”时有效")) {
+            textArea1.setText("");
+            textArea1.setForeground(OriginalColor);
+        }
+    }
+
+    private void textArea1FocusLost() {
+        if (textArea1.getText().isEmpty()) {
+            textArea1.setText("自定义人格，“人格”下拉框选择“自定义”时有效");
+            textArea1.setForeground(Color.GRAY);
+        }
+    }
+
+    static boolean checkFileExistence(String filePath) {
+        File file = new File(filePath);
+        return file.exists();
+    }
+
+    private void comboBox3ItemStateChanged() {
+        // 获取当前选择
+        Object selectedItem = comboBox3.getSelectedItem();
+
+        // 检查是否是 "自定义"，设置 textArea1 的可编辑状态
+        textArea1.setEditable(Objects.equals(selectedItem, "自定义"));
     }
 
     private void initComponents() {
@@ -312,6 +377,13 @@ public class settingWindow extends JFrame{
         label2 = new JLabel();
         textField2 = new JTextField();
         textField1 = new JTextField();
+        comboBox3 = new JComboBox<>();
+        label6 = new JLabel();
+        label7 = new JLabel();
+        spinner2 = new JSpinner();
+        scrollPane1 = new JScrollPane();
+        textArea1 = new JTextArea();
+        label8 = new JLabel();
         button2 = new JButton();
         button3 = new JButton();
         layeredPane2 = new JLayeredPane();
@@ -326,6 +398,12 @@ public class settingWindow extends JFrame{
         setTitle("\u8bbe\u7f6e");
         setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing();
+            }
+        });
         var contentPane = getContentPane();
 
         //======== layeredPane1 ========
@@ -335,16 +413,76 @@ public class settingWindow extends JFrame{
             //---- label1 ----
             label1.setText("\u63a5\u53e3URL\uff1a");
             layeredPane1.add(label1, JLayeredPane.DEFAULT_LAYER);
-            label1.setBounds(new Rectangle(new Point(20, 25), label1.getPreferredSize()));
+            label1.setBounds(new Rectangle(new Point(30, 25), label1.getPreferredSize()));
 
             //---- label2 ----
             label2.setText("API\uff1a");
             layeredPane1.add(label2, JLayeredPane.DEFAULT_LAYER);
-            label2.setBounds(new Rectangle(new Point(40, 65), label2.getPreferredSize()));
+            label2.setBounds(new Rectangle(new Point(60, 65), label2.getPreferredSize()));
             layeredPane1.add(textField2, JLayeredPane.DEFAULT_LAYER);
-            textField2.setBounds(85, 20, 200, 25);
+            textField2.setBounds(100, 20, 200, textField2.getPreferredSize().height);
             layeredPane1.add(textField1, JLayeredPane.DEFAULT_LAYER);
-            textField1.setBounds(85, 60, 200, 25);
+            textField1.setBounds(100, 60, 200, textField1.getPreferredSize().height);
+
+            //---- comboBox3 ----
+            comboBox3.setModel(new DefaultComboBoxModel<>(new String[] {
+                "\u9ed8\u8ba4",
+                "\u82f1\u8bed\u7ffb\u8bd1\u548c\u6539\u8fdb\u8005",
+                "\u82f1\u82f1\u8bcd\u5178(\u9644\u4e2d\u6587\u89e3\u91ca)",
+                "\u63d0\u793a\u751f\u6210\u5668",
+                "\u6b63\u5219\u751f\u6210\u5668",
+                "\u7b26\u53f7\u8bbe\u8ba1",
+                "\u6587\u7ae0\u7eed\u5199",
+                "\u6587\u5b57\u5192\u9669\u6e38\u620f",
+                "\u6d77\u7ef5\u5b9d\u5b9d\u7684\u795e\u5947\u6d77\u87ba",
+                "\u5c0f\u8bf4\u5bb6",
+                "\u5360\u661f\u5e08",
+                "Loris",
+                "\u81ea\u5b9a\u4e49"
+            }));
+            comboBox3.addItemListener(e -> comboBox3ItemStateChanged());
+            layeredPane1.add(comboBox3, JLayeredPane.DEFAULT_LAYER);
+            comboBox3.setBounds(55, 100, 95, 25);
+
+            //---- label6 ----
+            label6.setText("\u4eba\u683c");
+            layeredPane1.add(label6, JLayeredPane.DEFAULT_LAYER);
+            label6.setBounds(new Rectangle(new Point(20, 105), label6.getPreferredSize()));
+
+            //---- label7 ----
+            label7.setText("\u8bb0\u5fc6\u957f\u5ea6");
+            layeredPane1.add(label7, JLayeredPane.DEFAULT_LAYER);
+            label7.setBounds(new Rectangle(new Point(175, 105), label7.getPreferredSize()));
+
+            //---- spinner2 ----
+            spinner2.setModel(new SpinnerNumberModel(15, 1, 30, 1));
+            spinner2.setToolTipText("\u4fee\u6539AI\u8bb0\u5fc6\u957f\u5ea6\uff0c\u5efa\u8bae10~15");
+            layeredPane1.add(spinner2, JLayeredPane.DEFAULT_LAYER);
+            spinner2.setBounds(230, 100, 70, 25);
+
+            //======== scrollPane1 ========
+            {
+
+                //---- textArea1 ----
+                textArea1.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        textArea1FocusGained();
+                    }
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        textArea1FocusLost();
+                    }
+                });
+                scrollPane1.setViewportView(textArea1);
+            }
+            layeredPane1.add(scrollPane1, JLayeredPane.DEFAULT_LAYER);
+            scrollPane1.setBounds(35, 155, 265, 65);
+
+            //---- label8 ----
+            label8.setText("\u81ea\u5b9a\u4e49\u4eba\u683c\uff1a");
+            layeredPane1.add(label8, JLayeredPane.DEFAULT_LAYER);
+            label8.setBounds(new Rectangle(new Point(20, 135), label8.getPreferredSize()));
         }
 
         //---- button2 ----
@@ -400,7 +538,7 @@ public class settingWindow extends JFrame{
                 "Xcode-Dark"
             }));
             comboBox1.setSelectedIndex(0);
-            comboBox1.addItemListener(e -> lookAndFeelBox(e));
+            comboBox1.addItemListener(e -> lookAndFeelBox());
             layeredPane2.add(comboBox1, JLayeredPane.DEFAULT_LAYER);
             comboBox1.setBounds(55, 25, 95, 24);
 
@@ -433,20 +571,18 @@ public class settingWindow extends JFrame{
                 "\u96b6\u4e66",
                 "\u9ed1\u4f53"
             }));
-            comboBox2.addItemListener(e -> fontListener(e));
             layeredPane2.add(comboBox2, JLayeredPane.DEFAULT_LAYER);
             comboBox2.setBounds(55, 65, 95, 24);
 
             //---- label5 ----
             label5.setText("\u5b57\u53f7");
             layeredPane2.add(label5, JLayeredPane.DEFAULT_LAYER);
-            label5.setBounds(190, 30, 25, label5.getPreferredSize().height);
+            label5.setBounds(195, 30, 25, label5.getPreferredSize().height);
 
             //---- spinner1 ----
             spinner1.setModel(new SpinnerNumberModel(14, 8, 36, 1));
-            spinner1.addChangeListener(e -> fontSizeListener());
             layeredPane2.add(spinner1, JLayeredPane.DEFAULT_LAYER);
-            spinner1.setBounds(225, 25, 55, 25);
+            spinner1.setBounds(230, 25, 70, 25);
         }
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
@@ -456,29 +592,29 @@ public class settingWindow extends JFrame{
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addGap(0, 204, Short.MAX_VALUE)
                             .addComponent(button3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(button2, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-                        .addComponent(layeredPane2, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
+                        .addComponent(layeredPane2, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                        .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
                     .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addGap(17, 17, 17)
-                    .addComponent(layeredPane1, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(layeredPane1, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(layeredPane2, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addComponent(button2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                         .addComponent(button3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
-        setSize(350, 315);
+        setSize(350, 450);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -489,6 +625,13 @@ public class settingWindow extends JFrame{
     private JLabel label2;
     private JTextField textField2;
     private JTextField textField1;
+    private JComboBox<String> comboBox3;
+    private JLabel label6;
+    private JLabel label7;
+    private JSpinner spinner2;
+    private JScrollPane scrollPane1;
+    private JTextArea textArea1;
+    private JLabel label8;
     private JButton button2;
     private JButton button3;
     private JLayeredPane layeredPane2;
@@ -502,13 +645,18 @@ public class settingWindow extends JFrame{
 
     // 自定义变量
 
-    private String localAppDATA=System.getenv("LOCALAPPDATA");
-    private final String FILE_PATH = localAppDATA+"\\CIF\\settinginfor";
-    private final String FILE_PATH_2 = localAppDATA+"\\CIF\\themeFile";
-    private String setingFont = "微软雅黑";
-    private Integer setingFontSize =14;
-    public static String Url = "https://api.chatanywhere.com.cn";
-    public static String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
+    private final String localAppDATA=System.getenv("LOCALAPPDATA");
+    private final String FILE_PATH = localAppDATA+"\\Wise_Conversations\\settingInfo";
+    private final String FILE_PATH_2 = localAppDATA+"\\Wise_Conversations\\themeFile";
+    private final String FILE_PATH_3 = localAppDATA+"\\Wise_Conversations\\customizePrompt";
+    private String settingFont = "微软雅黑";
+    private Integer settingFontSize =14;
+    static String Url = "https://api.chatanywhere.com.cn";
+    static String ApiKey = "sk-bvhVMDkimbCNOeIemOS5giGyCa2CAiXIXKHq0t6ho5TrmBnY";
+    static Integer rememberLength = 15;
+    static Integer settingLength;
     private String checkThemeChange1;
-    private String checkThemeChange2;
+    private final String checkPromptChange1;
+    private final Color OriginalColor;
+    static String customizePromptContent;
 }

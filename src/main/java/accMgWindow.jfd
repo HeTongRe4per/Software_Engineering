@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq l {space :p:39:p, par l:::p {comp label1:::p:55:p, comp label2::t:::x, comp label3::t:p:55:p}, space :::p, par l:::p {par l:l {comp delAccountButton::t:p::p, seq l {par t:::p {comp passwordField1::::150:x, comp emailTextField::::150:x}, space s:::p, par l {comp resetEmailButton:::p:93:p, comp resetPasswdButton::l:p:93:p}}}, seq l {comp accountTextField:::p:150:p, space s:::p, comp resetUserNameButton::::93:x}}, space ::32:x}}"
-			"$verticalGroup": "par l {seq l {space :p:49:p, par b {comp label1::b:p:25:p, comp accountTextField::b:p:25:p, comp resetUserNameButton::b:p:25:p}, space s:::p, par b {comp label2::b:p:23:p, comp emailTextField::b:p:25:p, comp resetEmailButton::b:p:25:p}, space s:::p, par b {comp label3::b:p:23:p, comp passwordField1::b:p:25:p, comp resetPasswdButton::b:p:25:p}, space ::30:x, comp delAccountButton:::p::p, space :p:27:p}}"
+			"$verticalGroup": "par l {seq l {space :p:49:p, par b {comp label1::b:p:25:p, comp accountTextField::b:p:25:p, comp resetUserNameButton::b:p:25:p}, space s:::p, par b {comp label2::b:p:23:p, comp emailTextField::b:p:25:p, comp resetEmailButton::b:p:25:p}, space s:::p, par b {comp label3::b:p:23:p, comp passwordField1::b:p:25:p, comp resetPasswdButton::b:p:25:p}, space ::32:x, comp delAccountButton:::p::p, space :p:27:p}}"
 		} ) {
 			name: "this"
 			"$sizePolicy": 1
@@ -13,6 +13,7 @@ new FormModel {
 			"title": "账号管理"
 			"resizable": false
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/icon-chatgpt.png" )
+			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowClosing", "thisWindowClosing", false ) )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "用户名："

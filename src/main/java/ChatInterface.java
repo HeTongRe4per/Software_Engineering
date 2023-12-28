@@ -1,4 +1,5 @@
 import com.jgoodies.forms.factories.Borders;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -8,7 +9,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.*;
 import java.sql.*;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 /*
  * Created by JFormDesigner on Thu Dec 07 23:57:49 CST 2023
@@ -20,13 +23,15 @@ import java.util.concurrent.CompletableFuture;
  * @author zhang RDLS 小样
  */
 public class ChatInterface extends JFrame  {
+
     public ChatInterface() {
 		initComponents();
-        OriginalColor = sendPanel.getForeground();
+        OriginalColor = chatArea.getForeground();
         chatArea.setOpaque(false);
         chatScrollPane.setOpaque(false);
         chatScrollPane.getViewport().setOpaque(false);
         sendPaneEmpty();
+        selectPrompt();
         refreshWin();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -93,17 +98,19 @@ public class ChatInterface extends JFrame  {
     }
 
 	public void accountMangeItemListen() {
+        loginWindows.mainWin.setEnabled(false);
         accMgWin = new accMgWindow();
 		accMgWin.setVisible(true);
 	}
 
 	private void logoutItemListen() {
 		this.dispose();
-		main.loginWin = new loginWindows();
-        main.loginWin.setVisible(true);
+		Main.loginWin = new loginWindows();
+        Main.loginWin.setVisible(true);
 	}
 
 	private void settingItemListen() {
+        loginWindows.mainWin.setEnabled(false);
 		new settingWindow().setVisible(true);
 	}
 
@@ -113,14 +120,16 @@ public class ChatInterface extends JFrame  {
             String user = username;
             chatArea.append(user + "：\n" + inputMessage + "\n");
             sendPane.setText("");
+            setScrollPaneBar();
             sendButton.setEnabled(false);   // 发送消息后禁止再点击发送
             sendButtonFlag = false;  // 锁定按钮监听
+            //System.out.println("人格：" + promptContent);
 
             // 异步执行 chatAPI
             CompletableFuture.supplyAsync(chatAPI::new)
                     .thenAcceptAsync(chatAPI -> {
                         SwingUtilities.invokeLater(() -> {
-                            chatArea.append("\nChatGPT：\n" + chatAPI.answer + "\n\n");
+                            chatArea.append("\nROBO_Head：\n" + chatAPI.answer + "\n\n");
                             setScrollPaneBar();
                             sendButton.setEnabled(true);    // 解除发送按钮锁定
                             sendButtonFlag = true;  // 解除按钮监听锁定
@@ -134,7 +143,6 @@ public class ChatInterface extends JFrame  {
             // 滚动到最底部
             chatScrollBar = chatScrollPane.getVerticalScrollBar();
             if (chatScrollBar != null) {
-                // 必须先获取一次chatScrollBar.getMaximum()，否则滚动不到最底部, swing bug
                 chatScrollBar.setValue(chatScrollBar.getMaximum());
             }
         });
@@ -171,17 +179,72 @@ public class ChatInterface extends JFrame  {
 	}
 
     private void aboutItemLister() {
+        loginWindows.mainWin.setEnabled(false);
         new about().setVisible(true);
     }
 
-    private void resetChat() {
+    static void resetChat() {
+        selectPrompt();
         chatAPI.resetInputString();
         chatArea.setText("");
+        JOptionPane.showMessageDialog(null, "重置成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void refreshWin() {
+    static void refreshWin() {
         Font setFont = new Font(font, Font.PLAIN, fontSize);
         chatArea.setFont(setFont);
+    }
+
+    static void selectPrompt () { // 读取人格文件
+
+        // 获取当前工作目录
+        String currentDirectory = System.getProperty("user.dir");
+        //System.out.println("当前工作目录：" + currentDirectory);
+        // 指定目录路径
+        // 创建一个File对象表示目录
+        File directory = new File(currentDirectory + "\\prompts\\");
+        //System.out.println("指定人格目录：" + directory);
+
+        if (!Objects.equals(prompt, "自定义")) {
+            // 检查目录是否存在
+            if (directory.exists() && directory.isDirectory()) {
+                // 获取目录中的子目录和文件
+                File[] files = directory.listFiles();
+                if (files != null) {
+                    // 遍历子目录和文件
+                    for (File file : files) {
+                        if (!file.isDirectory()) {
+                            //System.out.println("文件: " + file.getName());
+                            if (file.getName().equals(prompt)) {
+                                try (FileInputStream fis = new FileInputStream(file);
+                                     BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
+                                    String line;
+                                    while ((line = reader.readLine()) != null) { // 读取人格文件内容
+                                        //System.out.println("测试line：" + line);
+                                        String escapedPrompt = StringEscapeUtils.escapeJson(line);
+                                        promptContent = "{\"role\": \"system\", \"content\":\"" + escapedPrompt + "\"},";
+                                        //System.out.println("人格内容：" + promptContent);
+                                    }
+                                } catch (IOException e) {
+                                    JOptionPane.showMessageDialog(null, "文件读取错误。", "提示", JOptionPane.INFORMATION_MESSAGE);
+                                    promptContent = " ";
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "人格目录为空或无法访问子目录和文件。", "提示", JOptionPane.INFORMATION_MESSAGE);
+                    promptContent = " ";
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "人格目录不存在或无法访问。", "提示", JOptionPane.INFORMATION_MESSAGE);
+                promptContent = " ";
+            }
+        } else {
+            String escapedPrompt = StringEscapeUtils.escapeJson(settingWindow.customizePromptContent);
+            promptContent = "{\"role\": \"system\", \"content\":\"" + escapedPrompt + "\"},";
+        }
     }
 
     private void chatAreaKeyPressed(KeyEvent e) {
@@ -397,13 +460,14 @@ public class ChatInterface extends JFrame  {
 	final String initSendText = "Message ChatGPT...";
 	static String inputMessage = "";
 	boolean sendButtonFlag = true;
-    private boolean isdark=false;
-    private String localAppDATA=System.getenv("LOCALAPPDATA");
-    private final String FILE_PATH = localAppDATA+"\\CIF\\isdark";
-    public static String font = "微软雅黑";
-    public static Integer fontSize = 14;
+    static String font = "微软雅黑";
+    static Integer fontSize = 14;
     String username = Chatname(loginWindows.username_s);
+    static String promptContent;
+    static String prompt = "默认";
     private final ImageIcon imageIcon = new ImageIcon(getClass().getResource("background-250x167-semitransparent.png"));
-    private Color OriginalColor;
+    private final Color OriginalColor;
+    private static final String localAppDATA=System.getenv("LOCALAPPDATA");
+    private static final String FILE_PATH = localAppDATA+"\\Wise_Conversations\\customizePrompt";
 	// 自定义方法
 }

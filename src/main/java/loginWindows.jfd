@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:59:p, par t {comp label2:::p::p, comp label3:::p::p}, space s:::p, par t {seq {comp remberPasswd:::p::p, space ::39:x, comp forgotPasswdButton:::p::p}, comp loginButton::l::190:x, comp accountField::l:::x, comp passwordField1::l::190:x}, space :p:87:p}, seq t {space ::158:x, par l {seq t {comp registerButton:::p::p, space :::p}, seq t {comp label1:::p::p, space :p:130:p}}}}"
-			"$verticalGroup": "par l {seq l {space :p:20:p, comp label1:::p::p, space :p:27:p, par b {comp label2::b:p::p, comp accountField::b:p:25:p}, space :p:28:p, par b {comp label3::b:p::p, comp passwordField1::b:p:25:p}, space s:::p, comp loginButton:::p:25:p, space s:::p, par b {comp forgotPasswdButton::b:p::p, comp remberPasswd::b:p::p}, space s:::p, comp registerButton:::p::p, space ::13:x}}"
+			"$horizontalGroup": "par l {seq {par l {seq {space :p:162:p, comp label1:::p::p}, seq l {space :p:52:p, par t {comp label2:::p::p, comp label3:::p::p}, space s:::p, par l {par t:::p {seq l {comp remberPasswd:::p::p, space :::x, comp forgotPasswdButton:::p::p}, comp loginButton::l:::x, comp passwordField1::l:::x, comp accountField::l:p:180:p}, seq l {space :p:100:p, comp registerButton:::p::p}}}}, space :p:26:p}}"
+			"$verticalGroup": "par l {seq l {space :p:25:p, comp label1:::p::p, space ::24:x, par b {comp label2::b:p::p, comp accountField::b:p:25:p}, space :p:28:p, par b {comp passwordField1::b:p:25:p, comp label3::b:p::p}, space s:::p, comp loginButton:::p:25:p, space s:::p, par b {comp remberPasswd::b:p::p, comp forgotPasswdButton::b:p::p}, space :p:18:p, comp registerButton:::p::p, space :::p}}"
 		} ) {
 			name: "this"
 			"resizable": false
@@ -35,7 +35,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "loginButton"
 				"text": "登录"
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loginButtonLinster", false ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loginButtonListener", false ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "registerButton"
@@ -63,7 +63,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 440, 335 )
+			"size": new java.awt.Dimension( 420, 330 )
 		} )
 	}
 }

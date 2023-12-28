@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.sql.*;
 /*
  * Created by JFormDesigner on Wed Nov 29 23:01:29 CST 2023
@@ -23,7 +20,7 @@ public class registeredWindow extends JFrame {
 
     private void button2registerLinsten() {
         if(regisverifyinfor()){
-            this.setVisible(false);
+            Main.loginWin.setEnabled(true);
             this.dispose();
         }else {
             this.repaint();
@@ -289,6 +286,10 @@ public class registeredWindow extends JFrame {
         }
     }
 
+    private void thisWindowClosing() {
+        Main.loginWin.setEnabled(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         button2 = new JButton();
@@ -305,6 +306,12 @@ public class registeredWindow extends JFrame {
         setTitle("\u6ce8\u518c\u8d26\u53f7");
         setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("/icon-chatgpt.png")).getImage());
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                thisWindowClosing();
+            }
+        });
         var contentPane = getContentPane();
 
         //---- button2 ----
@@ -402,7 +409,7 @@ public class registeredWindow extends JFrame {
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(36, Short.MAX_VALUE)
+                    .addContainerGap(34, Short.MAX_VALUE)
                     .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                             .addGroup(contentPaneLayout.createParallelGroup()

@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -18,16 +20,11 @@ import java.nio.charset.StandardCharsets;
  */
 public class chatAPI {
 
-    private static final StringBuffer inputString = new StringBuffer("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
-    private final String API_KEY = settingWindow.ApiKey;
-    private final String API_URL = settingWindow.Url;
-    private final String question = ChatInterface.inputMessage;
-    public static String answer = "";
-    private static Integer  messageCount = 0;
-
     public chatAPI() {
-        if (messageCount < 15) { // 防止token一次消耗过多导致报错，限制一次发送最多15个消息
-            try { httpClient(); } catch (IOException e) { throw new RuntimeException(e); }
+        if (messageCount < settingWindow.rememberLength) { // 防止token一次消耗过多导致报错，限制一次发送消息数量
+            try {
+                httpClient();
+            } catch (IOException e) { throw new RuntimeException(e); }
         } else {
             outMessageInputString();
             try { httpClient(); } catch (IOException e) { throw new RuntimeException(e); }
@@ -101,15 +98,30 @@ public class chatAPI {
         inputString.append(outputFormWork);
     }
 
-    public static void resetInputString() {
+    static void resetInputString() {
         inputString.setLength(0);
-        inputString.append("{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
+        inputString.append("{\"model\": \"gpt-3.5-turbo\",\"messages\": [").append(ChatInterface.promptContent);
         messageCount = 0;
     }
 
-    public static void outMessageInputString() {
-        // 通过查找第二个“,{"role": "user", "content””前的逗号来移除最早的对话
-        int secondCommaIndex = inputString.indexOf(",{\"role\": \"user\", \"content\"");
+
+    static void outMessageInputString() {
+        // 通过查找第二个“,{"role": "user", "content”前的逗号来移除最早的对话
+        //String message = inputString.toString();
+        Pattern pattern = Pattern.compile(",\\{\"role\": \"user\", \"content\":\".*?\"}");
+        Matcher matcher = pattern.matcher(inputString);
+        //int secondCommaIndex = inputString.indexOf(",{\"role\": \"user\", \"content\"");
+
+        int secondCommaIndex = -1;
+        int count = 0;
+
+        while (matcher.find()) {
+            count++;
+            if (count == 2) {
+                secondCommaIndex = matcher.end();
+                break;
+            }
+        }
 
         // 如果找到第二个逗号，删除逗号及其之前的内容
         if (secondCommaIndex != -1) {
@@ -120,7 +132,14 @@ public class chatAPI {
         }
 
         // 在 inputString 前插入初始部分
-        inputString.insert(0, "{\"model\": \"gpt-3.5-turbo\",\"messages\": [");
-        //System.out.println("超过后处理："+ inputString);
+        inputString.insert(0, "{\"model\": \"gpt-3.5-turbo\",\"messages\": [" + ChatInterface.promptContent);
+        //System.out.println("超过后处理：" + inputString);
     }
+
+    private static final StringBuffer inputString = new StringBuffer("{\"model\": \"gpt-3.5-turbo\",\"messages\": [" + ChatInterface.promptContent);
+    private final String API_KEY = settingWindow.ApiKey;
+    private final String API_URL = settingWindow.Url;
+    private final String question = ChatInterface.inputMessage;
+    static String answer = "";
+    private static Integer  messageCount = 0;
 }
