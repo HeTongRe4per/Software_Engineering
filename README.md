@@ -29,7 +29,7 @@
 │   ├── java/         # 源码
 │   └── resource/     # 资源
 ├── target/classes/   # 
-├── doc          
+├── Doc               # 文档
 ├── README.md         # 项目说明文件
 ├── LICENSES          # 许可证
 ├── pom.xml           # Maven依赖项等
