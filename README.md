@@ -28,7 +28,7 @@
 ├── src/Main/         # 存放源代码
 │   ├── java/         # 源码
 │   └── resource/     # 资源
-├── target/classes/   # 
+├── target/classes/   # 调试生成
 ├── Doc               # 文档
 ├── README.md         # 项目说明文件
 ├── LICENSES          # 许可证
