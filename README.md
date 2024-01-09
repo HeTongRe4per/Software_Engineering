@@ -29,7 +29,7 @@
 │   ├── java/         # 源码
 │   └── resource/     # 资源
 ├── target/classes/   # 调试生成
-├── Doc               # 文档
+├── doc               # 文档
 ├── README.md         # 项目说明文件
 ├── LICENSES          # 许可证
 ├── pom.xml           # Maven依赖项等
@@ -51,11 +51,12 @@
   姚雨果、喻博文
 
 ## 开发环境
+* Java11
+* Maven4.0.0
 
-1. Java11
-2. Maven4.0.0
+## ~~如何运行~~
 
-## 如何运行
+**（本项目不再提供 `.jar`，故此部分已过期）**
 
 以下提示是给编译运行的，如果你使用 `.exe`可以看[使用说明](#使用说明)。当然，你如果想直接使用的话可以直接下载Releases下的exe文件（使用exe4j打包），或者下载Releases下的jar文件然后运行 `java -jar 言谈智友.jar`来运行。
 
@@ -109,4 +110,4 @@
 
 ## 联系我们
 
-如果你在使用软件时遇到了问题，或者你有什么好的建议，欢迎通过邮件联系我们：[zhang_zlf@outlook.com](mailto:zhang_zlf@outlook.com)
+如果你在使用软件时遇到了问题，或者你有什么好的建议，欢迎提交[#issue](https://github.com/HeTongRe4per/Software_Engineering/issues)或者通过邮件联系我们：[zhang_zlf@outlook.com](mailto:zhang_zlf@outlook.com)
