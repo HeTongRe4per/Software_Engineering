@@ -73,7 +73,7 @@
 
 ## 使用须知
 
-1. 本软件使用GPLv3协议开源，详情请看[这里](https://github.com/HeTongRe4per/Software_Engineering?tab=readme-ov-file#AGPL-3.0-1-ov-file)。
+1. 本软件使用GPLv3协议开源，详情请看[这里](https://github.com/HeTongRe4per/Software_Engineering/blob/master/LICENSE)。
 2. 请勿将本软件用于非法用途，否则后果自负。
 3. 请勿将本软件用于商业用途，否则后果自负。
 
