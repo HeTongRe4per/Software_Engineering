@@ -31,7 +31,7 @@
 ├── target/classes/   # 调试生成
 ├── doc               # 文档
 ├── README.md         # 项目说明文件
-├── LICENSES          # 许可证
+├── LICENSE           # 许可证
 ├── pom.xml           # Maven依赖项等
 └── .gitignore        # Git 忽略文件配置
 
@@ -54,9 +54,9 @@
 * Java11
 * Maven4.0.0
 
-## ~~如何运行~~
+## 如何运行
 
-**（本项目不再提供 `.jar`，故此部分已过期）**
+**（本项目不再提供 `.jar`，故此部分已过期，编译运行可以参考）**
 
 以下提示是给编译运行的，如果你使用 `.exe`可以看[使用说明](#使用说明)。当然，你如果想直接使用的话可以直接下载Releases下的exe文件（使用exe4j打包），或者下载Releases下的jar文件然后运行 `java -jar 言谈智友.jar`来运行。
 
