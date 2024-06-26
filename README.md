@@ -51,6 +51,20 @@
 * Java11
 * Maven4.0.0
 
+## 软件截图
+
+- 登陆界面
+
+![登陆界面](https://github.com/HeTongRe4per/imgurl/blob/main/Wise_Conversations/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-06-26%20153902.png?raw=true)
+
+- 主界面
+
+![主界面](https://github.com/HeTongRe4per/imgurl/blob/main/Wise_Conversations/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-06-26%20153452.png?raw=true)
+
+- 设置界面
+
+![设置界面](https://github.com/HeTongRe4per/imgurl/blob/main/Wise_Conversations/cb95448797112cbc1286e38b36dba634.png?raw=true)
+
 ## 如何运行
 
 **（本项目不再提供 `.jar`，故此部分已过期，编译运行可以参考）**
