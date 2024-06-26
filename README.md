@@ -60,7 +60,7 @@
 1. 克隆项目到本地
 
    ```bash
-   git -clone https://github.com/HeTongRe4per/Software_Engineering.git
+   git clone https://github.com/HeTongRe4per/Software_Engineering.git
    ```
 2. 安装JDK11
 3. 安装Maven
